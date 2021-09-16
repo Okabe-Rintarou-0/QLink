@@ -7,9 +7,12 @@ class QLinkSquare
 private:
     QWidget *widget;
     int bonus;
-
+    int w;
+    int h;
 public:
     void setBonus(int bonus);
+    void setIcon(int iconIndex);
+    void setSize(int w, int h);
     QLinkSquare();
     ~QLinkSquare();
     QWidget *getWidget();

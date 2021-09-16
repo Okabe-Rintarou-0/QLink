@@ -4,7 +4,8 @@
 #include <QVector>
 #include <QGridLayout>
 #include "QLinkSquare.h"
-class QSquarePanelWidget : public QWidget{
+class QSquarePanelWidget : public QWidget
+{
 private:
     //height
     int h;
@@ -23,5 +24,6 @@ public:
     void setSize(int h, int w);
     void render();
     void clear();
+    void resizeAndRender(int w, int h);
 };
 #endif // QSQUAREPANELWIDGET_H

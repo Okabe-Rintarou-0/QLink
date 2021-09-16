@@ -17,12 +17,15 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     QLinkSquare.cpp \
+    QSquareImageManager.cpp \
     QSquarePanelWidget.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
+    FileConstants.h \
     QLinkSquare.h \
+    QSquareImageManager.h \
     QSquarePanelWidget.h \
     mainwindow.h
 
