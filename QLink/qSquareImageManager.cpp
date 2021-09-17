@@ -1,4 +1,4 @@
-#include "QSquareImageManager.h"
+#include "qSquareImageManager.h"
 
 QSquareImageManager::QSquareImageManager()
 {

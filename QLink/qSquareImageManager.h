@@ -2,7 +2,7 @@
 #define QSQUAREIMAGELOADER_H
 #include <QMap>
 #include <QImage>
-#include "FileConstants.h"
+#include "fileConstants.h"
 class QSquareImageManager
 {
 public:

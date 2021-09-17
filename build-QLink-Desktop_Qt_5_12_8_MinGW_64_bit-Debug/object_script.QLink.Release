@@ -1,0 +1,10 @@
+release/imageUtil.o
+release/main.o
+release/mainwindow.o
+release/qCharacterWidget.o
+release/qLinkSquare.o
+release/qSquareImageManager.o
+release/qSquarePanelWidget.o
+release/qStyleSheetBuilder.o
+release/randomUtil.o
+release/moc_mainwindow.o

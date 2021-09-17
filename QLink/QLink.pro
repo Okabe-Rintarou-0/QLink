@@ -16,18 +16,26 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    QLinkSquare.cpp \
-    QSquareImageManager.cpp \
-    QSquarePanelWidget.cpp \
+    imageUtil.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    qCharacterWidget.cpp \
+    qLinkSquare.cpp \
+    qSquareImageManager.cpp \
+    qSquarePanelWidget.cpp \
+    qStyleSheetBuilder.cpp \
+    randomUtil.cpp
 
 HEADERS += \
-    FileConstants.h \
-    QLinkSquare.h \
-    QSquareImageManager.h \
-    QSquarePanelWidget.h \
-    mainwindow.h
+    fileConstants.h \
+    imageUtil.h \
+    mainwindow.h \
+    qCharacterWidget.h \
+    qLinkSquare.h \
+    qSquareImageManager.h \
+    qSquarePanelWidget.h \
+    qStyleSheetBuilder.h \
+    randomUtil.h
 
 FORMS += \
     mainwindow.ui
