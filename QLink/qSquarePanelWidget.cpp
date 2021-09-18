@@ -25,14 +25,14 @@ void QSquarePanelWidget::setSize(int w, int h)
     this->h = h;
 }
 
-void QSquarePanelWidget::renderSquares()
+void QSquarePanelWidget::prepareRandom(QMap<int, int> & randomIconIdxToNum)
 {
-    QMap<int, int> randomIconIdxToNum;
-    int totalNum = w * h;
+    int totalNum = w * h / 2;
     int randomSeed = QDateTime::currentDateTime().toTime_t();
     randomSeed = RandomUtil::randRange(0, randomSeed) + randomSeed;
     srand(randomSeed);
     int randomNum = RandomUtil::randRange(totalNum / 8, totalNum / 16);
+    randomNum = qMin(randomNum, 40);
     int iconNum = totalNum / randomNum;
     int rest = totalNum % randomNum;
     for (int i = 0; i < randomNum; ++i)
@@ -48,8 +48,32 @@ void QSquarePanelWidget::renderSquares()
             additional = RandomUtil::randRange(1, rest);
             rest -= additional;
         }
-        randomIconIdxToNum.insert(randomIdx, iconNum + additional);
+        randomIconIdxToNum.insert(randomIdx, (iconNum + additional) * 2);
     }
+}
+
+QPair<QSquarePanelWidget::Direction, QSquarePanelWidget::Direction> QSquarePanelWidget::getRelativeDirection(QPoint from, QPoint to)
+{
+    QPair<Direction, Direction> relativeDirection;
+    QPoint diff = to - from;
+    if (diff.x() < 0)
+        relativeDirection.first = Up;
+    else if (diff.x() > 0)
+        relativeDirection.first = Down;
+    else
+        relativeDirection.first = None;
+    if (diff.y() < 0)
+        relativeDirection.second = Left;
+    else if(diff.y() > 0)
+        relativeDirection.second = Right;
+    else
+        relativeDirection.second = None;
+    return relativeDirection;
+}
+void QSquarePanelWidget::renderSquares()
+{
+    QMap<int, int> randomIconIdxToNum;
+    prepareRandom(randomIconIdxToNum);
 
     for (int i = 0; i < h; ++i)
     {
@@ -73,6 +97,24 @@ void QSquarePanelWidget::renderSquares()
     }
 }
 
+void QSquarePanelWidget::initSquareMap()
+{
+    squareMap.clear();
+    for(int i = 0; i <= h + 1; ++i)
+    {
+        QVector<int> row(w + 2, 0);
+        squareMap.push_back(row);
+    }
+
+    for(int i = 1; i <= h; ++i)
+    {
+        for(int j = 1; j <= w; ++j)
+        {
+            squareMap[i][j] = squares[i - 1][j - 1]->getIconIndex();
+        }
+    }
+}
+
 void QSquarePanelWidget::activate(QPoint fromPos)
 {
     int fromX = fromPos.x();
@@ -92,6 +134,25 @@ void QSquarePanelWidget::activate(QPoint fromPos)
     }
 }
 
+void QSquarePanelWidget::removeSquareAt(int x, int y)
+{
+    QLinkSquare *targetSquare = squares[x][y];
+    if (targetSquare != nullptr)
+    {
+//        targetSquare->getWidget()->setParent(nullptr);
+//        gridLayout->removeWidget(targetSquare->getWidget());
+//        delete targetSquare;
+        targetSquare->clearIcon();
+        squares[x][y] = nullptr;
+        squareMap[x + 1][y + 1] = 0;
+    }
+}
+
+void QSquarePanelWidget::removeSquareAt(QPoint p)
+{
+    removeSquareAt(p.x(), p.y());
+}
+
 void QSquarePanelWidget::setUpGridLayout()
 {
     gridLayout->setSpacing(squareSpacing);
@@ -102,9 +163,12 @@ void QSquarePanelWidget::setUpGridLayout()
 void QSquarePanelWidget::render()
 {
     renderSquares();
+    initSquareMap();
     setUpGridLayout();
     setLayout(gridLayout);
     setGeometry(980 - (800 * w / h) / 2, 100, 800 * w / h, 800);
+    QPainter painter;
+    drawLine(painter);
 }
 
 void QSquarePanelWidget::clear()
@@ -129,6 +193,82 @@ void QSquarePanelWidget::resizeAndRender(int w, int h)
     render();
 }
 
+QPoint QSquarePanelWidget::moveTowards(QPoint p, Direction direction) const
+{
+    return QPoint(p.x() + next[direction][0], p.y() + next[direction][1]);
+}
+
+bool QSquarePanelWidget::canPassBy(QPoint p)
+{
+    return !outOfBound(p) && squareMap[p.x()][p.y()] == 0;
+}
+
+bool QSquarePanelWidget::outOfBound(QPoint p)
+{
+    return p.x() < 0 || p.x() > h + 1 || p.y() < 0 || p.y() > w + 1;
+}
+
+void QSquarePanelWidget::searchForLinkPath(bool &found, QPoint curP, QPoint tgtP, int lineCnt, Direction lastDire, QVector<QPoint> &path, QVector<QVector<bool>> &visited)
+{
+    if (lineCnt >= 3) return;
+    QPair<Direction, Direction> relativeDirection = getRelativeDirection(curP, tgtP);
+    QVector<Direction> directions = {Left, Right, Up, Down};
+
+    if(relativeDirection.first != None)
+        qSwap(directions[0], directions[relativeDirection.first]);
+
+    if(relativeDirection.second != None)
+        qSwap(directions[1], directions[relativeDirection.second]);
+    qDebug() << directions << endl;
+    Direction curDire;
+    QPoint nextP;
+    int curCnt;
+
+    for (int i = 0; i < 4; ++i)
+    {
+        curDire = directions[i];
+        curCnt = lastDire == curDire ? lineCnt : lineCnt + 1;
+        nextP = moveTowards(curP, curDire);
+        if (nextP == tgtP)
+        {
+            if (curCnt <= 3)
+            {
+                qDebug() << "Find a path: ";
+                for (QPoint p : path)
+                {
+                    qDebug() << p << endl;
+                }
+                found = true;
+            }
+            return;
+        }
+        if (!canPassBy(nextP) || visited[nextP.x()][nextP.y()]) continue;
+        path.push_back(nextP);
+        qDebug() << "go to " << nextP << endl;
+        visited[nextP.x()][nextP.y()] = true;
+        searchForLinkPath(found, nextP, tgtP, curCnt, curDire, path, visited);
+        if (found) return;
+        path.pop_back();
+        visited[nextP.x()][nextP.y()] = false;
+    }
+}
+
+bool QSquarePanelWidget::isLinkable(QPoint p1, QPoint p2)
+{
+    QLinkSquare *first = squares[p1.x()][p1.y()];
+    QLinkSquare *second = squares[p2.x()][p2.y()];
+    bool found = false;
+    if (first->equals(*second))
+    {
+        QVector<QPoint> path;
+        QVector<QVector<bool>> visited(h + 2, QVector<bool>(w + 2, false));
+
+        qDebug() << "from " << QPoint(p1.x() + 1, p1.y() + 1) << " to " << QPoint(p2.x() + 1, p2.y() + 1) << endl;
+        searchForLinkPath(found, QPoint(p1.x() + 1, p1.y() + 1), QPoint(p2.x() + 1, p2.y() + 1), 0, None, path, visited);
+    }
+    return found;
+}
+
 void QSquarePanelWidget::tryLink()
 {
     if(activateQueue.size() == 2)
@@ -137,22 +277,15 @@ void QSquarePanelWidget::tryLink()
         QPoint second = activateQueue.dequeue();
         QLinkSquare *firstSquare = squares[first.x()][first.y()];
         QLinkSquare *secondSquare = squares[second.x()][second.y()];
-        qDebug()<<"first "<<first<<endl;
-        qDebug()<<"second "<<second<<endl;
-        if (firstSquare->equals(*secondSquare))
+        if (isLinkable(first, second))
         {
-            qDebug()<<" called "<<endl;
-            firstSquare->getWidget()->setParent(nullptr);
-            secondSquare->getWidget()->setParent(nullptr);
-            gridLayout->removeWidget(firstSquare->getWidget());
-            gridLayout->removeWidget(secondSquare->getWidget());
-            delete firstSquare;
-            delete secondSquare;
-            squares[first.x()][first.y()] = squares[second.x()][second.y()] = nullptr;
+            needPaint = true;
+            repaint();
+            removeSquareAt(first);
+            removeSquareAt(second);
         }
         else
         {
-            qDebug() << "Not equal, so reset" << endl;
             firstSquare->reset();
             secondSquare->reset();
         }
@@ -163,4 +296,22 @@ QSize QSquarePanelWidget::getSquareSize()
 {
     int restHeight = (800 - (h - 1) * squareSpacing);
     return QSize(restHeight / h, restHeight / h);
+}
+
+void QSquarePanelWidget::drawLine(QPainter &painter)
+{
+    painter.setPen(QPen(Qt::red));
+    painter.setBrush(QBrush(Qt::blue));
+    painter.drawRect(0, 0, 50, 50);
+    qDebug() << "draw" << endl;
+}
+
+void QSquarePanelWidget::paintEvent(QPaintEvent *event)
+{
+
+    if (!needPaint) return;
+    qDebug() << "need paint!" << endl;
+    QPainter painter(this);
+    drawLine(painter);
+    needPaint = false;
 }

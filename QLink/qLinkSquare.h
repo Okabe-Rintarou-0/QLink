@@ -24,6 +24,7 @@ public:
     bool isActivated() const;
     int getIconIndex() const;
     bool equals(QLinkSquare other) const;
+    void clearIcon();
     QLinkSquare();
     ~QLinkSquare();
     QWidget *getWidget();
