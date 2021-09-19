@@ -168,7 +168,6 @@ void QSquarePanelWidget::render()
     setLayout(gridLayout);
     setGeometry(980 - (800 * w / h) / 2, 100, 800 * w / h, 800);
     QPainter painter;
-    drawLine(painter);
 }
 
 void QSquarePanelWidget::clear()
@@ -208,10 +207,26 @@ bool QSquarePanelWidget::outOfBound(QPoint p)
     return p.x() < 0 || p.x() > h + 1 || p.y() < 0 || p.y() > w + 1;
 }
 
-void QSquarePanelWidget::searchForLinkPath(bool &found, QPoint curP, QPoint tgtP, int lineCnt, Direction lastDire, QVector<QPoint> &path, QVector<QVector<bool>> &visited)
+void QSquarePanelWidget::searchForLinkPath(bool &found, QPoint curP, QPoint tgtP, int lineCnt, Direction lastDire, QVector<QVector<bool>> &visited)
 {
-    if (lineCnt >= 3) return;
+    if (lineCnt > 3) return;
+    if (curP == tgtP)
+    {
+//        qDebug() << "Find a path: ";
+        path.push_back(tgtP);
+//        for (QPoint p : path)
+//        {
+//            qDebug() << p << endl;
+//        }
+        found = true;
+        return;
+    }
     QPair<Direction, Direction> relativeDirection = getRelativeDirection(curP, tgtP);
+
+    QString upordown = relativeDirection.first == Up ? "Up" : relativeDirection.first == Down ? "Down" : "None";
+    QString leftorright = relativeDirection.second == Left ? "Left" : relativeDirection.second == Right ? "Right" : "None";
+//    qDebug() << "relative dire " <<  upordown << " " << leftorright;
+
     QVector<Direction> directions = {Left, Right, Up, Down};
 
     if(relativeDirection.first != None)
@@ -219,7 +234,7 @@ void QSquarePanelWidget::searchForLinkPath(bool &found, QPoint curP, QPoint tgtP
 
     if(relativeDirection.second != None)
         qSwap(directions[1], directions[relativeDirection.second]);
-    qDebug() << directions << endl;
+//    qDebug() << directions << endl;
     Direction curDire;
     QPoint nextP;
     int curCnt;
@@ -227,46 +242,49 @@ void QSquarePanelWidget::searchForLinkPath(bool &found, QPoint curP, QPoint tgtP
     for (int i = 0; i < 4; ++i)
     {
         curDire = directions[i];
-        curCnt = lastDire == curDire ? lineCnt : lineCnt + 1;
+        curCnt = curDire != lastDire ? lineCnt + 1 : lineCnt;
         nextP = moveTowards(curP, curDire);
-        if (nextP == tgtP)
-        {
-            if (curCnt <= 3)
-            {
-                qDebug() << "Find a path: ";
-                for (QPoint p : path)
-                {
-                    qDebug() << p << endl;
-                }
-                found = true;
-            }
-            return;
-        }
-        if (!canPassBy(nextP) || visited[nextP.x()][nextP.y()]) continue;
-        path.push_back(nextP);
-        qDebug() << "go to " << nextP << endl;
+        if ((!canPassBy(nextP) || visited[nextP.x()][nextP.y()]) && nextP != tgtP) continue;
+        if (curDire != lastDire)
+            path.push_back(curP);
+
+//        qDebug() << "go to " << nextP << endl;
         visited[nextP.x()][nextP.y()] = true;
-        searchForLinkPath(found, nextP, tgtP, curCnt, curDire, path, visited);
+        searchForLinkPath(found, nextP, tgtP, curCnt, curDire, visited);
         if (found) return;
-        path.pop_back();
+        if (curDire != lastDire)
+            path.pop_back();
         visited[nextP.x()][nextP.y()] = false;
     }
 }
 
 bool QSquarePanelWidget::isLinkable(QPoint p1, QPoint p2)
 {
-    QLinkSquare *first = squares[p1.x()][p1.y()];
-    QLinkSquare *second = squares[p2.x()][p2.y()];
+    QLinkSquare *firstSquare = squares[p1.x()][p1.y()];
+    QLinkSquare *secondSquare = squares[p2.x()][p2.y()];
     bool found = false;
-    if (first->equals(*second))
+    if (firstSquare->equals(secondSquare))
     {
-        QVector<QPoint> path;
         QVector<QVector<bool>> visited(h + 2, QVector<bool>(w + 2, false));
-
-        qDebug() << "from " << QPoint(p1.x() + 1, p1.y() + 1) << " to " << QPoint(p2.x() + 1, p2.y() + 1) << endl;
-        searchForLinkPath(found, QPoint(p1.x() + 1, p1.y() + 1), QPoint(p2.x() + 1, p2.y() + 1), 0, None, path, visited);
+        QPoint from = QPoint(p1.x() + 1, p1.y() + 1);
+        QPoint to = QPoint(p2.x() + 1, p2.y() + 1);
+        qDebug() << "from " << from
+                 << " to " << to << endl;
+        path.clear();
+        searchForLinkPath(found, from, to, 0, None, visited);
     }
     return found;
+}
+
+QPoint QSquarePanelWidget::toRealPoint(QPoint org)
+{
+    int rx = pos().x()
+            + (800 - (h - 1) * squareSpacing) / (2 * h) * (1 + 2 * (org.y() - 1))
+            + (org.y() - 1) * squareSpacing;
+    int ry = pos().y()
+            + (800 - (h - 1) * squareSpacing) / (2 * h) * (1 + 2 * (org.x() - 1))
+            + (org.x() - 1) * squareSpacing;
+    return QPoint(rx, ry);
 }
 
 void QSquarePanelWidget::tryLink()
@@ -279,8 +297,8 @@ void QSquarePanelWidget::tryLink()
         QLinkSquare *secondSquare = squares[second.x()][second.y()];
         if (isLinkable(first, second))
         {
-            needPaint = true;
-            repaint();
+            for (QPoint &p : path) p = toRealPoint(p);
+            emit link(path);
             removeSquareAt(first);
             removeSquareAt(second);
         }
@@ -292,26 +310,12 @@ void QSquarePanelWidget::tryLink()
     }
 }
 
+
+
 QSize QSquarePanelWidget::getSquareSize()
 {
     int restHeight = (800 - (h - 1) * squareSpacing);
     return QSize(restHeight / h, restHeight / h);
 }
 
-void QSquarePanelWidget::drawLine(QPainter &painter)
-{
-    painter.setPen(QPen(Qt::red));
-    painter.setBrush(QBrush(Qt::blue));
-    painter.drawRect(0, 0, 50, 50);
-    qDebug() << "draw" << endl;
-}
 
-void QSquarePanelWidget::paintEvent(QPaintEvent *event)
-{
-
-    if (!needPaint) return;
-    qDebug() << "need paint!" << endl;
-    QPainter painter(this);
-    drawLine(painter);
-    needPaint = false;
-}

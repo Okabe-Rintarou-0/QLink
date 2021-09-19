@@ -23,7 +23,7 @@ public:
     void reset();
     bool isActivated() const;
     int getIconIndex() const;
-    bool equals(QLinkSquare other) const;
+    bool equals(QLinkSquare *other) const;
     void clearIcon();
     QLinkSquare();
     ~QLinkSquare();

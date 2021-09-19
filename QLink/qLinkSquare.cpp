@@ -62,9 +62,9 @@ int QLinkSquare::getIconIndex() const
     return iconIndex;
 }
 
-bool QLinkSquare::equals(QLinkSquare other) const
+bool QLinkSquare::equals(QLinkSquare *other) const
 {
-    return other.getIconIndex() == iconIndex;
+    return other != nullptr && other->getIconIndex() == iconIndex;
 }
 
 void QLinkSquare::reset()

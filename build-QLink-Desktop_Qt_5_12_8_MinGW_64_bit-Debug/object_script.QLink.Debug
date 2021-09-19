@@ -8,3 +8,4 @@ debug/qSquarePanelWidget.o
 debug/qStyleSheetBuilder.o
 debug/randomUtil.o
 debug/moc_mainwindow.o
+debug/moc_qSquarePanelWidget.o
