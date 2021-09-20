@@ -7,6 +7,7 @@
 #include <QPainter>
 #include <QPaintEvent>
 #include <QMap>
+#include "qlinkgamecontroller.h"
 #include "randomUtil.h"
 #include "qLinkSquare.h"
 class QSquarePanelWidget : public QWidget

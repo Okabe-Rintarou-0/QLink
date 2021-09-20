@@ -2,10 +2,14 @@ debug/imageUtil.o
 debug/main.o
 debug/mainwindow.o
 debug/qCharacterWidget.o
+debug/qLinkCanvas.o
+debug/qLinkGameController.o
 debug/qLinkSquare.o
 debug/qSquareImageManager.o
 debug/qSquarePanelWidget.o
 debug/qStyleSheetBuilder.o
 debug/randomUtil.o
 debug/moc_mainwindow.o
+debug/moc_qLinkCanvas.o
+debug/moc_qLinkGameController.o
 debug/moc_qSquarePanelWidget.o

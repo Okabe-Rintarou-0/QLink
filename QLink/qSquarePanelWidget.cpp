@@ -212,20 +212,11 @@ void QSquarePanelWidget::searchForLinkPath(bool &found, QPoint curP, QPoint tgtP
     if (lineCnt > 3) return;
     if (curP == tgtP)
     {
-//        qDebug() << "Find a path: ";
         path.push_back(tgtP);
-//        for (QPoint p : path)
-//        {
-//            qDebug() << p << endl;
-//        }
         found = true;
         return;
     }
     QPair<Direction, Direction> relativeDirection = getRelativeDirection(curP, tgtP);
-
-    QString upordown = relativeDirection.first == Up ? "Up" : relativeDirection.first == Down ? "Down" : "None";
-    QString leftorright = relativeDirection.second == Left ? "Left" : relativeDirection.second == Right ? "Right" : "None";
-//    qDebug() << "relative dire " <<  upordown << " " << leftorright;
 
     QVector<Direction> directions = {Left, Right, Up, Down};
 
@@ -234,7 +225,7 @@ void QSquarePanelWidget::searchForLinkPath(bool &found, QPoint curP, QPoint tgtP
 
     if(relativeDirection.second != None)
         qSwap(directions[1], directions[relativeDirection.second]);
-//    qDebug() << directions << endl;
+
     Direction curDire;
     QPoint nextP;
     int curCnt;
@@ -247,8 +238,6 @@ void QSquarePanelWidget::searchForLinkPath(bool &found, QPoint curP, QPoint tgtP
         if ((!canPassBy(nextP) || visited[nextP.x()][nextP.y()]) && nextP != tgtP) continue;
         if (curDire != lastDire)
             path.push_back(curP);
-
-//        qDebug() << "go to " << nextP << endl;
         visited[nextP.x()][nextP.y()] = true;
         searchForLinkPath(found, nextP, tgtP, curCnt, curDire, visited);
         if (found) return;
@@ -268,8 +257,6 @@ bool QSquarePanelWidget::isLinkable(QPoint p1, QPoint p2)
         QVector<QVector<bool>> visited(h + 2, QVector<bool>(w + 2, false));
         QPoint from = QPoint(p1.x() + 1, p1.y() + 1);
         QPoint to = QPoint(p2.x() + 1, p2.y() + 1);
-        qDebug() << "from " << from
-                 << " to " << to << endl;
         path.clear();
         searchForLinkPath(found, from, to, 0, None, visited);
     }
@@ -297,8 +284,9 @@ void QSquarePanelWidget::tryLink()
         QLinkSquare *secondSquare = squares[second.x()][second.y()];
         if (isLinkable(first, second))
         {
-            for (QPoint &p : path) p = toRealPoint(p);
-            emit link(path);
+//            for (QPoint &p : path) p = toRealPoint(p);
+//            emit link(path);
+            QLinkGameController::getInstance()->addScore(15);
             removeSquareAt(first);
             removeSquareAt(second);
         }

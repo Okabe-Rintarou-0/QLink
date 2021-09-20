@@ -20,6 +20,8 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     qCharacterWidget.cpp \
+    qLinkCanvas.cpp \
+    qLinkGameController.cpp \
     qLinkSquare.cpp \
     qSquareImageManager.cpp \
     qSquarePanelWidget.cpp \
@@ -31,6 +33,8 @@ HEADERS += \
     imageUtil.h \
     mainwindow.h \
     qCharacterWidget.h \
+    qLinkCanvas.h \
+    qLinkGameController.h \
     qLinkSquare.h \
     qSquareImageManager.h \
     qSquarePanelWidget.h \
