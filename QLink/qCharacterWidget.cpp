@@ -1,39 +1,33 @@
-#include "qCharacterWidget.h"
-QCharacterWidget::QCharacterWidget()
-{
+#include "QCharacterWidget.h"
+
+QCharacterWidget::QCharacterWidget() {
     setAutoFillBackground(true);
     moveSpeed = DEFAULT_MOVE_SPEED;
 }
 
-QCharacterWidget::QCharacterWidget(QWidget *parent): QWidget(parent)
-{
+QCharacterWidget::QCharacterWidget(QWidget *parent) : QWidget(parent) {
     QCharacterWidget();
 }
 
-void QCharacterWidget::setWidth(int w)
-{
+void QCharacterWidget::setWidth(int w) {
     this->w = w;
 }
 
-void QCharacterWidget::setHeight(int h)
-{
+void QCharacterWidget::setHeight(int h) {
     this->h = h;
 }
 
-void QCharacterWidget::setSize(int w, int h)
-{
+void QCharacterWidget::setSize(int w, int h) {
     this->w = w;
     this->h = h;
 }
 
-void QCharacterWidget::setSize(QSize size)
-{
+void QCharacterWidget::setSize(QSize size) {
     w = size.width();
     h = size.height();
 }
 
-void QCharacterWidget::spawn()
-{
+void QCharacterWidget::spawn() {
     character.load(QString("%1%2.png").arg(FileConstants::CHARACTER_URL).arg(1));
     QPalette palette;
     setGeometry(200, 200, w, h);
@@ -41,46 +35,40 @@ void QCharacterWidget::spawn()
     setPalette(palette);
 }
 
-void QCharacterWidget::moveUp()
-{
+void QCharacterWidget::moveUp() {
     int nextX = x();
     int nextY = y() - moveSpeed;
     constrainPos(nextX, nextY);
     move(nextX, nextY);
 }
 
-void QCharacterWidget::moveDown()
-{
+void QCharacterWidget::moveDown() {
     int nextX = x();
     int nextY = y() + moveSpeed;
     constrainPos(nextX, nextY);
     move(nextX, nextY);
 }
 
-void QCharacterWidget::moveLeft()
-{
+void QCharacterWidget::moveLeft() {
     int nextX = x() - moveSpeed;
     int nextY = y();
     constrainPos(nextX, nextY);
     move(nextX, nextY);
 }
 
-void QCharacterWidget::moveRight()
-{
+void QCharacterWidget::moveRight() {
     int nextX = x() + moveSpeed;
     int nextY = y();
     constrainPos(nextX, nextY);
     move(nextX, nextY);
 }
 
-void QCharacterWidget::constrainPos(int &x, int &y)
-{
+void QCharacterWidget::constrainPos(int &x, int &y) {
     x = qBound(0, x, 1960 - w);
     y = qBound(0, y, 1080 - h);
 }
 
-QPoint QCharacterWidget::center()
-{
+QPoint QCharacterWidget::center() {
     return QPoint(pos().x() + width() / 2, pos().y() + height() / 2);
 }
 

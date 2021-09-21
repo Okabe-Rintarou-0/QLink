@@ -1,14 +1,18 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QDebug>
+
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
-{
+        : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
     gameController = QLinkGameController::getInstance();
     setGeometry(0, 0, 1920, 1080);
     setWindowTitle("QLink");
+
+    hintLabel = new QLabel(this);
+    hintLabel->setText("按E激活方块");
+    hintLabel->setGeometry(10, 10, 400, 60);
+    hintLabel->setFont(QFont("Microsoft YaHei", 30, 75));
 
     scoreLabel = new QLabel(this);
     scoreLabel->setGeometry(960, 10, 200, 50);
@@ -17,37 +21,25 @@ MainWindow::MainWindow(QWidget *parent)
 
     squarePanel = new QSquarePanelWidget;
     squarePanel->setParent(this);
-    squarePanel->setSize(10, 10);
-    squarePanel->render();
+    squarePanel->setSize(8, 8);
 
-    QLabel *widthLabel = new QLabel(this);
+    widthLabel = new QLabel(this);
     widthLabel->setGeometry(900, 940, 20, 20);
     widthLabel->setText("宽");
     widthSpinBox = new QSpinBox(this);
     widthSpinBox->setGeometry(920, 940, 40, 20);
-    widthSpinBox->setValue(10);
+    widthSpinBox->setValue(8);
 
-    QLabel *heightLabel = new QLabel(this);
+    heightLabel = new QLabel(this);
     heightLabel->setGeometry(970, 940, 20, 20);
     heightLabel->setText("高");
     heightSpinBox = new QSpinBox(this);
     heightSpinBox->setGeometry(990, 940, 40, 20);
-    heightSpinBox->setValue(10);
+    heightSpinBox->setValue(8);
 
-    QPushButton *refreshButton = new QPushButton(this);
-    refreshButton->setText("刷新");
-    refreshButton->setGeometry(1050, 940, 50, 20);
-
-    QApplication::connect(refreshButton, &QPushButton::clicked, this, [=](){
-        int w = widthSpinBox->value();
-        int h = heightSpinBox->value();
-        if (h % 2 && w % 2)
-        {
-            QMessageBox::warning(this, "警告", "宽和高必须有一个是偶数！");
-            return;
-        }
-        squarePanel->resizeAndRender(w, h);
-    });
+    startButton = new QPushButton(this);
+    startButton->setText("开始游戏");
+    startButton->setGeometry(1050, 930, 80, 40);
 
     characterWidget = new QCharacterWidget;
     characterWidget->setParent(this);
@@ -56,19 +48,35 @@ MainWindow::MainWindow(QWidget *parent)
 
     setFocus();
 
+    QApplication::connect(startButton, &QPushButton::clicked, this, &MainWindow::startGame);
+    QApplication::connect(gameController, SIGNAL(gameOver(QString)), this, SLOT(showGameOverTips(QString)));
     QApplication::connect(gameController, SIGNAL(scoreChanged(QString)), scoreLabel, SLOT(setText(QString)));
-//    QApplication::connect(squarePanel, SIGNAL(link(QVector<QPoint>)), linkCanvas, SLOT(draw(QVector<QPoint>)));
 }
 
-MainWindow::~MainWindow()
+void MainWindow::startGame()
 {
+    int w = widthSpinBox->value();
+    int h = heightSpinBox->value();
+    if (h % 2 && w % 2)
+    {
+        QMessageBox::warning(this, "警告", "宽和高必须有一个是偶数！");
+        return;
+    }
+    gameController->startGame();
+    squarePanel->resizeAndRender(w, h);
+}
+
+void MainWindow::showGameOverTips(const QString &tips)
+{
+    QMessageBox::information(this, "提示", tips);
+}
+
+MainWindow::~MainWindow() {
     delete ui;
 }
 
-void MainWindow::keyPressEvent(QKeyEvent *e)
-{
-    switch(e->key())
-    {
+void MainWindow::keyPressEvent(QKeyEvent *e) {
+    switch (e->key()) {
         case Qt::Key_A:
             characterWidget->moveLeft();
             break;
@@ -85,5 +93,4 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
             squarePanel->activate(characterWidget->center());
             break;
     }
-    //qDebug() << characterWidget->center() << endl;
 }

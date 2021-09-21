@@ -7,21 +7,23 @@
 #include <QPushButton>
 #include <QMessageBox>
 #include <QPaintEvent>
-#include "qlinkgamecontroller.h"
-#include "qLinkCanvas.h"
-#include "qSquarePanelWidget.h"
-#include "qCharacterWidget.h"
+#include "QLinkGameController.h"
+#include "QLinkCanvas.h"
+#include "QSquarePanelWidget.h"
+#include "QCharacterWidget.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
-class MainWindow : public QMainWindow
-{
+class MainWindow : public QMainWindow {
     Q_OBJECT
 
 public:
     MainWindow(QWidget *parent = nullptr);
+
     ~MainWindow();
+
 private:
     Ui::MainWindow *ui;
     QSpinBox *widthSpinBox;
@@ -30,9 +32,17 @@ private:
     QSquarePanelWidget *squarePanel;
     QLabel *scoreLabel;
     QLinkCanvas *linkCanvas;
+    QPushButton *startButton;
+    QLabel *heightLabel;
+    QLabel *widthLabel;
+    QLabel *hintLabel;
 
     QLinkGameController *gameController;
+
+    void startGame();
 protected:
     void keyPressEvent(QKeyEvent *event);
+private slots:
+    void showGameOverTips(const QString &tips);
 };
 #endif // MAINWINDOW_H

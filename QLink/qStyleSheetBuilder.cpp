@@ -1,23 +1,19 @@
-#include "qStyleSheetBuilder.h"
+#include "QStyleSheetBuilder.h"
 
-QStyleSheetBuilder::QStyleSheetBuilder()
-{
+QStyleSheetBuilder::QStyleSheetBuilder() {
     styleSheet.clear();
 }
 
-QStyleSheetBuilder *QStyleSheetBuilder::setBorderColor(QString color)
-{
+QStyleSheetBuilder *QStyleSheetBuilder::setBorderColor(QString color) {
     styleSheet.append(QString("border-color:%1;").arg(color));
     return this;
 }
 
-QStyleSheetBuilder *QStyleSheetBuilder::setBackgroudColor(QString color)
-{
+QStyleSheetBuilder *QStyleSheetBuilder::setBackgroundColor(QString color) {
     styleSheet.append(QString("background-color:%1;").arg(color));
     return this;
 }
 
-QString QStyleSheetBuilder::build()
-{
+QString QStyleSheetBuilder::build() {
     return styleSheet;
 }

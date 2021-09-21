@@ -1,14 +1,16 @@
 #ifndef QSTYLESHEETBUILDER_H
 #define QSTYLESHEETBUILDER_H
+
 #include <QString>
 
-class QStyleSheetBuilder
-{
+class QStyleSheetBuilder {
 private:
     QString styleSheet;
 public:
     QStyleSheetBuilder();
-    QStyleSheetBuilder *setBackgroudColor(QString color);
+
+    QStyleSheetBuilder *setBackgroundColor(QString color);
+
     QStyleSheetBuilder *setBorderColor(QString color);
 
     QString build();

@@ -1,7 +1,7 @@
 #include "qLinkSquare.h"
 #include "qSquareImageManager.h"
-#include "imageUtil.h"
-#include "qStyleSheetBuilder.h"
+#include "ImageUtil.h"
+#include "QStyleSheetBuilder.h"
 QLinkSquare::QLinkSquare()
 {
     activated = false;
