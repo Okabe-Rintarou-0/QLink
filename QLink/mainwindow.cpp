@@ -41,13 +41,22 @@ MainWindow::MainWindow(QWidget *parent)
     startButton->setText("开始游戏");
     startButton->setGeometry(1050, 930, 80, 40);
 
+//    testBtn = new QPushButton(this);
+//    testBtn->setText("重新布局");
+//    testBtn->setGeometry(1250, 930, 80, 40);
+
     characterWidget = new QCharacterWidget;
     characterWidget->setParent(this);
     characterWidget->setSize(squarePanel->getSquareSize());
     characterWidget->spawn();
 
+    countDownLCD = new QLCDNumber(this);
+    countDownLCD->setGeometry(940, 50, 100, 40);
+    countDownLCD->display(0);
+
     setFocus();
 
+    QApplication::connect(gameController, SIGNAL(timeChanged(int)), countDownLCD, SLOT(display(int)));
     QApplication::connect(startButton, &QPushButton::clicked, this, &MainWindow::startGame);
     QApplication::connect(gameController, SIGNAL(gameOver(QString)), this, SLOT(showGameOverTips(QString)));
     QApplication::connect(gameController, SIGNAL(scoreChanged(QString)), scoreLabel, SLOT(setText(QString)));

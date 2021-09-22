@@ -4,12 +4,12 @@ QStyleSheetBuilder::QStyleSheetBuilder() {
     styleSheet.clear();
 }
 
-QStyleSheetBuilder *QStyleSheetBuilder::setBorderColor(QString color) {
+QStyleSheetBuilder *QStyleSheetBuilder::setBorderColor(const QString &color) {
     styleSheet.append(QString("border-color:%1;").arg(color));
     return this;
 }
 
-QStyleSheetBuilder *QStyleSheetBuilder::setBackgroundColor(QString color) {
+QStyleSheetBuilder *QStyleSheetBuilder::setBackgroundColor(const QString &color) {
     styleSheet.append(QString("background-color:%1;").arg(color));
     return this;
 }

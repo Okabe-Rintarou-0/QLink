@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QSpinBox>
 #include <QLabel>
+#include <QLCDNumber>
 #include <QPushButton>
 #include <QMessageBox>
 #include <QPaintEvent>
@@ -36,6 +37,8 @@ private:
     QLabel *heightLabel;
     QLabel *widthLabel;
     QLabel *hintLabel;
+    QPushButton *testBtn;
+    QLCDNumber *countDownLCD;
 
     QLinkGameController *gameController;
 

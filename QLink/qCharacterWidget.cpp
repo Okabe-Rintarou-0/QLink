@@ -68,7 +68,7 @@ void QCharacterWidget::constrainPos(int &x, int &y) {
     y = qBound(0, y, 1080 - h);
 }
 
-QPoint QCharacterWidget::center() {
+QPoint QCharacterWidget::center() const {
     return QPoint(pos().x() + width() / 2, pos().y() + height() / 2);
 }
 

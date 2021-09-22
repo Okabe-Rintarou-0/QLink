@@ -39,7 +39,7 @@ public:
 
     void moveRight();
 
-    QPoint center();
+    QPoint center() const;
 };
 
 #endif // QCHARACTERWIDGET_H

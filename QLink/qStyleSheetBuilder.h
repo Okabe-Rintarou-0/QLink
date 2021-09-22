@@ -9,9 +9,9 @@ private:
 public:
     QStyleSheetBuilder();
 
-    QStyleSheetBuilder *setBackgroundColor(QString color);
+    QStyleSheetBuilder *setBackgroundColor(const QString &color);
 
-    QStyleSheetBuilder *setBorderColor(QString color);
+    QStyleSheetBuilder *setBorderColor(const QString &color);
 
     QString build();
 };

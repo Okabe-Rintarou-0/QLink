@@ -22,6 +22,8 @@ public:
 
     void setIcon(int iconIndex);
 
+    void setAndRenderIcon(int iconIndex);
+
     void setSize(int w, int h);
 
     void activate();

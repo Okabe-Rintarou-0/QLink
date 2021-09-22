@@ -17,7 +17,9 @@ QLinkGameController *QLinkGameController::getInstance() {
 
 void QLinkGameController::reset() {
     score = 0;
+    restTime = 120;
     emit scoreChanged("分数: " + QString::number(score));
+    emit timeChanged(restTime);
 }
 
 void QLinkGameController::addScore(int increament) {
@@ -25,18 +27,35 @@ void QLinkGameController::addScore(int increament) {
     emit scoreChanged("分数: " + QString::number(score));
 }
 
-void QLinkGameController::setRestSquares(int restSquares)
-{
+void QLinkGameController::setRestSquares(int restSquares) {
     this->restSquares = restSquares;
-    if (this->restSquares == 0)
-    {
+    if (this->restSquares == 0) {
         emit gameOver("方块均已被消除，游戏结束！");
     }
 }
 
-void QLinkGameController::startGame()
-{
+void QLinkGameController::startGame() {
     reset();
+    startCountDown();
+    emit timeChanged(restTime);
+}
+
+void QLinkGameController::countDown() {
+    emit timeChanged(--restTime);
+    if (restTime == 0) {
+        emit gameOver("超时！游戏结束！");
+        killTimer(countDownTimer);
+    }
+}
+
+void QLinkGameController::startCountDown() {
+    countDownTimer = startTimer(1000, Qt::TimerType::PreciseTimer);
+}
+
+void QLinkGameController::timerEvent(QTimerEvent *event) {
+    if (event->timerId() == countDownTimer) {
+        countDown();
+    }
 }
 
 QLinkGameController *QLinkGameController::instance;

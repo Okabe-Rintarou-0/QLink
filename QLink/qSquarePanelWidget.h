@@ -19,7 +19,7 @@ private:
     int w;
     int squareSpacing;
     int restSquares;
-    static const int DEFUALT_SPACING = 5;
+    static const int DEFAULT_SPACING = 5;
     static const int DEFAULT_H = 10;
     static const int DEFAULT_W = 20;
     static const QColor DEFAULT_LINE_COLOR;
@@ -37,10 +37,13 @@ private:
     QGridLayout *gridLayout;
     QQueue <QPoint> activateQueue;
     QVector <QVector<int>> squareMap;
+    QMap<int, QVector<QPoint>> squarePosMap;
 
-    QPair <Direction, Direction> getRelativeDirection(QPoint from, QPoint to);
+    QPair <Direction, Direction> getRelativeDirection(const QPoint &from, const QPoint &to) const;
 
-    QPoint toRealPoint(QPoint org);
+    QPoint toRealPoint(const QPoint &org) const;
+
+    QPair<QPoint, QPoint> linkablePairCache = qMakePair(QPoint(-1, -1), QPoint(-1, -1));
 
     void initSquareMap();
 
@@ -50,11 +53,11 @@ private:
 
     void tryLink();
 
-    bool canPassBy(QPoint p);
+    bool canPassBy(const QPoint &p) const;
 
-    bool outOfBound(QPoint p);
+    bool outOfBound(const QPoint &p) const;
 
-    QPoint moveTowards(QPoint p, Direction direction) const;
+    QPoint moveTowards(const QPoint &p, Direction direction) const;
 
     void removeSquareAt(int x, int y);
 
@@ -62,14 +65,33 @@ private:
 
     void prepareRandom(QMap<int, int> &);
 
-    bool isLinkable(QPoint p1, QPoint p2);
+    bool isLinkable(const QPoint &p1, const QPoint &p2) const;
 
     void searchForLinkPath(bool &found, QPoint curP, QPoint tgtP, int lineCnt, Direction lastDire,
                            QVector <QVector<bool>> &visited);
 
-    void cancelLink(QPoint p1, QPoint p2);
+    void cancelLink(const QPoint &p1, const QPoint &p2);
 
     void link(QPoint p1, QPoint p2);
+
+    bool checkVertical(const QPoint &p1, const QPoint &p2) const;
+
+    bool checkHorizontal(const QPoint &p1, const QPoint &p2) const;
+
+    bool checkStraightLine(const QPoint &p1, const QPoint &p2) const;
+
+    bool checkOneCorner(const QPoint &p1, const QPoint &p2) const;
+
+    bool checkTwoCorner(const QPoint &p1, const QPoint &p2) const;
+
+    void initSquarePosMap();
+
+    bool existsLinkableSquare();
+
+    QPoint toMapPoint(const QPoint &p) const;
+
+    QPoint toMapPoint(int x, int y) const;
+
 public:
     QSquarePanelWidget();
 
@@ -77,7 +99,7 @@ public:
 
     ~QSquarePanelWidget();
 
-    void activate(QPoint fromPos);
+    void activate(const QPoint &fromPos);
 
     void setSize(int h, int w);
 
@@ -87,8 +109,9 @@ public:
 
     void resizeAndRender(int w, int h);
 
-    QSize getSquareSize();
+    QSize getSquareSize() const;
 
+    void reassign();
 signals:
     void link(QVector < QPoint > points);
 };

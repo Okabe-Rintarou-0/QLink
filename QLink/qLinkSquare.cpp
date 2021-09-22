@@ -79,5 +79,10 @@ void QLinkSquare::clearIcon()
     widget->setPalette(QPalette());
 }
 
+void QLinkSquare::setAndRenderIcon(int iconIndex) {
+    setIcon(iconIndex);
+    renderIcon();
+}
+
 const QColor QLinkSquare::DEFAULT_BORDER_COLOR = Qt::gray;
 const QColor QLinkSquare::DEFAULT_ACTIVATE_BORDER_COLOR = Qt::black;

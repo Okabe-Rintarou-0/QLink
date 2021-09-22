@@ -4,6 +4,8 @@
 #include <QObject>
 #include <QDebug>
 #include <QMessageBox>
+#include <QTimer>
+#include <QTimerEvent>
 
 class QLinkGameController : public QObject {
     Q_OBJECT
@@ -21,13 +23,24 @@ public:
 private:
     int score;
     int restSquares;
+    int restTime;
+    int countDownTimer;
+
     static QLinkGameController *instance;
 
     QLinkGameController();
 
     ~QLinkGameController();
 
+    void startCountDown();
+
+    void countDown();
+
+protected:
+    void timerEvent(QTimerEvent *event) override;
+
 signals:
+    void timeChanged(int sec);
     void scoreChanged(const QString &);
     void gameOver(const QString &);
 };

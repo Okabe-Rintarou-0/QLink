@@ -10,42 +10,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a1c061ac-3abf-4a44-87d8-ee572f9744d2" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/QLink/fileConstants.h" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/fileConstants.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/imageUtil.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/imageUtil.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/imageUtil.h" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/imageUtil.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QLink/QCharacterWidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/QCharacterWidget.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QLink/QCharacterWidget.h" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/QCharacterWidget.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QLink/QStyleSheetBuilder.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/QStyleSheetBuilder.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QLink/QStyleSheetBuilder.h" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/QStyleSheetBuilder.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/QLink/mainwindow.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/mainwindow.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/QLink/mainwindow.h" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/mainwindow.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/qCharacterWidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/qCharacterWidget.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/qCharacterWidget.h" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/qCharacterWidget.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/qLinkCanvas.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/qLinkCanvas.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/qLinkCanvas.h" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/qLinkCanvas.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QLink/mainwindow.ui" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/mainwindow.ui" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/QLink/qLinkGameController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/qLinkGameController.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/QLink/qLinkGameController.h" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/qLinkGameController.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/QLink/qLinkSquare.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/qLinkSquare.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/QLink/qLinkSquare.h" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/qLinkSquare.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/qSquareImageManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/qSquareImageManager.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/QLink/qSquarePanelWidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/qSquarePanelWidget.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/QLink/qSquarePanelWidget.h" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/qSquarePanelWidget.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/qStyleSheetBuilder.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/qStyleSheetBuilder.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/qStyleSheetBuilder.h" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/qStyleSheetBuilder.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/randomUtil.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/randomUtil.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/randomUtil.h" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/randomUtil.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build-QLink-Desktop_Qt_5_12_8_MinGW_64_bit-Debug/debug/QLink.exe" beforeDir="false" afterPath="$PROJECT_DIR$/build-QLink-Desktop_Qt_5_12_8_MinGW_64_bit-Debug/debug/QLink.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build-QLink-Desktop_Qt_5_12_8_MinGW_64_bit-Debug/debug/imageUtil.o" beforeDir="false" afterPath="$PROJECT_DIR$/build-QLink-Desktop_Qt_5_12_8_MinGW_64_bit-Debug/debug/imageUtil.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build-QLink-Desktop_Qt_5_12_8_MinGW_64_bit-Debug/debug/main.o" beforeDir="false" afterPath="$PROJECT_DIR$/build-QLink-Desktop_Qt_5_12_8_MinGW_64_bit-Debug/debug/main.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build-QLink-Desktop_Qt_5_12_8_MinGW_64_bit-Debug/debug/mainwindow.o" beforeDir="false" afterPath="$PROJECT_DIR$/build-QLink-Desktop_Qt_5_12_8_MinGW_64_bit-Debug/debug/mainwindow.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build-QLink-Desktop_Qt_5_12_8_MinGW_64_bit-Debug/debug/moc_mainwindow.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/build-QLink-Desktop_Qt_5_12_8_MinGW_64_bit-Debug/debug/moc_mainwindow.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build-QLink-Desktop_Qt_5_12_8_MinGW_64_bit-Debug/debug/moc_mainwindow.o" beforeDir="false" afterPath="$PROJECT_DIR$/build-QLink-Desktop_Qt_5_12_8_MinGW_64_bit-Debug/debug/moc_mainwindow.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build-QLink-Desktop_Qt_5_12_8_MinGW_64_bit-Debug/debug/moc_qLinkCanvas.o" beforeDir="false" afterPath="$PROJECT_DIR$/build-QLink-Desktop_Qt_5_12_8_MinGW_64_bit-Debug/debug/moc_qLinkCanvas.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build-QLink-Desktop_Qt_5_12_8_MinGW_64_bit-Debug/debug/moc_qLinkGameController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/build-QLink-Desktop_Qt_5_12_8_MinGW_64_bit-Debug/debug/moc_qLinkGameController.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build-QLink-Desktop_Qt_5_12_8_MinGW_64_bit-Debug/debug/moc_qLinkGameController.o" beforeDir="false" afterPath="$PROJECT_DIR$/build-QLink-Desktop_Qt_5_12_8_MinGW_64_bit-Debug/debug/moc_qLinkGameController.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build-QLink-Desktop_Qt_5_12_8_MinGW_64_bit-Debug/debug/moc_qSquarePanelWidget.o" beforeDir="false" afterPath="$PROJECT_DIR$/build-QLink-Desktop_Qt_5_12_8_MinGW_64_bit-Debug/debug/moc_qSquarePanelWidget.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build-QLink-Desktop_Qt_5_12_8_MinGW_64_bit-Debug/debug/qCharacterWidget.o" beforeDir="false" afterPath="$PROJECT_DIR$/build-QLink-Desktop_Qt_5_12_8_MinGW_64_bit-Debug/debug/qCharacterWidget.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build-QLink-Desktop_Qt_5_12_8_MinGW_64_bit-Debug/debug/qLinkCanvas.o" beforeDir="false" afterPath="$PROJECT_DIR$/build-QLink-Desktop_Qt_5_12_8_MinGW_64_bit-Debug/debug/qLinkCanvas.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build-QLink-Desktop_Qt_5_12_8_MinGW_64_bit-Debug/debug/qLinkGameController.o" beforeDir="false" afterPath="$PROJECT_DIR$/build-QLink-Desktop_Qt_5_12_8_MinGW_64_bit-Debug/debug/qLinkGameController.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build-QLink-Desktop_Qt_5_12_8_MinGW_64_bit-Debug/debug/qStyleSheetBuilder.o" beforeDir="false" afterPath="$PROJECT_DIR$/build-QLink-Desktop_Qt_5_12_8_MinGW_64_bit-Debug/debug/qStyleSheetBuilder.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build-QLink-Desktop_Qt_5_12_8_MinGW_64_bit-Debug/debug/randomUtil.o" beforeDir="false" afterPath="$PROJECT_DIR$/build-QLink-Desktop_Qt_5_12_8_MinGW_64_bit-Debug/debug/randomUtil.o" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,13 +49,6 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.cidr.embedded.config" />
   </component>
-  <component name="RunManager">
-    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -87,6 +58,8 @@
       <option name="presentableId" value="Default" />
       <updated>1632189872687</updated>
       <workItem from="1632189873854" duration="1661000" />
+      <workItem from="1632235013907" duration="40000" />
+      <workItem from="1632280014152" duration="7302000" />
     </task>
     <servers />
   </component>
@@ -94,9 +67,9 @@
     <option name="version" value="3" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="519" y="175" key="FileChooserDialogImpl" timestamp="1632190234517">
+    <state x="519" y="175" key="FileChooserDialogImpl" timestamp="1632235042593">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="519" y="175" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1632190234517" />
+    <state x="519" y="175" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1632235042593" />
   </component>
 </project>
