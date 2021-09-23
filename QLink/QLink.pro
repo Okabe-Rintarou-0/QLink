@@ -16,6 +16,11 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    FlashJewel.cpp \
+    HintJewel.cpp \
+    ShuffleJewel.cpp \
+    TimeJewel.cpp \
+    directionutil.cpp \
     imageUtil.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -26,9 +31,17 @@ SOURCES += \
     qSquareImageManager.cpp \
     qSquarePanelWidget.cpp \
     qStyleSheetBuilder.cpp \
+    qlinkgameitem.cpp \
+    qlinkmenu.cpp \
     randomUtil.cpp
 
 HEADERS += \
+    FlashJewel.h \
+    HintJewel.h \
+    Jewels.h \
+    ShuffleJewel.h \
+    TimeJewel.h \
+    directionutil.h \
     fileConstants.h \
     imageUtil.h \
     mainwindow.h \
@@ -39,10 +52,13 @@ HEADERS += \
     qSquareImageManager.h \
     qSquarePanelWidget.h \
     qStyleSheetBuilder.h \
+    qlinkgameitem.h \
+    qlinkmenu.h \
     randomUtil.h
 
 FORMS += \
-    mainwindow.ui
+    mainwindow.ui \
+    qlinkmenu.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

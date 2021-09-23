@@ -7,14 +7,18 @@ QSquarePanelWidget::QSquarePanelWidget() {
     w = 0;
     squareSpacing = DEFAULT_SPACING;
     gridLayout = new QGridLayout;
-}
-
-QSquarePanelWidget::QSquarePanelWidget(QWidget *parent) : QWidget(parent) {
-    QSquarePanelWidget();
+    instance = nullptr;
 }
 
 QSquarePanelWidget::~QSquarePanelWidget() {
     clear();
+}
+
+QSquarePanelWidget *QSquarePanelWidget::getInstance() {
+    if (instance == nullptr) {
+        instance = new QSquarePanelWidget;
+    }
+    return instance;
 }
 
 void QSquarePanelWidget::setSize(int w, int h) {
@@ -40,22 +44,21 @@ void QSquarePanelWidget::prepareRandom(QMap<int, int> &randomIconIdxToNum) {
     }
 }
 
-QPair <QSquarePanelWidget::Direction, QSquarePanelWidget::Direction>
-QSquarePanelWidget::getRelativeDirection(const QPoint &from, const QPoint &to) const {
+QPair <Direction, Direction> QSquarePanelWidget::getRelativeDirection(const QPoint &from, const QPoint &to) const {
     QPair <Direction, Direction> relativeDirection;
     QPoint diff = to - from;
     if (diff.x() < 0)
-        relativeDirection.first = Up;
+        relativeDirection.first = Direction::Up;
     else if (diff.x() > 0)
-        relativeDirection.first = Down;
+        relativeDirection.first = Direction::Down;
     else
-        relativeDirection.first = None;
+        relativeDirection.first = Direction::None;
     if (diff.y() < 0)
-        relativeDirection.second = Left;
+        relativeDirection.second = Direction::Left;
     else if (diff.y() > 0)
-        relativeDirection.second = Right;
+        relativeDirection.second = Direction::Right;
     else
-        relativeDirection.second = None;
+        relativeDirection.second = Direction::None;
     return relativeDirection;
 }
 
@@ -157,7 +160,7 @@ void QSquarePanelWidget::clear() {
         }
     }
     squares.clear();
-    linkablePairCache = qMakePair(QPoint(-1, -1), QPoint(-1, -1));
+    linkablePairCache = INVALID_PAIR;
 }
 
 void QSquarePanelWidget::resizeAndRender(int w, int h) {
@@ -190,12 +193,12 @@ void QSquarePanelWidget::searchForLinkPath(bool &found, QPoint curP, QPoint tgtP
     }
     QPair <Direction, Direction> relativeDirection = getRelativeDirection(curP, tgtP);
 
-    QVector <Direction> directions = {Left, Right, Up, Down};
+    QVector <Direction> directions = {Direction::Left, Direction::Right, Direction::Up, Direction::Down};
 
-    if (relativeDirection.first != None)
+    if (relativeDirection.first != Direction::None)
         qSwap(directions[0], directions[relativeDirection.first]);
 
-    if (relativeDirection.second != None)
+    if (relativeDirection.second != Direction::None)
         qSwap(directions[1], directions[relativeDirection.second]);
 
     Direction curDire;
@@ -249,11 +252,7 @@ QPoint QSquarePanelWidget::toRealPoint(const QPoint &org) const {
     return QPoint(rx, ry);
 }
 
-bool QSquarePanelWidget::existsLinkableSquare() {
-    if (linkablePairCache != qMakePair(QPoint(-1, -1), QPoint(-1, -1))) {
-        qDebug() << "cached " << linkablePairCache << endl;
-        return true;
-    }
+bool QSquarePanelWidget::searchLinkabelSquare() {
     for (const QVector <QPoint> &points: squarePosMap) {
         int size = points.size();
         for (int i = 0; i < size; ++i)
@@ -264,30 +263,57 @@ bool QSquarePanelWidget::existsLinkableSquare() {
                     return true;
                 }
     }
-    qDebug() << "cannot link!" << endl;
     return false;
 }
 
-void QSquarePanelWidget::link(QPoint p1, QPoint p2) {
-    restSquares -= 2;
+bool QSquarePanelWidget::existsLinkableSquare() {
+    if (linkablePairCache != INVALID_PAIR) {
+        qDebug() << "cached " << linkablePairCache << endl;
+        return true;
+    }
+
+    qDebug() << "cannot link!" << endl;
+    return searchLinkabelSquare();
+}
+
+void QSquarePanelWidget::updateCache(const QPoint &p1, const QPoint &p2) {
     int iconIndex = squares[p1.x()][p1.y()]->getIconIndex();
     if (linkablePairCache.first == p1 || linkablePairCache.second == p1 || linkablePairCache.first == p2 ||
         linkablePairCache.second == p2)
-        linkablePairCache = qMakePair(QPoint(-1, -1), QPoint(-1, -1));
+        linkablePairCache = INVALID_PAIR;
     QVector <QPoint> &points = squarePosMap[iconIndex];
     points.removeOne(p1);
     points.removeOne(p2);
+}
+
+void QSquarePanelWidget::hintNext() {
+    if (linkablePairCache == INVALID_PAIR) {
+        searchLinkabelSquare();
+    }
+    highlightAt(linkablePairCache.first);
+    highlightAt(linkablePairCache.second);
+}
+
+void QSquarePanelWidget::link(const QPoint &p1, const QPoint &p2) {
+    emit link("消除");
+    updateCache(p1, p2);
     removeSquareAt(p1);
     removeSquareAt(p2);
     QLinkGameController *gameController = QLinkGameController::getInstance();
+    restSquares -= 2;
     gameController->addScore(15);
     gameController->setRestSquares(restSquares);
     if (!existsLinkableSquare()) {
-        reassign();
+        shuffle();
     }
 }
 
+void QSquarePanelWidget::highlightAt(const QPoint &p) {
+    squares[p.x()][p.y()]->highlight();
+}
+
 void QSquarePanelWidget::cancelLink(const QPoint &p1, const QPoint &p2) {
+    emit link("不可消除");
     squares[p1.x()][p1.y()]->reset();
     squares[p2.x()][p2.y()]->reset();
 }
@@ -317,8 +343,8 @@ QPoint QSquarePanelWidget::toMapPoint(int x, int y) const {
     return QPoint(x + 1, y + 1);
 }
 
-void QSquarePanelWidget::reassign() {
-    qDebug() << "Reassign !!" << endl;
+void QSquarePanelWidget::shuffle() {
+    qDebug() << "Shuffle" << endl;
 
     QVector <QPoint> points;
     QVector<int> icons;
@@ -411,6 +437,16 @@ bool QSquarePanelWidget::checkTwoCorner(const QPoint &p1, const QPoint &p2) cons
     return false;
 }
 
+void QSquarePanelWidget::startHint() {
+    qDebug() << "start hint" << endl;
+    runMode = RunMode::HINT;
+    hintNext();
+    QTimer::singleShot(10000, this, [&](){
+        runMode = RunMode::COMMON;
+        qDebug() << "end hint after 10s" << endl;
+    });
+}
+
 void QSquarePanelWidget::initSquarePosMap() {
     squarePosMap.clear();
     for (int i = 0; i < h; ++i) {
@@ -423,4 +459,7 @@ void QSquarePanelWidget::initSquarePosMap() {
         }
     }
 }
+
+const QPair<QPoint, QPoint> QSquarePanelWidget::INVALID_PAIR = qMakePair(QPoint(-1, -1), QPoint(-1, -1));
+QSquarePanelWidget *QSquarePanelWidget::instance;
 

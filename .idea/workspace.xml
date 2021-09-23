@@ -9,22 +9,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a1c061ac-3abf-4a44-87d8-ee572f9744d2" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/QCharacterWidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/QCharacterWidget.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/QCharacterWidget.h" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/QCharacterWidget.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/QStyleSheetBuilder.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/QStyleSheetBuilder.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/QStyleSheetBuilder.h" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/QStyleSheetBuilder.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/mainwindow.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/mainwindow.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/mainwindow.h" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/mainwindow.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/mainwindow.ui" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/mainwindow.ui" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/qLinkGameController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/qLinkGameController.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/qLinkGameController.h" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/qLinkGameController.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/qLinkSquare.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/qLinkSquare.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/qLinkSquare.h" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/qLinkSquare.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/qSquarePanelWidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/qSquarePanelWidget.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/qSquarePanelWidget.h" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/qSquarePanelWidget.h" afterDir="false" />
-    </list>
+    <list default="true" id="a1c061ac-3abf-4a44-87d8-ee572f9744d2" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -59,7 +44,7 @@
       <updated>1632189872687</updated>
       <workItem from="1632189873854" duration="1661000" />
       <workItem from="1632235013907" duration="40000" />
-      <workItem from="1632280014152" duration="7302000" />
+      <workItem from="1632280014152" duration="7928000" />
     </task>
     <servers />
   </component>

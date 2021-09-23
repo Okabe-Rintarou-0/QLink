@@ -1,12 +1,8 @@
 #include "QCharacterWidget.h"
 
-QCharacterWidget::QCharacterWidget() {
+QCharacterWidget::QCharacterWidget(int id): id(id) {
     setAutoFillBackground(true);
     moveSpeed = DEFAULT_MOVE_SPEED;
-}
-
-QCharacterWidget::QCharacterWidget(QWidget *parent) : QWidget(parent) {
-    QCharacterWidget();
 }
 
 void QCharacterWidget::setWidth(int w) {
@@ -39,28 +35,69 @@ void QCharacterWidget::moveUp() {
     int nextX = x();
     int nextY = y() - moveSpeed;
     constrainPos(nextX, nextY);
-    move(nextX, nextY);
+    QWidget::move(nextX, nextY);
 }
 
 void QCharacterWidget::moveDown() {
     int nextX = x();
     int nextY = y() + moveSpeed;
     constrainPos(nextX, nextY);
-    move(nextX, nextY);
+    QWidget::move(nextX, nextY);
 }
 
 void QCharacterWidget::moveLeft() {
     int nextX = x() - moveSpeed;
     int nextY = y();
     constrainPos(nextX, nextY);
-    move(nextX, nextY);
+    QWidget::move(nextX, nextY);
 }
 
 void QCharacterWidget::moveRight() {
     int nextX = x() + moveSpeed;
     int nextY = y();
     constrainPos(nextX, nextY);
-    move(nextX, nextY);
+    QWidget::move(nextX, nextY);
+}
+
+void QCharacterWidget::dash(const QPoint &targetPos) {
+    QPoint centerPos = QPoint(targetPos.x() - width() / 2, targetPos.y() - height() / 2);
+    QWidget::move(centerPos);
+}
+
+QCharacterWidget::MoveMode QCharacterWidget::getMoveMode() const {
+    return moveMode;
+}
+
+void QCharacterWidget::startDash(int id) {
+    if (this->id == id) {
+        moveMode = FLASH;
+        qDebug() << "start dash" << endl;
+        QTimer::singleShot(5000, this, [&](){
+            moveMode = MoveMode::COMMON;
+            qDebug() << "recover" << endl;
+        });
+    }
+}
+
+void QCharacterWidget::move(Direction direction){
+    if (moveMode == FROZEN) return;
+    switch (direction) {
+        case Direction::Up:
+            moveUp();
+            break;
+        case Direction::Down:
+            moveDown();
+            break;
+        case Direction::Left:
+            moveLeft();
+            break;
+        case Direction::Right:
+            moveRight();
+            break;
+        case Direction::None:
+            break;
+    }
+    emit moveTo(id, center());
 }
 
 void QCharacterWidget::constrainPos(int &x, int &y) {
@@ -72,4 +109,7 @@ QPoint QCharacterWidget::center() const {
     return QPoint(pos().x() + width() / 2, pos().y() + height() / 2);
 }
 
-const float QCharacterWidget::ADJUST_K = 1.2;
+void QCharacterWidget::setMoveMode(MoveMode moveMode) {
+    this->moveMode = moveMode;
+}
+

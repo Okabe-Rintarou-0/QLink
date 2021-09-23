@@ -7,16 +7,18 @@
 #include <QLCDNumber>
 #include <QPushButton>
 #include <QMessageBox>
-#include <QPaintEvent>
+#include <QMouseEvent>
 #include "QLinkGameController.h"
 #include "QLinkCanvas.h"
 #include "QSquarePanelWidget.h"
 #include "QCharacterWidget.h"
+#include "Jewels.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
+typedef QCharacterWidget::MoveMode MoveMode;
 class MainWindow : public QMainWindow {
     Q_OBJECT
 
@@ -29,7 +31,7 @@ private:
     Ui::MainWindow *ui;
     QSpinBox *widthSpinBox;
     QSpinBox *heightSpinBox;
-    QCharacterWidget *characterWidget;
+    QCharacterWidget **characters;
     QSquarePanelWidget *squarePanel;
     QLabel *scoreLabel;
     QLinkCanvas *linkCanvas;
@@ -37,14 +39,19 @@ private:
     QLabel *heightLabel;
     QLabel *widthLabel;
     QLabel *hintLabel;
+    QLabel *linkStatusLabel;
     QPushButton *testBtn;
     QLCDNumber *countDownLCD;
+
+    QLinkGameItem *jewel;
 
     QLinkGameController *gameController;
 
     void startGame();
 protected:
     void keyPressEvent(QKeyEvent *event);
+
+    void mousePressEvent(QMouseEvent *event);
 private slots:
     void showGameOverTips(const QString &tips);
 };

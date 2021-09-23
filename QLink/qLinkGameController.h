@@ -20,6 +20,8 @@ public:
 
     void setRestSquares(int restSquares);
 
+    void addTime(int sec);
+
 private:
     int score;
     int restSquares;

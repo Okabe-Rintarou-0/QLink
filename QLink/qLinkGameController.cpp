@@ -7,6 +7,7 @@ QLinkGameController::~QLinkGameController() {
 QLinkGameController::QLinkGameController() {
     instance = nullptr;
     score = 0;
+    restTime = 0;
 }
 
 QLinkGameController *QLinkGameController::getInstance() {
@@ -56,6 +57,11 @@ void QLinkGameController::timerEvent(QTimerEvent *event) {
     if (event->timerId() == countDownTimer) {
         countDown();
     }
+}
+
+void QLinkGameController::addTime(int sec) {
+    restTime += sec;
+    emit timeChanged(restTime);
 }
 
 QLinkGameController *QLinkGameController::instance;

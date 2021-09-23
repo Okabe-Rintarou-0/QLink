@@ -1,5 +1,5 @@
-#include "qLinkSquare.h"
-#include "qSquareImageManager.h"
+#include "QLinkSquare.h"
+#include "QSquareImageManager.h"
 #include "ImageUtil.h"
 #include "QStyleSheetBuilder.h"
 QLinkSquare::QLinkSquare()
@@ -45,6 +45,11 @@ void QLinkSquare::activate()
     renderIcon();
 }
 
+void QLinkSquare::highlight() {
+    ImageUtil::setBorder(icon, DEFAULT_HIGHLIGHT_BORDER_COLOR, 2);
+    renderIcon();
+}
+
 void QLinkSquare::renderIcon()
 {
     QPalette palette;
@@ -84,5 +89,6 @@ void QLinkSquare::setAndRenderIcon(int iconIndex) {
     renderIcon();
 }
 
+const QColor QLinkSquare::DEFAULT_HIGHLIGHT_BORDER_COLOR = Qt::red;
 const QColor QLinkSquare::DEFAULT_BORDER_COLOR = Qt::gray;
 const QColor QLinkSquare::DEFAULT_ACTIVATE_BORDER_COLOR = Qt::black;

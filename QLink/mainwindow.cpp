@@ -14,12 +14,17 @@ MainWindow::MainWindow(QWidget *parent)
     hintLabel->setGeometry(10, 10, 400, 60);
     hintLabel->setFont(QFont("Microsoft YaHei", 30, 75));
 
+    linkStatusLabel = new QLabel(this);
+    linkStatusLabel->setGeometry(10, 80, 200, 50);
+    linkStatusLabel->setStyleSheet("color:red;");
+    linkStatusLabel->setFont(QFont("Microsoft YaHei", 15, 50));
+
     scoreLabel = new QLabel(this);
     scoreLabel->setGeometry(960, 10, 200, 50);
     scoreLabel->setText("分数: 0");
     scoreLabel->setFont(QFont("Microsoft YaHei", 10, 75));
 
-    squarePanel = new QSquarePanelWidget;
+    squarePanel = QSquarePanelWidget::getInstance();
     squarePanel->setParent(this);
     squarePanel->setSize(8, 8);
 
@@ -45,19 +50,29 @@ MainWindow::MainWindow(QWidget *parent)
 //    testBtn->setText("重新布局");
 //    testBtn->setGeometry(1250, 930, 80, 40);
 
-    characterWidget = new QCharacterWidget;
-    characterWidget->setParent(this);
-    characterWidget->setSize(squarePanel->getSquareSize());
-    characterWidget->spawn();
+    characters = new QCharacterWidget *[2];
+
+    characters[0] = new QCharacterWidget(0);
+    characters[0]->setParent(this);
+    characters[0]->setSize(squarePanel->getSquareSize());
+    characters[0]->spawn();
 
     countDownLCD = new QLCDNumber(this);
     countDownLCD->setGeometry(940, 50, 100, 40);
     countDownLCD->display(0);
 
+    jewel = new ShuffleJewel;
+    jewel->setParent(this);
+    jewel->setGeometry(50, 600, 50, 50);
+    jewel->connect(characters[0]);
+    jewel->stackUnder(characters[0]);
+    QApplication::connect(characters[0], &QCharacterWidget::moveTo, jewel, &QLinkGameItem::tryPick);
+
     setFocus();
 
-    QApplication::connect(gameController, SIGNAL(timeChanged(int)), countDownLCD, SLOT(display(int)));
     QApplication::connect(startButton, &QPushButton::clicked, this, &MainWindow::startGame);
+    QApplication::connect(squarePanel, SIGNAL(link(QString)), linkStatusLabel, SLOT(setText(QString)));
+    QApplication::connect(gameController, SIGNAL(timeChanged(int)), countDownLCD, SLOT(display(int)));
     QApplication::connect(gameController, SIGNAL(gameOver(QString)), this, SLOT(showGameOverTips(QString)));
     QApplication::connect(gameController, SIGNAL(scoreChanged(QString)), scoreLabel, SLOT(setText(QString)));
 }
@@ -84,22 +99,30 @@ MainWindow::~MainWindow() {
     delete ui;
 }
 
+void MainWindow::mousePressEvent(QMouseEvent *event) {
+    if (event->button() == Qt::LeftButton) {
+        if (characters[0]->getMoveMode() == MoveMode::FLASH) {
+            characters[0]->dash(event->pos());
+        }
+    }
+}
+
 void MainWindow::keyPressEvent(QKeyEvent *e) {
     switch (e->key()) {
         case Qt::Key_A:
-            characterWidget->moveLeft();
+            characters[0]->move(Direction::Left);
             break;
         case Qt::Key_D:
-            characterWidget->moveRight();
+            characters[0]->move(Direction::Right);
             break;
         case Qt::Key_S:
-            characterWidget->moveDown();
+            characters[0]->move(Direction::Down);
             break;
         case Qt::Key_W:
-            characterWidget->moveUp();
+            characters[0]->move(Direction::Up);
             break;
         case Qt::Key_E:
-            squarePanel->activate(characterWidget->center());
+            squarePanel->activate(characters[0]->center());
             break;
     }
 }

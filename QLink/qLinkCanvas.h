@@ -1,6 +1,7 @@
 #ifndef QLINKCANVAS_H
 #define QLINKCANVAS_H
 
+#include <QObject>
 #include <QWidget>
 #include <QDebug>
 #include <QPaintEvent>

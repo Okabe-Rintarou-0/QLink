@@ -10,6 +10,7 @@ private:
     QImage icon;
     static const QColor DEFAULT_BORDER_COLOR;
     static const QColor DEFAULT_ACTIVATE_BORDER_COLOR;
+    static const QColor DEFAULT_HIGHLIGHT_BORDER_COLOR;
     int bonus;
     int iconIndex;
     int w;
@@ -27,6 +28,8 @@ public:
     void setSize(int w, int h);
 
     void activate();
+
+    void highlight();
 
     void reset();
 

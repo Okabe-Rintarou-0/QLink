@@ -8,24 +8,26 @@
 #include <QPainter>
 #include <QPaintEvent>
 #include <QMap>
+#include <QTimer>
 #include "QLinkGameController.h"
 #include "RandomUtil.h"
 #include "QLinkSquare.h"
+#include "DirectionUtil.h"
 
+typedef DirectionUtil::Direction Direction;
 class QSquarePanelWidget : public QWidget {
     Q_OBJECT
 private:
+    enum RunMode { COMMON, HINT } runMode = COMMON;
     int h;
     int w;
     int squareSpacing;
     int restSquares;
+    static const QPair<QPoint, QPoint> INVALID_PAIR;
     static const int DEFAULT_SPACING = 5;
     static const int DEFAULT_H = 10;
     static const int DEFAULT_W = 20;
     static const QColor DEFAULT_LINE_COLOR;
-    enum Direction {
-        None = -1, Left = 0, Right, Up, Down
-    };
     const int next[4][2] = {
             {0,  -1},
             {0,  1},
@@ -45,11 +47,21 @@ private:
 
     QPair<QPoint, QPoint> linkablePairCache = qMakePair(QPoint(-1, -1), QPoint(-1, -1));
 
+    QSquarePanelWidget();
+
+    void highlightAt(const QPoint &p);
+
+    void updateCache(const QPoint &p1, const QPoint &p2);
+
     void initSquareMap();
 
     void renderSquares();
 
     void setUpGridLayout();
+
+    bool searchLinkabelSquare();
+
+    void hintNext();
 
     void tryLink();
 
@@ -72,7 +84,7 @@ private:
 
     void cancelLink(const QPoint &p1, const QPoint &p2);
 
-    void link(QPoint p1, QPoint p2);
+    void link(const QPoint &p1, const QPoint &p2);
 
     bool checkVertical(const QPoint &p1, const QPoint &p2) const;
 
@@ -92,10 +104,9 @@ private:
 
     QPoint toMapPoint(int x, int y) const;
 
+    static QSquarePanelWidget *instance;
 public:
-    QSquarePanelWidget();
-
-    QSquarePanelWidget(QWidget *parent);
+    static QSquarePanelWidget *getInstance();
 
     ~QSquarePanelWidget();
 
@@ -111,9 +122,11 @@ public:
 
     QSize getSquareSize() const;
 
-    void reassign();
+    void shuffle();
+
+    void startHint();
 signals:
-    void link(QVector < QPoint > points);
+    void link(const QString &status);
 };
 
 #endif // QSQUAREPANELWIDGET_H

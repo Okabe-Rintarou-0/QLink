@@ -4,22 +4,17 @@
 #include "FileConstants.h"
 #include <QWidget>
 #include <QKeyEvent>
+#include <QTimer>
+#include <QDebug>
+#include "DirectionUtil.h"
 
+typedef DirectionUtil::Direction Direction;
 class QCharacterWidget : public QWidget {
-private:
-    QImage character;
-    int w;
-    int h;
-    int moveSpeed;
-    static const float ADJUST_K;
-    static const int DEFAULT_MOVE_SPEED = 12;
-
-    void constrainPos(int &x, int &y);
-
+    Q_OBJECT
 public:
-    QCharacterWidget();
+    QCharacterWidget(int id);
 
-    QCharacterWidget(QWidget *parent);
+    enum MoveMode { COMMON, FLASH, FROZEN };
 
     void spawn();
 
@@ -31,6 +26,29 @@ public:
 
     void setSize(QSize size);
 
+    void move(Direction direction);
+
+    void setMoveMode(MoveMode);
+
+    QPoint center() const;
+
+    void dash(const QPoint &targetPos);
+
+    MoveMode getMoveMode() const;
+
+private:
+    QImage character;
+    int id;
+    int w;
+    int h;
+    int moveSpeed;
+
+    MoveMode moveMode;
+
+    static constexpr int DEFAULT_MOVE_SPEED = 12;
+
+    void constrainPos(int &x, int &y);
+
     void moveUp();
 
     void moveDown();
@@ -39,7 +57,11 @@ public:
 
     void moveRight();
 
-    QPoint center() const;
+public slots:
+    void startDash(int id);
+
+signals:
+    void moveTo(int, const QPoint &);
 };
 
 #endif // QCHARACTERWIDGET_H
