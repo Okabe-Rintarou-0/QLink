@@ -18,6 +18,8 @@ private:
 
     static constexpr int DEFUALT_W = 50;
 public:
+    enum JewelType { TIME, FLASH, SHUFFLE, HINT };
+
     QLinkGameItem(const QString &imgPath);
 
     virtual ~QLinkGameItem() = default;

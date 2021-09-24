@@ -18,6 +18,9 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     FlashJewel.cpp \
     HintJewel.cpp \
+    QCharacterManager.cpp \
+    QLinkArchive.cpp \
+    QPauseContinueButton.cpp \
     ShuffleJewel.cpp \
     TimeJewel.cpp \
     directionutil.cpp \
@@ -39,6 +42,9 @@ HEADERS += \
     FlashJewel.h \
     HintJewel.h \
     Jewels.h \
+    QCharacterManager.h \
+    QLinkArchive.h \
+    QPauseContinueButton.h \
     ShuffleJewel.h \
     TimeJewel.h \
     directionutil.h \

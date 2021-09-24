@@ -71,10 +71,8 @@ QCharacterWidget::MoveMode QCharacterWidget::getMoveMode() const {
 void QCharacterWidget::startDash(int id) {
     if (this->id == id) {
         moveMode = FLASH;
-        qDebug() << "start dash" << endl;
         QTimer::singleShot(5000, this, [&](){
             moveMode = MoveMode::COMMON;
-            qDebug() << "recover" << endl;
         });
     }
 }

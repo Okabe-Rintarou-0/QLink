@@ -1,4 +1,4 @@
-#include "qlinkgameitem.h"
+#include "QLinkGameItem.h"
 #include <QDebug>
 
 void QLinkGameItem::onPick(int picker) {

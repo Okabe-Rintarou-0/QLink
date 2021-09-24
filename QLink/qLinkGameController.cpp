@@ -41,39 +41,58 @@ void QLinkGameController::startGame() {
     emit timeChanged(restTime);
 }
 
+void QLinkGameController::pauseGame() {
+    killTimer(countDownTimer);
+    QCharacterManager::getInstance()->frozenAll();
+}
+
+void QLinkGameController::continueGame() {
+    startCountDown();
+    QCharacterManager::getInstance()->unfrozenAll();
+}
+
 void QLinkGameController::countDown() {
     emit timeChanged(--restTime);
     if (restTime == 0) {
-        emit gameOver("超时！游戏结束！");
+        emit gameOver("超时了哦！游戏结束！");
         killTimer(countDownTimer);
     }
-    if (restTime % 5 == 0) {
+    if (restTime % 15 == 0) {
         formJewel();
     }
 }
 
-QLinkGameItem *QLinkGameController::getJewel(int category) {
-    switch (category) {
-        case 0:
+void QLinkGameController::pauseOrContinue() {
+    paused = !paused;
+    if (!paused)
+        pauseGame();
+    else
+        continueGame();
+}
+
+QLinkGameItem *QLinkGameController::getJewel(JewelType jewelType) {
+    switch (jewelType) {
+        case JewelType::TIME:
             qDebug() << "Time" << endl;
             return new TimeJewel;
-        case 1:
+        case JewelType::HINT:
             qDebug() << "Hint" << endl;
             return new HintJewel;
-        case 2:
+        case JewelType::FLASH:
             qDebug() << "Flash" << endl;
             return new FlashJewel;
-        case 3:
+        case JewelType::SHUFFLE:
             qDebug() << "Shuffle" << endl;
             return new ShuffleJewel;
     }
     return nullptr;
 }
 
+//Form jewels. Game items.
 ///Form pos need to be optimized
 void QLinkGameController::formJewel() {
-    int category = RandomUtil::randRange(0, 3);
-    QLinkGameItem *jewel = getJewel(category);
+    JewelType jewelType = (JewelType)RandomUtil::randRange(0, 3);
+    QLinkGameItem *jewel = getJewel(jewelType);
 
     QSize size = QSquarePanelWidget::getInstance()->size();
     QPoint pos = QSquarePanelWidget::getInstance()->pos();
@@ -83,15 +102,12 @@ void QLinkGameController::formJewel() {
     bool valid;
     do {
         if (RandomUtil::randRange(0, 1)) {
-            x = RandomUtil::randRange(50, minX - 50);
+            x = RandomUtil::randRange(150, minX - 150);
         }
         else
-            x = RandomUtil::randRange(maxX + 50, 1910);
-        if (RandomUtil::randRange(0, 1)) {
-            y = RandomUtil::randRange(50, minY - 50);
-        }
-        else
-            y = RandomUtil::randRange(maxY + 50, 1030);
+            x = RandomUtil::randRange(maxX + 150, 1810);
+
+        y = RandomUtil::randRange(minY, maxY);
 
         valid = true;
         for (QLinkGameItem *jewel : jewels) {
@@ -106,7 +122,7 @@ void QLinkGameController::formJewel() {
         jewels.remove(jewel);
     });
     jewels.insert(jewel);
-    emit formJewel(jewel, QPoint(x, y));
+//    emit formJewel(jewel, QPoint(x, y));
 }
 
 void QLinkGameController::startCountDown() {

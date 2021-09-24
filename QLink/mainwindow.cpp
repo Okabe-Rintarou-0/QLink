@@ -56,10 +56,19 @@ MainWindow::MainWindow(QWidget *parent)
     characters[0]->setParent(this);
     characters[0]->setSize(squarePanel->getSquareSize());
     characters[0]->spawn();
+    QCharacterManager::getInstance()->addCharacter(characters[0]);
+
 
     countDownLCD = new QLCDNumber(this);
     countDownLCD->setGeometry(940, 50, 100, 40);
     countDownLCD->display(0);
+
+    pauseContinueButton = new QPauseContinueButton;
+    pauseContinueButton->setParent(this);
+    pauseContinueButton->setGeometry(250, 600, 150, 150);
+    pauseContinueButton->initAndShow();
+
+    QApplication::connect(pauseContinueButton, &QPauseContinueButton::clicked, gameController, &QLinkGameController::pauseOrContinue);
 
 //    jewel = new HintJewel;
 //    jewel->setParent(this);
@@ -139,4 +148,5 @@ void MainWindow::keyPressEvent(QKeyEvent *e) {
             squarePanel->activate(characters[0]->center());
             break;
     }
+    qDebug() << characters[0]->pos() << endl;
 }

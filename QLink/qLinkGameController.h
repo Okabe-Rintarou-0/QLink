@@ -11,7 +11,9 @@
 #include "QLinkGameItem.h"
 #include "Jewels.h"
 #include "QSquarePanelWidget.h"
+#include "QCharacterManager.h"
 
+typedef QLinkGameItem::JewelType JewelType;
 class QLinkGameController : public QObject {
     Q_OBJECT
 public:
@@ -27,7 +29,10 @@ public:
 
     void addTime(int sec);
 
+    void pauseOrContinue();
+
 private:
+    bool paused = true;
     int score;
     int restSquares;
     int restTime;
@@ -44,9 +49,13 @@ private:
 
     void countDown();
 
-    QLinkGameItem *getJewel(int category);
+    QLinkGameItem *getJewel(JewelType jewelType);
 
     void formJewel();
+
+    void pauseGame();
+
+    void continueGame();
 
 protected:
     void timerEvent(QTimerEvent *event) override;
