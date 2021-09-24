@@ -306,6 +306,9 @@ void QSquarePanelWidget::link(const QPoint &p1, const QPoint &p2) {
     if (!existsLinkableSquare()) {
         shuffle();
     }
+    if (runMode == RunMode::HINT) {
+        hintNext();
+    }
 }
 
 void QSquarePanelWidget::highlightAt(const QPoint &p) {

@@ -61,15 +61,16 @@ MainWindow::MainWindow(QWidget *parent)
     countDownLCD->setGeometry(940, 50, 100, 40);
     countDownLCD->display(0);
 
-    jewel = new ShuffleJewel;
-    jewel->setParent(this);
-    jewel->setGeometry(50, 600, 50, 50);
-    jewel->connect(characters[0]);
-    jewel->stackUnder(characters[0]);
-    QApplication::connect(characters[0], &QCharacterWidget::moveTo, jewel, &QLinkGameItem::tryPick);
+//    jewel = new HintJewel;
+//    jewel->setParent(this);
+//    jewel->setGeometry(50, 600, 50, 50);
+//    jewel->connect(characters[0]);
+//    jewel->stackUnder(characters[0]);
+//    QApplication::connect(characters[0], &QCharacterWidget::moveTo, jewel, &QLinkGameItem::tryPick);
 
     setFocus();
 
+    QApplication::connect(gameController, SIGNAL(formJewel(QLinkGameItem *, QPoint)), this, SLOT(renderJewel(QLinkGameItem *, QPoint)));
     QApplication::connect(startButton, &QPushButton::clicked, this, &MainWindow::startGame);
     QApplication::connect(squarePanel, SIGNAL(link(QString)), linkStatusLabel, SLOT(setText(QString)));
     QApplication::connect(gameController, SIGNAL(timeChanged(int)), countDownLCD, SLOT(display(int)));
@@ -105,6 +106,19 @@ void MainWindow::mousePressEvent(QMouseEvent *event) {
             characters[0]->dash(event->pos());
         }
     }
+}
+
+void MainWindow::renderJewel(QLinkGameItem *jewel, const QPoint &pos) {
+    qDebug() << "pos: " << pos << endl;
+    jewel->setGeometry(pos.x(), pos.y(), 50, 50);
+    jewel->setParent(this);
+    for (int i = 0; i < 1; ++i) {
+        if (characters[i] != nullptr) {
+            jewel->connect(characters[i]);
+            jewel->stackUnder(characters[i]);
+        }
+    }
+    jewel->show();
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *e) {

@@ -22,9 +22,9 @@ public:
 
     virtual ~QLinkGameItem() = default;
 
-    virtual void connect(QCharacterWidget *character) {};
+    virtual void connect(QCharacterWidget *character);
 
-    virtual void takeEffect(int picker) = 0;
+    virtual void takeEffect(int picker);
 
 signals:
     void picked(int picker);

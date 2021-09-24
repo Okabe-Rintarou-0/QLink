@@ -47,6 +47,66 @@ void QLinkGameController::countDown() {
         emit gameOver("超时！游戏结束！");
         killTimer(countDownTimer);
     }
+    if (restTime % 5 == 0) {
+        formJewel();
+    }
+}
+
+QLinkGameItem *QLinkGameController::getJewel(int category) {
+    switch (category) {
+        case 0:
+            qDebug() << "Time" << endl;
+            return new TimeJewel;
+        case 1:
+            qDebug() << "Hint" << endl;
+            return new HintJewel;
+        case 2:
+            qDebug() << "Flash" << endl;
+            return new FlashJewel;
+        case 3:
+            qDebug() << "Shuffle" << endl;
+            return new ShuffleJewel;
+    }
+    return nullptr;
+}
+
+///Form pos need to be optimized
+void QLinkGameController::formJewel() {
+    int category = RandomUtil::randRange(0, 3);
+    QLinkGameItem *jewel = getJewel(category);
+
+    QSize size = QSquarePanelWidget::getInstance()->size();
+    QPoint pos = QSquarePanelWidget::getInstance()->pos();
+    int minX = pos.x(), maxX = pos.x() + size.width();
+    int minY = pos.y(), maxY = pos.y() + size.height();
+    int x, y;
+    bool valid;
+    do {
+        if (RandomUtil::randRange(0, 1)) {
+            x = RandomUtil::randRange(50, minX - 50);
+        }
+        else
+            x = RandomUtil::randRange(maxX + 50, 1910);
+        if (RandomUtil::randRange(0, 1)) {
+            y = RandomUtil::randRange(50, minY - 50);
+        }
+        else
+            y = RandomUtil::randRange(maxY + 50, 1030);
+
+        valid = true;
+        for (QLinkGameItem *jewel : jewels) {
+            QPoint thisPos = jewel->pos();
+            int diffX = thisPos.x() - x;
+            int diffY = thisPos.y() - y;
+            if (diffX * diffX + diffY * diffY <= 25)
+                valid = false;
+        }
+    } while(!valid);
+    QApplication::connect(jewel, &QLinkGameItem::picked, this, [=](){
+        jewels.remove(jewel);
+    });
+    jewels.insert(jewel);
+    emit formJewel(jewel, QPoint(x, y));
 }
 
 void QLinkGameController::startCountDown() {

@@ -54,5 +54,7 @@ protected:
     void mousePressEvent(QMouseEvent *event);
 private slots:
     void showGameOverTips(const QString &tips);
+
+    void renderJewel(QLinkGameItem *jewel, const QPoint &pos);
 };
 #endif // MAINWINDOW_H

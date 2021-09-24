@@ -17,6 +17,14 @@ void QLinkGameItem::tryPick(int picker, const QPoint &pickerPos){
     }
 }
 
+void QLinkGameItem::takeEffect(int picker) {
+    emit picked(picker);
+}
+
+void QLinkGameItem::connect(QCharacterWidget *character) {
+    QApplication::connect(character, &QCharacterWidget::moveTo, this, &QLinkGameItem::tryPick);
+}
+
 QLinkGameItem::QLinkGameItem(const QString &imgPath) {
     setGeometry(0, 0, 50, 50);
     setAutoFillBackground(true);

@@ -4,9 +4,10 @@ FlashJewel::FlashJewel():QLinkGameItem(FileConstants::JEWEL_URL + "FlashJewel.pn
 }
 
 void FlashJewel::connect(QCharacterWidget *character) {
+    QLinkGameItem::connect(character);
     QApplication::connect(this, &QLinkGameItem::picked, character, &QCharacterWidget::startDash);
 }
 
 void FlashJewel::takeEffect(int picker) {
-    emit picked(picker);
+    QLinkGameItem::takeEffect(picker);
 }

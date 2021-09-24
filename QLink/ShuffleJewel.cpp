@@ -4,5 +4,6 @@ ShuffleJewel::ShuffleJewel(): QLinkGameItem(FileConstants::JEWEL_URL + "ShuffleJ
 }
 
 void ShuffleJewel::takeEffect(int picker) {
+    QLinkGameItem::takeEffect(picker);
     QSquarePanelWidget::getInstance()->shuffle();
 }
