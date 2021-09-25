@@ -13,6 +13,10 @@ QCharacterManager *QCharacterManager::getInstance() {
     return instance;
 }
 
+QPlayerInfo QCharacterManager::getPlayerInfo() const {
+    return QPlayerInfo(getCharacterInfos());
+}
+
 void QCharacterManager::addCharacter(QCharacterWidget *character) {
     if (characters[0] == nullptr)
         characters[0] = character;

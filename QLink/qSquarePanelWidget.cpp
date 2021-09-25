@@ -26,6 +26,18 @@ void QSquarePanelWidget::setSize(int w, int h) {
     this->h = h;
 }
 
+QSquarePanelInfo QSquarePanelWidget::getSquarePanelInfo() const {
+    QSquarePanelInfo squarePanelInfo(QSize(w, h));
+    for (int i = 0; i < h; ++i) {
+        for (int j = 0; j < w; ++j) {
+            if (squares[i][j] != nullptr) {
+                squarePanelInfo.addSquareInfo(QSquareInfo(QPoint(i, j), squares[i][j]->getIconIndex()));
+            }
+        }
+    }
+    return squarePanelInfo;
+}
+
 void QSquarePanelWidget::prepareRandom(QMap<int, int> &randomIconIdxToNum) {
     int totalNum = w * h;
     int maxCategoryNum = totalNum / 2;

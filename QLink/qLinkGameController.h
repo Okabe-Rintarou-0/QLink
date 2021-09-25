@@ -10,6 +10,7 @@
 #include "RandomUtil.h"
 #include "QLinkGameItem.h"
 #include "Jewels.h"
+#include "QLinkArchive.h"
 #include "QSquarePanelWidget.h"
 #include "QCharacterManager.h"
 
@@ -30,6 +31,10 @@ public:
     void addTime(int sec);
 
     void pauseOrContinue();
+
+    QGameItemInfo getGameItemInfo() const;
+
+    QGlobalInfo getGlobalInfo() const;
 
 private:
     bool paused = true;

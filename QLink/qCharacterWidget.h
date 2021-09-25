@@ -1,11 +1,11 @@
 #ifndef QCHARACTERWIDGET_H
 #define QCHARACTERWIDGET_H
 
-#include "FileConstants.h"
 #include <QWidget>
 #include <QKeyEvent>
 #include <QTimer>
 #include <QDebug>
+#include "FileConstants.h"
 #include "DirectionUtil.h"
 
 typedef DirectionUtil::Direction Direction;
@@ -43,7 +43,7 @@ private:
     int h;
     int moveSpeed;
 
-    MoveMode moveMode;
+    MoveMode moveMode = FLASH;
 
     static constexpr int DEFAULT_MOVE_SPEED = 12;
 

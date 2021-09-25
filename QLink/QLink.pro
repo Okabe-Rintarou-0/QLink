@@ -19,52 +19,56 @@ SOURCES += \
     FlashJewel.cpp \
     HintJewel.cpp \
     QCharacterManager.cpp \
+    QJsonUtil.cpp \
     QLinkArchive.cpp \
+    QLinkArchiveManager.cpp \
     QPauseContinueButton.cpp \
     ShuffleJewel.cpp \
     TimeJewel.cpp \
-    directionutil.cpp \
+    DirectionUtil.cpp \
     imageUtil.cpp \
     main.cpp \
     mainwindow.cpp \
-    qCharacterWidget.cpp \
-    qLinkCanvas.cpp \
-    qLinkGameController.cpp \
-    qLinkSquare.cpp \
-    qSquareImageManager.cpp \
-    qSquarePanelWidget.cpp \
-    qStyleSheetBuilder.cpp \
-    qlinkgameitem.cpp \
-    qlinkmenu.cpp \
-    randomUtil.cpp
+    QCharacterWidget.cpp \
+    QLinkCanvas.cpp \
+    QLinkGameController.cpp \
+    QLinkSquare.cpp \
+    QSquareImageManager.cpp \
+    QSquarePanelWidget.cpp \
+    QStyleSheetBuilder.cpp \
+    QLinkGameItem.cpp \
+    QLinkMenu.cpp \
+    RandomUtil.cpp
 
 HEADERS += \
     FlashJewel.h \
     HintJewel.h \
     Jewels.h \
     QCharacterManager.h \
+    QJsonUtil.h \
     QLinkArchive.h \
+    QLinkArchiveManager.h \
     QPauseContinueButton.h \
     ShuffleJewel.h \
     TimeJewel.h \
-    directionutil.h \
-    fileConstants.h \
-    imageUtil.h \
+    DirectionUtil.h \
+    FileConstants.h \
+    ImageUtil.h \
     mainwindow.h \
-    qCharacterWidget.h \
-    qLinkCanvas.h \
-    qLinkGameController.h \
-    qLinkSquare.h \
-    qSquareImageManager.h \
-    qSquarePanelWidget.h \
-    qStyleSheetBuilder.h \
-    qlinkgameitem.h \
-    qlinkmenu.h \
-    randomUtil.h
+    QCharacterWidget.h \
+    QLinkCanvas.h \
+    QLinkGameController.h \
+    QLinkSquare.h \
+    QSquareImageManager.h \
+    QSquarePanelWidget.h \
+    QStyleSheetBuilder.h \
+    QLinkGameItem.h \
+    QLinkMenu.h \
+    RandomUtil.h
 
 FORMS += \
     mainwindow.ui \
-    qlinkmenu.ui
+    QLinkMenu.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

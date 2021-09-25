@@ -16,13 +16,15 @@ public:
 
     void unfrozenAll();
 
-    QVector<QCharacterInfo> getCharacterInfos() const;
+    QPlayerInfo getPlayerInfo() const;
 
 private:
     static QCharacterManager *instance;
     QCharacterWidget **characters;
 
     QCharacterManager();
+
+    QVector<QCharacterInfo> getCharacterInfos() const;
 };
 
 #endif // QCHARACTERMANAGER_H

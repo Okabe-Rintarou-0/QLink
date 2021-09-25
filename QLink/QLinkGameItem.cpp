@@ -25,6 +25,10 @@ void QLinkGameItem::connect(QCharacterWidget *character) {
     QApplication::connect(character, &QCharacterWidget::moveTo, this, &QLinkGameItem::tryPick);
 }
 
+QLinkGameItem::JewelType QLinkGameItem::getJewelType() const {
+    return jewelType;
+}
+
 QLinkGameItem::QLinkGameItem(const QString &imgPath) {
     setGeometry(0, 0, 50, 50);
     setAutoFillBackground(true);

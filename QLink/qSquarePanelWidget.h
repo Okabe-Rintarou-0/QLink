@@ -11,6 +11,7 @@
 #include <QTimer>
 #include "QLinkGameController.h"
 #include "RandomUtil.h"
+#include "QLinkArchive.h"
 #include "QLinkSquare.h"
 #include "DirectionUtil.h"
 
@@ -123,6 +124,8 @@ public:
     QSize getSquareSize() const;
 
     void shuffle();
+
+    QSquarePanelInfo getSquarePanelInfo() const;
 
     void startHint();
 signals:

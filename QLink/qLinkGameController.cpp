@@ -70,6 +70,18 @@ void QLinkGameController::pauseOrContinue() {
         continueGame();
 }
 
+QGameItemInfo QLinkGameController::getGameItemInfo() const {
+    QGameItemInfo gameItemInfo;
+    for (QLinkGameItem *jewel : jewels) {
+        gameItemInfo.addJewel(QJewelInfo(jewel->getJewelType(), jewel->pos()));
+    }
+    return gameItemInfo;
+}
+
+QGlobalInfo QLinkGameController::getGlobalInfo() const {
+    return QGlobalInfo(restTime, score);
+}
+
 QLinkGameItem *QLinkGameController::getJewel(JewelType jewelType) {
     switch (jewelType) {
         case JewelType::TIME:
@@ -84,6 +96,8 @@ QLinkGameItem *QLinkGameController::getJewel(JewelType jewelType) {
         case JewelType::SHUFFLE:
             qDebug() << "Shuffle" << endl;
             return new ShuffleJewel;
+        case JewelType::UNDEFINED:
+            return nullptr;
     }
     return nullptr;
 }

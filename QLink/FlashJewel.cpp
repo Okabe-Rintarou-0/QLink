@@ -1,6 +1,7 @@
 #include "FlashJewel.h"
 
 FlashJewel::FlashJewel():QLinkGameItem(FileConstants::JEWEL_URL + "FlashJewel.png") {
+    jewelType = JewelType::FLASH;
 }
 
 void FlashJewel::connect(QCharacterWidget *character) {

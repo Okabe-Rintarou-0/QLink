@@ -8,17 +8,8 @@
 class QLinkGameItem: public QWidget
 {
     Q_OBJECT
-private:
-
-    void onPick(int picker);
-
-    static constexpr int PICK_THRESH = 15;
-
-    static constexpr int DEFAULT_H = 50;
-
-    static constexpr int DEFUALT_W = 50;
 public:
-    enum JewelType { TIME, FLASH, SHUFFLE, HINT };
+    enum JewelType { UNDEFINED, TIME, FLASH, SHUFFLE, HINT };
 
     QLinkGameItem(const QString &imgPath);
 
@@ -28,6 +19,19 @@ public:
 
     virtual void takeEffect(int picker);
 
+    JewelType getJewelType() const;
+private:
+
+    void onPick(int picker);
+
+    static constexpr int PICK_THRESH = 15;
+
+    static constexpr int DEFAULT_H = 50;
+
+    static constexpr int DEFUALT_W = 50;
+
+protected:
+    JewelType jewelType = UNDEFINED;
 signals:
     void picked(int picker);
 
