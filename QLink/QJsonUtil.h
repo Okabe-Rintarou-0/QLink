@@ -8,7 +8,9 @@
 class QJsonUtil
 {
 public:
-    static QJsonObject parseQPoint(const QPoint &p);
+    static QJsonObject toJson(const QPoint &p);
+
+    static QPoint toQPoint(const QJsonObject &jsonObj);
 };
 
 #endif // QJSONUTIL_H

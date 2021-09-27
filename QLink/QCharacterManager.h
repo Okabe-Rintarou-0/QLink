@@ -2,9 +2,10 @@
 #define QCHARACTERMANAGER_H
 #include "QCharacterWidget.h"
 #include "QLinkArchive.h"
+#include "QLinkArchive.h"
 
-class QCharacterManager
-{
+class QCharacterManager: public QObject {
+    Q_OBJECT
 public:
     static QCharacterManager *getInstance();
 
@@ -16,6 +17,8 @@ public:
 
     void unfrozenAll();
 
+    void loadFromArchive(const QPlayerInfo &playerInfo);
+
     QPlayerInfo getPlayerInfo() const;
 
 private:
@@ -25,6 +28,9 @@ private:
     QCharacterManager();
 
     QVector<QCharacterInfo> getCharacterInfos() const;
+
+signals:
+    void spawn(int id, const QPoint &pos, MoveMode moveMode);
 };
 
 #endif // QCHARACTERMANAGER_H

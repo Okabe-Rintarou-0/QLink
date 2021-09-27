@@ -18,6 +18,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     FlashJewel.cpp \
     HintJewel.cpp \
+    ImageUtil.cpp \
     QCharacterManager.cpp \
     QJsonUtil.cpp \
     QLinkArchive.cpp \
@@ -26,7 +27,6 @@ SOURCES += \
     ShuffleJewel.cpp \
     TimeJewel.cpp \
     DirectionUtil.cpp \
-    imageUtil.cpp \
     main.cpp \
     mainwindow.cpp \
     QCharacterWidget.cpp \

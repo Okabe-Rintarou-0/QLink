@@ -26,6 +26,31 @@ void QSquarePanelWidget::setSize(int w, int h) {
     this->h = h;
 }
 
+void QSquarePanelWidget::renderSquares(const QVector<QSquareInfo> &squareInfos) {
+    for (int i = 0; i < h; ++i) {
+        squares.push_back(QVector<QLinkSquare *>(w, nullptr));
+    }
+
+    for (QSquareInfo squareInfo: squareInfos) {
+        QLinkSquare *square = new QLinkSquare;
+        int restHeight = (800 - (h - 1) * squareSpacing);
+        square->setSize(restHeight / h, restHeight / h);
+        square->setAndRenderIcon(squareInfo.iconIndex);
+        int x = squareInfo.pos.x(), y = squareInfo.pos.y();
+        squares[x][y] = square;
+        gridLayout->addWidget(square->getWidget(), x, y, 1, 1);
+    }
+    restSquares = squareInfos.size();
+}
+
+void QSquarePanelWidget::loadFromArchive(const QSquarePanelInfo &squarePanelInfo) {
+    clear();
+    setSize(squarePanelInfo.w, squarePanelInfo.h);
+    renderSquares(squarePanelInfo.squareInfos);
+    setUpGridLayout();
+    onRender();
+}
+
 QSquarePanelInfo QSquarePanelWidget::getSquarePanelInfo() const {
     QSquarePanelInfo squarePanelInfo(QSize(w, h));
     for (int i = 0; i < h; ++i) {
@@ -79,7 +104,7 @@ void QSquarePanelWidget::renderSquares() {
     prepareRandom(randomIconIdxToNum);
 
     for (int i = 0; i < h; ++i) {
-        squares.push_back(QVector<QLinkSquare *>(w));
+        squares.push_back(QVector<QLinkSquare *>(w, nullptr));
         for (int j = 0; j < w; ++j) {
             QLinkSquare *square = new QLinkSquare;
             int restHeight = (800 - (h - 1) * squareSpacing);
@@ -107,7 +132,8 @@ void QSquarePanelWidget::initSquareMap() {
 
     for (int i = 1; i <= h; ++i) {
         for (int j = 1; j <= w; ++j) {
-            squareMap[i][j] = 1;
+            if (squares[i - 1][j - 1] != nullptr)
+                squareMap[i][j] = 1;
         }
     }
 }
@@ -145,19 +171,16 @@ void QSquarePanelWidget::removeSquareAt(QPoint p) {
 }
 
 void QSquarePanelWidget::setUpGridLayout() {
+    setGeometry(980 - (800 * w / h) / 2, 100, 800 * w / h, 800);
     gridLayout->setSpacing(squareSpacing);
     gridLayout->setMargin(0);
     gridLayout->setContentsMargins(0, 0, 0, 0);
+    setLayout(gridLayout);
 }
 
 void QSquarePanelWidget::render() {
     renderSquares();
-    initSquareMap();
-    initSquarePosMap();
-    setGeometry(980 - (800 * w / h) / 2, 100, 800 * w / h, 800);
     setUpGridLayout();
-    setLayout(gridLayout);
-    QPainter painter;
 }
 
 void QSquarePanelWidget::clear() {
@@ -175,10 +198,16 @@ void QSquarePanelWidget::clear() {
     linkablePairCache = INVALID_PAIR;
 }
 
+void QSquarePanelWidget::onRender() {
+    initSquareMap();
+    initSquarePosMap();
+}
+
 void QSquarePanelWidget::resizeAndRender(int w, int h) {
     clear();
     setSize(w, h);
     render();
+    onRender();
 }
 
 QPoint QSquarePanelWidget::moveTowards(const QPoint &p, Direction direction) const {

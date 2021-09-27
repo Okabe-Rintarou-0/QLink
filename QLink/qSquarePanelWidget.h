@@ -56,7 +56,11 @@ private:
 
     void initSquareMap();
 
+    void onRender();
+
     void renderSquares();
+
+    void renderSquares(const QVector<QSquareInfo> &squareInfos);
 
     void setUpGridLayout();
 
@@ -122,6 +126,8 @@ public:
     void resizeAndRender(int w, int h);
 
     QSize getSquareSize() const;
+
+    void loadFromArchive(const QSquarePanelInfo &squarePanelInfo);
 
     void shuffle();
 

@@ -23,12 +23,13 @@ void QCharacterWidget::setSize(QSize size) {
     h = size.height();
 }
 
-void QCharacterWidget::spawn() {
+void QCharacterWidget::spawn(const QPoint &pos) {
+    setGeometry(pos.x(), pos.y(), w, h);
     character.load(QString("%1%2.png").arg(FileConstants::CHARACTER_URL).arg(1));
     QPalette palette;
-    setGeometry(200, 200, w, h);
     palette.setBrush(backgroundRole(), QBrush(character.scaled(width(), height())));
     setPalette(palette);
+    qDebug() << "spawn here: " << pos << "and size = " << w << "*" << h << endl;
 }
 
 void QCharacterWidget::moveUp() {

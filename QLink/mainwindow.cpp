@@ -6,6 +6,8 @@ MainWindow::MainWindow(QWidget *parent)
         : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
     gameController = QLinkGameController::getInstance();
+    characterManager = QCharacterManager::getInstance();
+
     setGeometry(0, 0, 1920, 1080);
     setWindowTitle("QLink");
 
@@ -52,23 +54,16 @@ MainWindow::MainWindow(QWidget *parent)
 
     characters = new QCharacterWidget *[2];
 
-    characters[0] = new QCharacterWidget(0);
-    characters[0]->setParent(this);
-    characters[0]->setSize(squarePanel->getSquareSize());
-    characters[0]->spawn();
-    QCharacterManager::getInstance()->addCharacter(characters[0]);
-
-
     countDownLCD = new QLCDNumber(this);
     countDownLCD->setGeometry(940, 50, 100, 40);
     countDownLCD->display(0);
 
-    pauseContinueButton = new QPauseContinueButton;
-    pauseContinueButton->setParent(this);
-    pauseContinueButton->setGeometry(250, 600, 150, 150);
-    pauseContinueButton->initAndShow();
+//    pauseContinueButton = new QPauseContinueButton;
+//    pauseContinueButton->setParent(this);
+//    pauseContinueButton->setGeometry(250, 600, 150, 150);
+//    pauseContinueButton->initAndShow();
 
-    QApplication::connect(pauseContinueButton, &QPauseContinueButton::clicked, gameController, &QLinkGameController::pauseOrContinue);
+//    QApplication::connect(pauseContinueButton, &QPauseContinueButton::clicked, gameController, &QLinkGameController::pauseOrContinue);
 
 //    jewel = new HintJewel;
 //    jewel->setParent(this);
@@ -79,12 +74,26 @@ MainWindow::MainWindow(QWidget *parent)
 
     setFocus();
 
+    QApplication::connect(characterManager, SIGNAL(spawn(int, QPoint, MoveMode)), this, SLOT(spawnCharacter(int, QPoint, MoveMode)));
     QApplication::connect(gameController, SIGNAL(formJewel(QLinkGameItem *, QPoint)), this, SLOT(renderJewel(QLinkGameItem *, QPoint)));
     QApplication::connect(startButton, &QPushButton::clicked, this, &MainWindow::startGame);
     QApplication::connect(squarePanel, SIGNAL(link(QString)), linkStatusLabel, SLOT(setText(QString)));
     QApplication::connect(gameController, SIGNAL(timeChanged(int)), countDownLCD, SLOT(display(int)));
     QApplication::connect(gameController, SIGNAL(gameOver(QString)), this, SLOT(showGameOverTips(QString)));
     QApplication::connect(gameController, SIGNAL(scoreChanged(QString)), scoreLabel, SLOT(setText(QString)));
+
+
+    QLinkArchiveManager::getInstance()->loadArchive();
+}
+
+void MainWindow::spawnCharacter(int id, const QPoint &pos, MoveMode moveMode) {
+    qDebug() << "called " << id << " " << pos << " " << moveMode << endl;
+    assert(id >= 0 && id <= 1);
+    characters[id] = characterManager->getCharacter(id);
+    characters[id]->setParent(this);
+    characters[id]->setSize(squarePanel->getSquareSize());
+    characters[id]->spawn(pos);
+    characters[id]->setMoveMode(moveMode);
 }
 
 void MainWindow::startGame()

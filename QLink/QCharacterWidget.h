@@ -16,7 +16,7 @@ public:
 
     enum MoveMode { COMMON, FLASH, FROZEN };
 
-    void spawn();
+    void spawn(const QPoint &pos);
 
     void setWidth(int w);
 

@@ -14,6 +14,7 @@
 #include "QCharacterWidget.h"
 #include "QCharacterManager.h"
 #include "QPauseContinueButton.h"
+#include "QLinkArchiveManager.h"
 #include "Jewels.h"
 
 QT_BEGIN_NAMESPACE
@@ -48,6 +49,7 @@ private:
     QLinkGameItem *jewel;
 
     QLinkGameController *gameController;
+    QCharacterManager *characterManager;
 
     void startGame();
 protected:
@@ -58,5 +60,7 @@ private slots:
     void showGameOverTips(const QString &tips);
 
     void renderJewel(QLinkGameItem *jewel, const QPoint &pos);
+
+    void spawnCharacter(int id, const QPoint &pos, MoveMode moveMode);
 };
 #endif // MAINWINDOW_H

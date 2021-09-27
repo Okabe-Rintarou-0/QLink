@@ -24,7 +24,9 @@ public:
     QPoint pos;
     MoveMode moveMode;
 
-    QJsonObject parse() const;
+    QJsonObject toJson() const;
+
+    void parse(const QJsonObject &jsonObj);
 };
 
 class QPlayerInfo{
@@ -37,7 +39,9 @@ public:
 
     QVector<QCharacterInfo> characters;
 
-    QJsonObject parse() const;
+    QJsonObject toJson() const;
+
+    void parse(const QJsonObject &jsonObj);
 };
 
 class QSquareInfo {
@@ -48,7 +52,9 @@ public:
 
     ~QSquareInfo() = default;
 
-    QJsonObject parse() const;
+    QJsonObject toJson() const;
+
+    void parse(const QJsonObject &jsonObj);
 
     QPoint pos;
     int iconIndex;
@@ -62,7 +68,9 @@ public:
 
     ~QGlobalInfo() = default;
 
-    QJsonObject parse() const;
+    QJsonObject toJson() const;
+
+    void parse(const QJsonObject &jsonObj);
 
     int restTime;
     int scores;
@@ -76,7 +84,9 @@ public:
 
     ~QJewelInfo() = default;
 
-    QJsonObject parse() const;
+    QJsonObject toJson() const;
+
+    void parse(const QJsonObject &jsonObj);
 
     JewelType jewelType;
     QPoint pos;
@@ -92,7 +102,9 @@ public:
 
     void addJewel(const QJewelInfo &jewel);
 
-    QJsonObject parse() const;
+    QJsonObject toJson() const;
+
+    void parse(const QJsonObject &jsonObj);
 
     QVector<QJewelInfo> jewels;
 };
@@ -109,7 +121,9 @@ public:
 
     QSquarePanelInfo(const QSize &size);
 
-    QJsonObject parse() const;
+    QJsonObject toJson() const;
+
+    void parse(const QJsonObject &jsonObj);
 
     void addSquareInfo(const QSquareInfo &squareInfo);
 };
@@ -128,8 +142,10 @@ public:
 
     void buildGameItemPart(const QGameItemInfo &gameItemInfo);
 
-    QJsonObject parse() const;
-private:
+    QJsonObject toJson() const;
+
+    void parse(const QJsonObject &jsonObj);
+
     QPlayerInfo playerInfo;
     QSquarePanelInfo squarePanelInfo;
     QGlobalInfo globalInfo;

@@ -11,9 +11,32 @@ QLinkArchiveManager *QLinkArchiveManager::getInstance() {
     return instance;
 }
 
-QLinkArchive QLinkArchiveManager::loadArchive() const {
+void QLinkArchiveManager::loadArchive() const {
     QLinkArchive archive;
-//    archive.buildCharacterPart(QChara)
+    QJsonDocument jdoc;
+    //打开文件
+    QFile file(FileConstants::ARCHIVE_URL);
+    if(!file.open(QIODevice::ReadOnly)) {
+        qDebug() << "File open failed!";
+    } else {
+        qDebug() <<"File open successfully!";
+    }
+    QJsonParseError *error=new QJsonParseError;
+    jdoc = QJsonDocument::fromJson(file.readAll(),error);
+
+    //判断文件是否完整
+    if(error->error != QJsonParseError::NoError)
+    {
+      qDebug()<<"parseJson:"<<error->errorString();
+    }
+
+    qDebug() << jdoc.toJson() << endl;
+    archive.parse(jdoc.object());
+
+    QLinkGameController::getInstance()->loadFromArchive(archive.globalInfo);
+    QCharacterManager::getInstance()->loadFromArchive(archive.playerInfo);
+    QSquarePanelWidget::getInstance()->loadFromArchive(archive.squarePanelInfo);
+    QLinkGameController::getInstance()->loadFromArchive(archive.gameItemInfo);
 }
 
 void QLinkArchiveManager::saveArchive() const {
@@ -23,17 +46,21 @@ void QLinkArchiveManager::saveArchive() const {
     archive.buildGameItemPart(QLinkGameController::getInstance()->getGameItemInfo());
     archive.buildSquarePart(QSquarePanelWidget::getInstance()->getSquarePanelInfo());
 
+    QJsonObject jsonObj = archive.toJson();
+
+    QJsonDocument jdoc;
+    jdoc.setObject(jsonObj);
+
     //open archive
-    QString archiveUrl = FileConstants::ARCHIVE_URL;
-    QFile file(archiveUrl);
+    QFile file(FileConstants::ARCHIVE_URL);
     if(!file.open(QIODevice::WriteOnly)) {
         qDebug() << "File open failed!";
     } else {
-        qDebug() <<"File open successfully!";
+        qDebug() << "File open successfully!";
+        file.write(jdoc.toJson(QJsonDocument::Indented));
+        qDebug() << "write: " << jdoc.toJson(QJsonDocument::Indented) << endl;
+        file.close();
     }
-
-    QJsonObject jsonObj;
-
 }
 
 QLinkArchiveManager *QLinkArchiveManager::instance;

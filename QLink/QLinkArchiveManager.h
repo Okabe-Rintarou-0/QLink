@@ -17,7 +17,7 @@ private:
 public:
     ~QLinkArchiveManager() = default;
 
-    QLinkArchive loadArchive() const;
+    void loadArchive() const;
 
     void saveArchive() const;
 

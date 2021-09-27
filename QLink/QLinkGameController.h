@@ -32,6 +32,10 @@ public:
 
     void pauseOrContinue();
 
+    void loadFromArchive(const QGlobalInfo &globalInfo);
+
+    void loadFromArchive(const QGameItemInfo &gameItemInfo);
+
     QGameItemInfo getGameItemInfo() const;
 
     QGlobalInfo getGlobalInfo() const;
@@ -50,6 +54,8 @@ private:
 
     ~QLinkGameController();
 
+    QPoint getRandomFormPoint();
+
     void startCountDown();
 
     void countDown();
@@ -57,6 +63,8 @@ private:
     QLinkGameItem *getJewel(JewelType jewelType);
 
     void formJewel();
+
+    void formJewel(JewelType jewelType, const QPoint &pos);
 
     void pauseGame();
 
