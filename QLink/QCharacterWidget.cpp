@@ -1,6 +1,6 @@
 #include "QCharacterWidget.h"
 
-QCharacterWidget::QCharacterWidget(int id): id(id) {
+QCharacterWidget::QCharacterWidget(int id) : id(id) {
     setAutoFillBackground(true);
     moveSpeed = DEFAULT_MOVE_SPEED;
 }
@@ -72,13 +72,13 @@ QCharacterWidget::MoveMode QCharacterWidget::getMoveMode() const {
 void QCharacterWidget::startDash(int id) {
     if (this->id == id) {
         moveMode = FLASH;
-        QTimer::singleShot(5000, this, [&](){
+        QTimer::singleShot(5000, this, [&]() {
             moveMode = MoveMode::COMMON;
         });
     }
 }
 
-void QCharacterWidget::move(Direction direction){
+void QCharacterWidget::move(Direction direction) {
     if (moveMode == FROZEN) return;
     switch (direction) {
         case Direction::Up:

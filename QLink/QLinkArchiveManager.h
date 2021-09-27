@@ -1,5 +1,6 @@
 #ifndef QLINKARCHIVEMANAGER_H
 #define QLINKARCHIVEMANAGER_H
+
 #include <QJsonObject>
 #include <QJsonDocument>
 #include <QJsonArray>
@@ -8,10 +9,10 @@
 #include "QLinkGameController.h"
 #include "FileConstants.h"
 
-class QLinkArchiveManager
-{
+class QLinkArchiveManager {
 private:
     QLinkArchiveManager();
+
     static QLinkArchiveManager *instance;
 
 public:

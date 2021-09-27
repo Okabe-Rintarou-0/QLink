@@ -6,6 +6,7 @@
 class RandomUtil {
 public:
     static int randRange(int min, int max);
+
     static int randomSeed();
 };
 

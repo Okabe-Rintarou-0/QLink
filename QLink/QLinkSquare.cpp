@@ -2,44 +2,38 @@
 #include "QSquareImageManager.h"
 #include "ImageUtil.h"
 #include "QStyleSheetBuilder.h"
-QLinkSquare::QLinkSquare()
-{
+
+QLinkSquare::QLinkSquare() {
     activated = false;
     widget = new QWidget;
     widget->setAutoFillBackground(true);
 }
 
-QLinkSquare::~QLinkSquare()
-{
+QLinkSquare::~QLinkSquare() {
     //delete widget;
 }
 
-void QLinkSquare::setBonus(int bonus)
-{
+void QLinkSquare::setBonus(int bonus) {
     this->bonus = bonus;
 }
 
-QWidget *QLinkSquare::getWidget()
-{
+QWidget *QLinkSquare::getWidget() {
     return widget;
 }
 
-void QLinkSquare::setSize(int w, int h)
-{
+void QLinkSquare::setSize(int w, int h) {
     this->w = w;
     this->h = h;
 }
 
-void QLinkSquare::setIcon(int iconIndex)
-{
+void QLinkSquare::setIcon(int iconIndex) {
     this->iconIndex = iconIndex;
     icon = QSquareImageManager::getInstance()->getIcon(iconIndex);
     icon = icon.scaled(QSize(w, h));
     ImageUtil::setBorder(icon, DEFAULT_BORDER_COLOR, 2);
 }
 
-void QLinkSquare::activate()
-{
+void QLinkSquare::activate() {
     ImageUtil::setBorder(icon, DEFAULT_ACTIVATE_BORDER_COLOR, 2);
     activated = true;
     renderIcon();
@@ -50,37 +44,31 @@ void QLinkSquare::highlight() {
     renderIcon();
 }
 
-void QLinkSquare::renderIcon()
-{
+void QLinkSquare::renderIcon() {
     QPalette palette;
     palette.setBrush(widget->backgroundRole(), QBrush(icon));
     widget->setPalette(palette);
 }
 
-bool QLinkSquare::isActivated() const
-{
+bool QLinkSquare::isActivated() const {
     return activated;
 }
 
-int QLinkSquare::getIconIndex() const
-{
+int QLinkSquare::getIconIndex() const {
     return iconIndex;
 }
 
-bool QLinkSquare::equals(QLinkSquare *other) const
-{
+bool QLinkSquare::equals(QLinkSquare *other) const {
     return other != nullptr && other->getIconIndex() == iconIndex;
 }
 
-void QLinkSquare::reset()
-{
+void QLinkSquare::reset() {
     activated = false;
     ImageUtil::setBorder(icon, DEFAULT_BORDER_COLOR, 2);
     renderIcon();
 }
 
-void QLinkSquare::clearIcon()
-{
+void QLinkSquare::clearIcon() {
     widget->setPalette(QPalette());
 }
 

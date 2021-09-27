@@ -1,6 +1,6 @@
 #include "QLinkArchiveManager.h"
 
-QLinkArchiveManager::QLinkArchiveManager(){
+QLinkArchiveManager::QLinkArchiveManager() {
     instance = nullptr;
 }
 
@@ -16,18 +16,17 @@ void QLinkArchiveManager::loadArchive() const {
     QJsonDocument jdoc;
     //打开文件
     QFile file(FileConstants::ARCHIVE_URL);
-    if(!file.open(QIODevice::ReadOnly)) {
+    if (!file.open(QIODevice::ReadOnly)) {
         qDebug() << "File open failed!";
     } else {
-        qDebug() <<"File open successfully!";
+        qDebug() << "File open successfully!";
     }
-    QJsonParseError *error=new QJsonParseError;
-    jdoc = QJsonDocument::fromJson(file.readAll(),error);
+    QJsonParseError *error = new QJsonParseError;
+    jdoc = QJsonDocument::fromJson(file.readAll(), error);
 
     //判断文件是否完整
-    if(error->error != QJsonParseError::NoError)
-    {
-      qDebug()<<"parseJson:"<<error->errorString();
+    if (error->error != QJsonParseError::NoError) {
+        qDebug() << "parseJson:" << error->errorString();
     }
 
     qDebug() << jdoc.toJson() << endl;
@@ -53,7 +52,7 @@ void QLinkArchiveManager::saveArchive() const {
 
     //open archive
     QFile file(FileConstants::ARCHIVE_URL);
-    if(!file.open(QIODevice::WriteOnly)) {
+    if (!file.open(QIODevice::WriteOnly)) {
         qDebug() << "File open failed!";
     } else {
         qDebug() << "File open successfully!";

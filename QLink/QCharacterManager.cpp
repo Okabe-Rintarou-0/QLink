@@ -24,14 +24,14 @@ void QCharacterManager::addCharacter(QCharacterWidget *character) {
 }
 
 QCharacterWidget *QCharacterManager::getCharacter(int id) {
-    assert(id >= 0 && id <=1);
+    assert(id >= 0 && id <= 1);
     if (characters[id] == nullptr)
         characters[id] = new QCharacterWidget(id);
     return characters[id];
 }
 
-QVector<QCharacterInfo> QCharacterManager::getCharacterInfos() const {
-    QVector<QCharacterInfo> characterInfos;
+QVector <QCharacterInfo> QCharacterManager::getCharacterInfos() const {
+    QVector <QCharacterInfo> characterInfos;
     for (int i = 0; i < 2; ++i) {
         QCharacterWidget *c = characters[i];
         if (c != nullptr)

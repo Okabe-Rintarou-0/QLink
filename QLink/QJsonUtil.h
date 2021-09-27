@@ -1,12 +1,12 @@
 #ifndef QJSONUTIL_H
 #define QJSONUTIL_H
+
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QPoint>
 
-class QJsonUtil
-{
+class QJsonUtil {
 public:
     static QJsonObject toJson(const QPoint &p);
 

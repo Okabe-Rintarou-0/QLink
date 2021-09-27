@@ -1,5 +1,6 @@
 #ifndef QLINKARCHIVE_H
 #define QLINKARCHIVE_H
+
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QJsonDocument>
@@ -29,15 +30,15 @@ public:
     void parse(const QJsonObject &jsonObj);
 };
 
-class QPlayerInfo{
+class QPlayerInfo {
 public:
-    QPlayerInfo(const QVector<QCharacterInfo> &characters);
+    QPlayerInfo(const QVector <QCharacterInfo> &characters);
 
     QPlayerInfo() = default;
 
     ~QPlayerInfo() = default;
 
-    QVector<QCharacterInfo> characters;
+    QVector <QCharacterInfo> characters;
 
     QJsonObject toJson() const;
 
@@ -94,7 +95,7 @@ public:
 
 class QGameItemInfo {
 public:
-    QGameItemInfo(const QVector<QJewelInfo> &jewels);
+    QGameItemInfo(const QVector <QJewelInfo> &jewels);
 
     QGameItemInfo() = default;
 
@@ -106,18 +107,18 @@ public:
 
     void parse(const QJsonObject &jsonObj);
 
-    QVector<QJewelInfo> jewels;
+    QVector <QJewelInfo> jewels;
 };
 
 class QSquarePanelInfo {
 public:
     int w;
     int h;
-    QVector<QSquareInfo> squareInfos;
+    QVector <QSquareInfo> squareInfos;
 
     QSquarePanelInfo() = default;
 
-    QSquarePanelInfo(const QSize &size, const QVector<QSquareInfo> &squareInfos);
+    QSquarePanelInfo(const QSize &size, const QVector <QSquareInfo> &squareInfos);
 
     QSquarePanelInfo(const QSize &size);
 

@@ -1,9 +1,9 @@
 #ifndef FLASHJEWEL_H
 #define FLASHJEWEL_H
+
 #include "QLinkGameItem.h"
 
-class FlashJewel: public QLinkGameItem
-{
+class FlashJewel : public QLinkGameItem {
 public:
     FlashJewel();
 

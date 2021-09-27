@@ -15,6 +15,7 @@
 #include "QCharacterManager.h"
 
 typedef QLinkGameItem::JewelType JewelType;
+
 class QLinkGameController : public QObject {
     Q_OBJECT
 public:
@@ -75,8 +76,11 @@ protected:
 
 signals:
     void timeChanged(int sec);
+
     void scoreChanged(const QString &);
+
     void gameOver(const QString &);
+
     void formJewel(QLinkGameItem *jewel, const QPoint &pos);
 };
 

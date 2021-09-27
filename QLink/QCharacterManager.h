@@ -27,7 +27,7 @@ private:
 
     QCharacterManager();
 
-    QVector<QCharacterInfo> getCharacterInfos() const;
+    QVector <QCharacterInfo> getCharacterInfos() const;
 
 signals:
     void spawn(int id, const QPoint &pos, MoveMode moveMode);

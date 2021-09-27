@@ -16,11 +16,11 @@ void QCharacterInfo::parse(const QJsonObject &jsonObj) {
     if (jsonObj.contains("pos") && jsonObj.contains("moveMode")) {
         pos = QJsonUtil::toQPoint(jsonObj["pos"].toObject());
         moveMode = static_cast<MoveMode>(jsonObj["moveMode"].toInt());
-        qDebug() << "Parse: pos = " << pos << " moveMode = " << moveMode <<endl;
+        qDebug() << "Parse: pos = " << pos << " moveMode = " << moveMode << endl;
     }
 }
 
-QPlayerInfo::QPlayerInfo(const QVector<QCharacterInfo> &characters) {
+QPlayerInfo::QPlayerInfo(const QVector <QCharacterInfo> &characters) {
     this->characters = characters;
 }
 
@@ -63,7 +63,7 @@ void QSquareInfo::parse(const QJsonObject &jsonObj) {
     if (jsonObj.contains("pos") && jsonObj.contains("iconIndex")) {
         pos = QJsonUtil::toQPoint(jsonObj["pos"].toObject());
         iconIndex = jsonObj["iconIndex"].toInt();
-        qDebug() << "Parse: pos = " << pos << " iconIndex = " << iconIndex <<endl;
+        qDebug() << "Parse: pos = " << pos << " iconIndex = " << iconIndex << endl;
     }
 }
 
@@ -72,7 +72,7 @@ QSquarePanelInfo::QSquarePanelInfo(const QSize &size) {
     this->h = size.height();
 }
 
-QSquarePanelInfo::QSquarePanelInfo(const QSize &size, const QVector<QSquareInfo> &squareInfos) {
+QSquarePanelInfo::QSquarePanelInfo(const QSize &size, const QVector <QSquareInfo> &squareInfos) {
     this->w = size.width();
     this->h = size.height();
     this->squareInfos = squareInfos;
@@ -98,7 +98,7 @@ void QSquarePanelInfo::parse(const QJsonObject &jsonObj) {
     if (jsonObj.contains("w") && jsonObj.contains("h") && jsonObj.contains("squares")) {
         w = jsonObj["w"].toInt();
         h = jsonObj["h"].toInt();
-        qDebug() << "Parse: w = " << w << " h = " << h <<endl;
+        qDebug() << "Parse: w = " << w << " h = " << h << endl;
         QJsonArray squares = jsonObj["squares"].toArray();
         int len = squares.size();
         squareInfos.clear();
@@ -126,7 +126,7 @@ void QGlobalInfo::parse(const QJsonObject &jsonObj) {
     if (jsonObj.contains("restTime") && jsonObj.contains("scores")) {
         restTime = jsonObj["restTime"].toInt();
         scores = jsonObj["scores"].toInt();
-        qDebug() << "Parse: scores = " << scores << " restTime = " << restTime <<endl;
+        qDebug() << "Parse: scores = " << scores << " restTime = " << restTime << endl;
     }
 }
 
@@ -146,11 +146,11 @@ void QJewelInfo::parse(const QJsonObject &jsonObj) {
     if (jsonObj.contains("pos") && jsonObj.contains("jewelType")) {
         pos = QJsonUtil::toQPoint(jsonObj["pos"].toObject());
         jewelType = static_cast<JewelType>(jsonObj["jewelType"].toInt());
-        qDebug() << "Parse: pos = " << pos << " jewelType = " << jewelType <<endl;
+        qDebug() << "Parse: pos = " << pos << " jewelType = " << jewelType << endl;
     }
 }
 
-QGameItemInfo::QGameItemInfo(const QVector<QJewelInfo> &jewels) {
+QGameItemInfo::QGameItemInfo(const QVector <QJewelInfo> &jewels) {
     this->jewels = jewels;
 }
 
@@ -191,7 +191,8 @@ QJsonObject QLinkArchive::toJson() const {
 }
 
 void QLinkArchive::parse(const QJsonObject &jsonObj) {
-    if (jsonObj.contains("playerInfo") && jsonObj.contains("squarePanelInfo") && jsonObj.contains("globalInfo") && jsonObj.contains("gameItemInfo")) {
+    if (jsonObj.contains("playerInfo") && jsonObj.contains("squarePanelInfo") && jsonObj.contains("globalInfo") &&
+        jsonObj.contains("gameItemInfo")) {
         playerInfo.parse(jsonObj["playerInfo"].toObject());
         squarePanelInfo.parse(jsonObj["squarePanelInfo"].toObject());
         globalInfo.parse(jsonObj["globalInfo"].toObject());

@@ -124,8 +124,7 @@ QPoint QLinkGameController::getRandomFormPoint() {
     do {
         if (RandomUtil::randRange(0, 1)) {
             x = RandomUtil::randRange(150, minX - 150);
-        }
-        else
+        } else
             x = RandomUtil::randRange(maxX + 150, 1810);
 
         y = RandomUtil::randRange(minY, maxY);
@@ -138,14 +137,14 @@ QPoint QLinkGameController::getRandomFormPoint() {
             if (diffX * diffX + diffY * diffY <= 25)
                 valid = false;
         }
-    } while(!valid);
+    } while (!valid);
     return QPoint(x, y);
 }
 
 //Form jewels. Game items.
 ///Form pos need to be optimized
 void QLinkGameController::formJewel() {
-    JewelType jewelType = (JewelType)RandomUtil::randRange(0, 3);
+    JewelType jewelType = (JewelType) RandomUtil::randRange(0, 3);
     QPoint randomPos = getRandomFormPoint();
     formJewel(jewelType, randomPos);
 }
@@ -154,7 +153,7 @@ void QLinkGameController::formJewel() {
 void QLinkGameController::formJewel(JewelType jewelType, const QPoint &pos) {
     QLinkGameItem *jewel = getJewel(jewelType);
 
-    QApplication::connect(jewel, &QLinkGameItem::picked, this, [=](){
+    QApplication::connect(jewel, &QLinkGameItem::picked, this, [=]() {
         jewels.remove(jewel);
     });
     jewels.insert(jewel);

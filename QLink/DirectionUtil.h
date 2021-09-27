@@ -2,8 +2,7 @@
 #define DIRECTIONUTIL_H
 
 
-class DirectionUtil
-{
+class DirectionUtil {
 public:
     enum Direction {
         None = -1, Left = 0, Right, Up, Down
