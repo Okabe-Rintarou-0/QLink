@@ -170,7 +170,7 @@ QJsonObject QGameItemInfo::toJson() const {
 
 void QGameItemInfo::parse(const QJsonObject &jsonObj) {
     if (jsonObj.contains("jewels")) {
-        QJsonArray jewels = jsonObj["jewel"].toArray();
+        QJsonArray jewels = jsonObj["jewels"].toArray();
         int len = jewels.size();
         this->jewels.clear();
         for (int i = 0; i < len; ++i) {

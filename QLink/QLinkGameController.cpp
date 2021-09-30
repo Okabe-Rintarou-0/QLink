@@ -43,6 +43,7 @@ void QLinkGameController::loadFromArchive(const QGlobalInfo &globalInfo) {
 
 void QLinkGameController::loadFromArchive(const QGameItemInfo &gameItemInfo) {
     for (QJewelInfo jewelInfo: gameItemInfo.jewels) {
+        qDebug() << "form jewel " << jewelInfo.jewelType << " " << jewelInfo.pos << endl;
         formJewel(jewelInfo.jewelType, jewelInfo.pos);
     }
 }

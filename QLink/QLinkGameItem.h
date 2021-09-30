@@ -9,7 +9,7 @@ class QLinkGameItem: public QWidget
 {
     Q_OBJECT
 public:
-    enum JewelType { UNDEFINED, TIME, FLASH, SHUFFLE, HINT };
+    enum JewelType { UNDEFINED = -1, TIME, FLASH, SHUFFLE, HINT };
 
     QLinkGameItem(const QString &imgPath);
 

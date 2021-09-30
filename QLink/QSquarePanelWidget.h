@@ -14,6 +14,7 @@
 #include "QLinkArchive.h"
 #include "QLinkSquare.h"
 #include "DirectionUtil.h"
+#include "QUnitTest.h"
 
 typedef DirectionUtil::Direction Direction;
 class QSquarePanelWidget : public QWidget {
@@ -111,6 +112,8 @@ private:
 
     static QSquarePanelWidget *instance;
 public:
+    friend class QUnitTest;
+
     static QSquarePanelWidget *getInstance();
 
     ~QSquarePanelWidget();

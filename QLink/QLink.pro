@@ -1,4 +1,4 @@
-QT       += core gui
+QT       += core gui testlib
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -24,6 +24,7 @@ SOURCES += \
     QLinkArchive.cpp \
     QLinkArchiveManager.cpp \
     QPauseContinueButton.cpp \
+    QUnitTest.cpp \
     ShuffleJewel.cpp \
     TimeJewel.cpp \
     DirectionUtil.cpp \
@@ -49,6 +50,7 @@ HEADERS += \
     QLinkArchive.h \
     QLinkArchiveManager.h \
     QPauseContinueButton.h \
+    QUnitTest.h \
     ShuffleJewel.h \
     TimeJewel.h \
     DirectionUtil.h \

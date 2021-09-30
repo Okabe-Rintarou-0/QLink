@@ -48,9 +48,12 @@ MainWindow::MainWindow(QWidget *parent)
     startButton->setText("开始游戏");
     startButton->setGeometry(1050, 930, 80, 40);
 
-//    testBtn = new QPushButton(this);
-//    testBtn->setText("重新布局");
-//    testBtn->setGeometry(1250, 930, 80, 40);
+    testBtn = new QPushButton(this);
+    testBtn->setText("存档");
+    testBtn->setGeometry(1250, 930, 80, 40);
+    QApplication::connect(testBtn, &QPushButton::clicked, this, [=](){
+        QLinkArchiveManager::getInstance()->saveArchive();
+    });
 
     characters = new QCharacterWidget *[2];
 
@@ -83,11 +86,11 @@ MainWindow::MainWindow(QWidget *parent)
     QApplication::connect(gameController, SIGNAL(scoreChanged(QString)), scoreLabel, SLOT(setText(QString)));
 
 
-    QLinkArchiveManager::getInstance()->loadArchive();
+//    QLinkArchiveManager::getInstance()->loadArchive();
 }
 
 void MainWindow::spawnCharacter(int id, const QPoint &pos, MoveMode moveMode) {
-    qDebug() << "called " << id << " " << pos << " " << moveMode << endl;
+//    qDebug() << "called " << id << " " << pos << " " << moveMode << endl;
     assert(id >= 0 && id <= 1);
     characters[id] = characterManager->getCharacter(id);
     characters[id]->setParent(this);
@@ -127,7 +130,7 @@ void MainWindow::mousePressEvent(QMouseEvent *event) {
 }
 
 void MainWindow::renderJewel(QLinkGameItem *jewel, const QPoint &pos) {
-    qDebug() << "pos: " << pos << endl;
+    qDebug() << "render jewel at pos: " << pos << endl;
     jewel->setGeometry(pos.x(), pos.y(), 50, 50);
     jewel->setParent(this);
     for (int i = 0; i < 1; ++i) {

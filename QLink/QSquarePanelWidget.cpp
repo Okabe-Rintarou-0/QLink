@@ -411,10 +411,11 @@ void QSquarePanelWidget::shuffle() {
 }
 
 //check if it's blocked
-bool QSquarePanelWidget::checkVertical(const QPoint &p1, const QPoint &p2) const {
-    int x1 = p1.x(), y1 = p1.y(), x2 = p2.x();
+//consume map point mp1, mp2
+bool QSquarePanelWidget::checkVertical(const QPoint &mp1, const QPoint &mp2) const {
+    int x1 = mp1.x(), y1 = mp1.y(), x2 = mp2.x();
     if (x1 == x2) return false;
-//    qDebug() << "check vertical: " << "p1: " << p1 << "p2: " << p2 << endl;
+//    qDebug() << "check vertical: " << "mp1: " << mp1 << "mp2: " << mp2 << endl;
     int minX = qMin(x1, x2);
     int maxX = qMax(x1, x2);
     for (int x = minX + 1; x < maxX; ++x)
@@ -424,10 +425,12 @@ bool QSquarePanelWidget::checkVertical(const QPoint &p1, const QPoint &p2) const
     return true;
 }
 
-bool QSquarePanelWidget::checkHorizontal(const QPoint &p1, const QPoint &p2) const {
-    int x1 = p1.x(), y1 = p1.y(), y2 = p2.y();
+//check if it's blocked
+//consume map point mp1, mp2
+bool QSquarePanelWidget::checkHorizontal(const QPoint &mp1, const QPoint &mp2) const {
+    int x1 = mp1.x(), y1 = mp1.y(), y2 = mp2.y();
     if (y1 == y2) return false;
-//    qDebug() << "check horizontal: " << "p1: " << p1 << "p2: " << p2 << endl;
+//    qDebug() << "check horizontal: " << "mp1: " << mp1 << "mp2: " << mp2 << endl;
     int minY = qMin(y1, y2);
     int maxY = qMax(y1, y2);
     for (int y = minY + 1; y < maxY; ++y)
@@ -449,7 +452,7 @@ bool QSquarePanelWidget::checkOneCorner(const QPoint &p1, const QPoint &p2) cons
     QPoint corner_2 = toMapPoint(p1.x(), p2.y());
     bool ret = (canPassBy(corner_1) && checkVertical(mp1, corner_1) && checkHorizontal(corner_1, mp2)) ||
                (canPassBy(corner_2) && checkHorizontal(mp1, corner_2) && checkVertical(corner_2, mp2));
-    if (ret) qDebug() << "one corner check passed" << endl;
+//    if (ret) qDebug() << "one corner check passed" << endl;
     return ret;
 }
 
@@ -462,7 +465,7 @@ bool QSquarePanelWidget::checkTwoCorner(const QPoint &p1, const QPoint &p2) cons
         QPoint corner_2(mx2, j);
         if (!canPassBy(corner_1) || !canPassBy(corner_2)) continue;
         if (checkVertical(corner_1, corner_2) && checkHorizontal(mp1, corner_1) && checkHorizontal(mp2, corner_2)) {
-            qDebug() << "two corner check passed" << endl;
+//            qDebug() << "two corner check passed" << endl;
             return true;
         }
     }
@@ -473,7 +476,7 @@ bool QSquarePanelWidget::checkTwoCorner(const QPoint &p1, const QPoint &p2) cons
         QPoint corner_2(i, my2);
         if (!canPassBy(corner_1) || !canPassBy(corner_2)) continue;
         if (checkHorizontal(corner_1, corner_2) && checkVertical(mp1, corner_1) && checkVertical(mp2, corner_2)) {
-            qDebug() << "two corner check passed" << endl;
+//            qDebug() << "two corner check passed" << endl;
             return true;
         }
     }
