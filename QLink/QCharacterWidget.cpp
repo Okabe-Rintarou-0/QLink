@@ -29,6 +29,7 @@ void QCharacterWidget::spawn(const QPoint &pos) {
     QPalette palette;
     palette.setBrush(backgroundRole(), QBrush(character.scaled(width(), height())));
     setPalette(palette);
+    show();
     qDebug() << "spawn here: " << pos << "and size = " << w << "*" << h << endl;
 }
 

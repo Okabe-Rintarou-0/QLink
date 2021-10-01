@@ -27,6 +27,8 @@ private:
 
     QCharacterManager();
 
+    ~QCharacterManager();
+
     QVector <QCharacterInfo> getCharacterInfos() const;
 
 signals:

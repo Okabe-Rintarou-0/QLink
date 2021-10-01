@@ -25,11 +25,12 @@ SOURCES += \
     QLinkArchiveManager.cpp \
     QPauseContinueButton.cpp \
     QUnitTest.cpp \
+    QWindowManager.cpp \
     ShuffleJewel.cpp \
     TimeJewel.cpp \
     DirectionUtil.cpp \
     main.cpp \
-    mainwindow.cpp \
+    GameWindow.cpp \
     QCharacterWidget.cpp \
     QLinkCanvas.cpp \
     QLinkGameController.cpp \
@@ -45,18 +46,20 @@ HEADERS += \
     FlashJewel.h \
     HintJewel.h \
     Jewels.h \
+    MenuSelection.h \
     QCharacterManager.h \
     QJsonUtil.h \
     QLinkArchive.h \
     QLinkArchiveManager.h \
     QPauseContinueButton.h \
     QUnitTest.h \
+    QWindowManager.h \
     ShuffleJewel.h \
     TimeJewel.h \
     DirectionUtil.h \
     FileConstants.h \
     ImageUtil.h \
-    mainwindow.h \
+    GameWindow.h \
     QCharacterWidget.h \
     QLinkCanvas.h \
     QLinkGameController.h \
@@ -69,7 +72,7 @@ HEADERS += \
     RandomUtil.h
 
 FORMS += \
-    mainwindow.ui \
+    GameWindow.ui \
     QLinkMenu.ui
 
 # Default rules for deployment.

@@ -13,6 +13,10 @@ QCharacterManager *QCharacterManager::getInstance() {
     return instance;
 }
 
+QCharacterManager::~QCharacterManager() {
+    delete instance;
+}
+
 QPlayerInfo QCharacterManager::getPlayerInfo() const {
     return QPlayerInfo(getCharacterInfos());
 }

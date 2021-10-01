@@ -11,6 +11,10 @@ QLinkArchiveManager *QLinkArchiveManager::getInstance() {
     return instance;
 }
 
+QLinkArchiveManager::~QLinkArchiveManager() {
+    delete instance;
+}
+
 void QLinkArchiveManager::loadArchive() const {
     QLinkArchive archive;
     QJsonDocument jdoc;

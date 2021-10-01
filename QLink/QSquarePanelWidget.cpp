@@ -12,6 +12,7 @@ QSquarePanelWidget::QSquarePanelWidget() {
 
 QSquarePanelWidget::~QSquarePanelWidget() {
     clear();
+    delete instance;
 }
 
 QSquarePanelWidget *QSquarePanelWidget::getInstance() {
@@ -232,6 +233,7 @@ void QSquarePanelWidget::searchForLinkPath(bool &found, QPoint curP, QPoint tgtP
         found = true;
         return;
     }
+
     QPair <Direction, Direction> relativeDirection = getRelativeDirection(curP, tgtP);
 
     QVector <Direction> directions = {Direction::Left, Direction::Right, Direction::Up, Direction::Down};

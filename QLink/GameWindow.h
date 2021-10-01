@@ -15,6 +15,7 @@
 #include "QCharacterManager.h"
 #include "QPauseContinueButton.h"
 #include "QLinkArchiveManager.h"
+#include "MenuSelection.h"
 #include "Jewels.h"
 
 QT_BEGIN_NAMESPACE
@@ -22,13 +23,17 @@ namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
 typedef QCharacterWidget::MoveMode MoveMode;
-class MainWindow : public QMainWindow {
+class GameWindow : public QMainWindow {
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
+    GameWindow(QWidget *parent = nullptr);
 
-    ~MainWindow();
+    ~GameWindow();
+
+    enum GameMode { ONE_PLAYER, TWO_PLAYER };
+
+    void startGame(GameMode gameMode = ONE_PLAYER);
 
 private:
     Ui::MainWindow *ui;
@@ -38,12 +43,12 @@ private:
     QSquarePanelWidget *squarePanel;
     QLabel *scoreLabel;
     QLinkCanvas *linkCanvas;
-    QPushButton *startButton;
+    QPushButton *retButton;
     QLabel *heightLabel;
     QLabel *widthLabel;
     QLabel *hintLabel;
     QLabel *linkStatusLabel;
-    QPushButton *testBtn;
+    QPushButton *saveBtn;
     QLCDNumber *countDownLCD;
     QPauseContinueButton *pauseContinueButton;
     QLinkGameItem *jewel;
@@ -51,7 +56,6 @@ private:
     QLinkGameController *gameController;
     QCharacterManager *characterManager;
 
-    void startGame();
 protected:
     void keyPressEvent(QKeyEvent *event);
 
@@ -62,5 +66,8 @@ private slots:
     void renderJewel(QLinkGameItem *jewel, const QPoint &pos);
 
     void spawnCharacter(int id, const QPoint &pos, MoveMode moveMode);
+
+signals:
+    void selected(MenuSelection::Selection selection);
 };
 #endif // MAINWINDOW_H

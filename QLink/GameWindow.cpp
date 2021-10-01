@@ -1,8 +1,8 @@
-#include "mainwindow.h"
+#include "GameWindow.h"
 #include "ui_mainwindow.h"
 #include <QDebug>
 
-MainWindow::MainWindow(QWidget *parent)
+GameWindow::GameWindow(QWidget *parent)
         : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
     gameController = QLinkGameController::getInstance();
@@ -44,14 +44,14 @@ MainWindow::MainWindow(QWidget *parent)
     heightSpinBox->setGeometry(990, 940, 40, 20);
     heightSpinBox->setValue(8);
 
-    startButton = new QPushButton(this);
-    startButton->setText("开始游戏");
-    startButton->setGeometry(1050, 930, 80, 40);
+    retButton = new QPushButton(this);
+    retButton->setText("返回菜单");
+    retButton->setGeometry(1050, 930, 80, 40);
 
-    testBtn = new QPushButton(this);
-    testBtn->setText("存档");
-    testBtn->setGeometry(1250, 930, 80, 40);
-    QApplication::connect(testBtn, &QPushButton::clicked, this, [=](){
+    saveBtn = new QPushButton(this);
+    saveBtn->setText("存档");
+    saveBtn->setGeometry(1150, 930, 80, 40);
+    QApplication::connect(saveBtn, &QPushButton::clicked, this, [=](){
         QLinkArchiveManager::getInstance()->saveArchive();
     });
 
@@ -79,7 +79,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     QApplication::connect(characterManager, SIGNAL(spawn(int, QPoint, MoveMode)), this, SLOT(spawnCharacter(int, QPoint, MoveMode)));
     QApplication::connect(gameController, SIGNAL(formJewel(QLinkGameItem *, QPoint)), this, SLOT(renderJewel(QLinkGameItem *, QPoint)));
-    QApplication::connect(startButton, &QPushButton::clicked, this, &MainWindow::startGame);
+    QApplication::connect(retButton, &QPushButton::clicked, this, [&](){
+        emit selected(MenuSelection::RET);
+    });
     QApplication::connect(squarePanel, SIGNAL(link(QString)), linkStatusLabel, SLOT(setText(QString)));
     QApplication::connect(gameController, SIGNAL(timeChanged(int)), countDownLCD, SLOT(display(int)));
     QApplication::connect(gameController, SIGNAL(gameOver(QString)), this, SLOT(showGameOverTips(QString)));
@@ -89,7 +91,7 @@ MainWindow::MainWindow(QWidget *parent)
 //    QLinkArchiveManager::getInstance()->loadArchive();
 }
 
-void MainWindow::spawnCharacter(int id, const QPoint &pos, MoveMode moveMode) {
+void GameWindow::spawnCharacter(int id, const QPoint &pos, MoveMode moveMode) {
 //    qDebug() << "called " << id << " " << pos << " " << moveMode << endl;
     assert(id >= 0 && id <= 1);
     characters[id] = characterManager->getCharacter(id);
@@ -99,29 +101,35 @@ void MainWindow::spawnCharacter(int id, const QPoint &pos, MoveMode moveMode) {
     characters[id]->setMoveMode(moveMode);
 }
 
-void MainWindow::startGame()
+void GameWindow::startGame(GameMode gameMode)
 {
     int w = widthSpinBox->value();
     int h = heightSpinBox->value();
-    if (h % 2 && w % 2)
-    {
+    if (h % 2 && w % 2) {
         QMessageBox::warning(this, "警告", "宽和高必须有一个是偶数！");
         return;
     }
+
+    int playerCnt = gameMode == ONE_PLAYER ? 1 : 2;
+    for (int i = 0; i < playerCnt; ++i) {
+        spawnCharacter(i, QPoint(200, 200), MoveMode::COMMON);
+    }
+
     gameController->startGame();
+
     squarePanel->resizeAndRender(w, h);
 }
 
-void MainWindow::showGameOverTips(const QString &tips)
+void GameWindow::showGameOverTips(const QString &tips)
 {
     QMessageBox::information(this, "提示", tips);
 }
 
-MainWindow::~MainWindow() {
+GameWindow::~GameWindow() {
     delete ui;
 }
 
-void MainWindow::mousePressEvent(QMouseEvent *event) {
+void GameWindow::mousePressEvent(QMouseEvent *event) {
     if (event->button() == Qt::LeftButton) {
         if (characters[0]->getMoveMode() == MoveMode::FLASH) {
             characters[0]->dash(event->pos());
@@ -129,7 +137,7 @@ void MainWindow::mousePressEvent(QMouseEvent *event) {
     }
 }
 
-void MainWindow::renderJewel(QLinkGameItem *jewel, const QPoint &pos) {
+void GameWindow::renderJewel(QLinkGameItem *jewel, const QPoint &pos) {
     qDebug() << "render jewel at pos: " << pos << endl;
     jewel->setGeometry(pos.x(), pos.y(), 50, 50);
     jewel->setParent(this);
@@ -142,7 +150,7 @@ void MainWindow::renderJewel(QLinkGameItem *jewel, const QPoint &pos) {
     jewel->show();
 }
 
-void MainWindow::keyPressEvent(QKeyEvent *e) {
+void GameWindow::keyPressEvent(QKeyEvent *e) {
     switch (e->key()) {
         case Qt::Key_A:
             characters[0]->move(Direction::Left);
