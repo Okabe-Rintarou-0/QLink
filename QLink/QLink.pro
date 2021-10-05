@@ -17,6 +17,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     FlashJewel.cpp \
+    GameSettingDialog.cpp \
     HintJewel.cpp \
     ImageUtil.cpp \
     QCharacterManager.cpp \
@@ -44,6 +45,7 @@ SOURCES += \
 
 HEADERS += \
     FlashJewel.h \
+    GameSettingDialog.h \
     HintJewel.h \
     Jewels.h \
     MenuSelection.h \
@@ -72,6 +74,7 @@ HEADERS += \
     RandomUtil.h
 
 FORMS += \
+    GameSettingDialog.ui \
     GameWindow.ui \
     QLinkMenu.ui
 

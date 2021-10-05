@@ -33,7 +33,9 @@ public:
 
     enum GameMode { ONE_PLAYER, TWO_PLAYER };
 
-    void startGame(GameMode gameMode = ONE_PLAYER);
+    void startGame(int w, int h, GameMode gameMode = ONE_PLAYER);
+
+    void endGame();
 
 private:
     Ui::MainWindow *ui;

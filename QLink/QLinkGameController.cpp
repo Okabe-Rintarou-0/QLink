@@ -21,6 +21,15 @@ void QLinkGameController::reset() {
     restTime = 120;
     emit scoreChanged("分数: " + QString::number(score));
     emit timeChanged(restTime);
+    for (QLinkGameItem *jewel:jewels){
+        jewel->setParent(nullptr);
+        jewels.remove(jewel);
+        delete jewel;
+    }
+}
+
+void QLinkGameController::endGame() {
+    reset();
 }
 
 void QLinkGameController::addScore(int increament) {

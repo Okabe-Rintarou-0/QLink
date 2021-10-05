@@ -4,6 +4,7 @@
 #include "QLinkArchiveManager.h"
 #include "QLinkMenu.h"
 #include "MenuSelection.h"
+#include "GameSettingDialog.h"
 
 typedef GameWindow::GameMode GameMode;
 class QWindowManager: public QObject
@@ -12,6 +13,7 @@ class QWindowManager: public QObject
 private:
     GameWindow *gameWindow;
     QLinkMenu *menu;
+    GameSettingDialog *gameSettingDialog;
     static QWindowManager *instance;
 
     QWindowManager();

@@ -3,11 +3,13 @@
 QWindowManager::QWindowManager() {
     gameWindow = new GameWindow;
     menu = new QLinkMenu;
+    gameSettingDialog = new GameSettingDialog;
 
     menu->show();
 
     instance = nullptr;
 
+    QApplication::connect(gameSettingDialog, &GameSettingDialog::startGame, gameWindow, &GameWindow::startGame);
     QApplication::connect(gameWindow, &GameWindow::selected, this, &QWindowManager::select);
     QApplication::connect(menu, &QLinkMenu::selected, this, &QWindowManager::select);
 }
@@ -20,13 +22,14 @@ void QWindowManager::loadArchive() {
 
 void QWindowManager::returnMenu() {
     gameWindow->hide();
+    QLinkGameController::getInstance()->endGame();
     menu->show();
 }
 
 void QWindowManager::startGame(GameMode gameMode) {
     menu->hide();
-    gameWindow->show();
-    gameWindow->startGame(gameMode);
+    gameSettingDialog->show();
+    gameSettingDialog->setGameMode(gameMode);
 }
 
 void QWindowManager::select(MenuSelection::Selection selection) {
@@ -58,6 +61,7 @@ QWindowManager *QWindowManager::getInstance() {
 QWindowManager::~QWindowManager() {
     delete gameWindow;
     delete menu;
+    delete gameSettingDialog;
     delete instance;
 }
 

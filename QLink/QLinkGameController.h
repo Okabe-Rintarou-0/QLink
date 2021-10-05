@@ -31,6 +31,12 @@ public:
 
     void addTime(int sec);
 
+    void pauseGame();
+
+    void continueGame();
+
+    void endGame();
+
     void pauseOrContinue();
 
     void loadFromArchive(const QGlobalInfo &globalInfo);
@@ -66,10 +72,6 @@ private:
     void formJewel();
 
     void formJewel(JewelType jewelType, const QPoint &pos);
-
-    void pauseGame();
-
-    void continueGame();
 
 protected:
     void timerEvent(QTimerEvent *event) override;

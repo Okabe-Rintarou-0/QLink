@@ -30,19 +30,19 @@ GameWindow::GameWindow(QWidget *parent)
     squarePanel->setParent(this);
     squarePanel->setSize(8, 8);
 
-    widthLabel = new QLabel(this);
-    widthLabel->setGeometry(900, 940, 20, 20);
-    widthLabel->setText("宽");
-    widthSpinBox = new QSpinBox(this);
-    widthSpinBox->setGeometry(920, 940, 40, 20);
-    widthSpinBox->setValue(8);
+//    widthLabel = new QLabel(this);
+//    widthLabel->setGeometry(900, 940, 20, 20);
+//    widthLabel->setText("宽");
+//    widthSpinBox = new QSpinBox(this);
+//    widthSpinBox->setGeometry(920, 940, 40, 20);
+//    widthSpinBox->setValue(8);
 
-    heightLabel = new QLabel(this);
-    heightLabel->setGeometry(970, 940, 20, 20);
-    heightLabel->setText("高");
-    heightSpinBox = new QSpinBox(this);
-    heightSpinBox->setGeometry(990, 940, 40, 20);
-    heightSpinBox->setValue(8);
+//    heightLabel = new QLabel(this);
+//    heightLabel->setGeometry(970, 940, 20, 20);
+//    heightLabel->setText("高");
+//    heightSpinBox = new QSpinBox(this);
+//    heightSpinBox->setGeometry(990, 940, 40, 20);
+//    heightSpinBox->setValue(8);
 
     retButton = new QPushButton(this);
     retButton->setText("返回菜单");
@@ -61,10 +61,10 @@ GameWindow::GameWindow(QWidget *parent)
     countDownLCD->setGeometry(940, 50, 100, 40);
     countDownLCD->display(0);
 
-//    pauseContinueButton = new QPauseContinueButton;
-//    pauseContinueButton->setParent(this);
-//    pauseContinueButton->setGeometry(250, 600, 150, 150);
-//    pauseContinueButton->initAndShow();
+    pauseContinueButton = new QPauseContinueButton;
+    pauseContinueButton->setParent(this);
+    pauseContinueButton->setGeometry(250, 600, 150, 150);
+    pauseContinueButton->initAndShow();
 
 //    QApplication::connect(pauseContinueButton, &QPauseContinueButton::clicked, gameController, &QLinkGameController::pauseOrContinue);
 
@@ -75,6 +75,7 @@ GameWindow::GameWindow(QWidget *parent)
 //    jewel->stackUnder(characters[0]);
 //    QApplication::connect(characters[0], &QCharacterWidget::moveTo, jewel, &QLinkGameItem::tryPick);
 
+    setFocusPolicy(Qt::StrongFocus);
     setFocus();
 
     QApplication::connect(characterManager, SIGNAL(spawn(int, QPoint, MoveMode)), this, SLOT(spawnCharacter(int, QPoint, MoveMode)));
@@ -101,15 +102,9 @@ void GameWindow::spawnCharacter(int id, const QPoint &pos, MoveMode moveMode) {
     characters[id]->setMoveMode(moveMode);
 }
 
-void GameWindow::startGame(GameMode gameMode)
+void GameWindow::startGame(int w, int h, GameMode gameMode)
 {
-    int w = widthSpinBox->value();
-    int h = heightSpinBox->value();
-    if (h % 2 && w % 2) {
-        QMessageBox::warning(this, "警告", "宽和高必须有一个是偶数！");
-        return;
-    }
-
+    show();
     int playerCnt = gameMode == ONE_PLAYER ? 1 : 2;
     for (int i = 0; i < playerCnt; ++i) {
         spawnCharacter(i, QPoint(200, 200), MoveMode::COMMON);
@@ -152,6 +147,7 @@ void GameWindow::renderJewel(QLinkGameItem *jewel, const QPoint &pos) {
 
 void GameWindow::keyPressEvent(QKeyEvent *e) {
     switch (e->key()) {
+        if(characters[0] != nullptr){
         case Qt::Key_A:
             characters[0]->move(Direction::Left);
             break;
@@ -167,6 +163,24 @@ void GameWindow::keyPressEvent(QKeyEvent *e) {
         case Qt::Key_E:
             squarePanel->activate(characters[0]->center());
             break;
+        }
+        if(characters[1] != nullptr){
+        case Qt::Key_Left:
+            characters[1]->move(Direction::Left);
+            break;
+        case Qt::Key_Right:
+            characters[1]->move(Direction::Right);
+            break;
+        case Qt::Key_Down:
+            characters[1]->move(Direction::Down);
+            break;
+        case Qt::Key_Up:
+            characters[1]->move(Direction::Up);
+            break;
+        case Qt::Key_P:
+            squarePanel->activate(characters[1]->center());
+            break;
+        }
     }
     qDebug() << characters[0]->pos() << endl;
 }
