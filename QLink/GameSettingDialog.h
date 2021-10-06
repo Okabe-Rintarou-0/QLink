@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QMessageBox>
 #include "GameWindow.h"
+#include "MenuSelection.h"
 
 typedef GameWindow::GameMode GameMode;
 namespace Ui {
@@ -28,8 +29,12 @@ private:
 
     void checkAndStart();
 
+    void returnToMenu();
+
 signals:
     void startGame(int w, int h, GameMode gameMode);
+
+    void selected(MenuSelection::Selection selection);
 };
 
 #endif // GAMESETTINGDIALOG_H

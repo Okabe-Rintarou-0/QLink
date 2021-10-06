@@ -46,11 +46,11 @@ GameWindow::GameWindow(QWidget *parent)
 
     retButton = new QPushButton(this);
     retButton->setText("返回菜单");
-    retButton->setGeometry(1050, 930, 80, 40);
+    retButton->setGeometry(900, 930, 80, 40);
 
     saveBtn = new QPushButton(this);
     saveBtn->setText("存档");
-    saveBtn->setGeometry(1150, 930, 80, 40);
+    saveBtn->setGeometry(1000, 930, 80, 40);
     QApplication::connect(saveBtn, &QPushButton::clicked, this, [=](){
         QLinkArchiveManager::getInstance()->saveArchive();
     });
@@ -63,10 +63,9 @@ GameWindow::GameWindow(QWidget *parent)
 
     pauseContinueButton = new QPauseContinueButton;
     pauseContinueButton->setParent(this);
-    pauseContinueButton->setGeometry(250, 600, 150, 150);
-    pauseContinueButton->initAndShow();
+    pauseContinueButton->setGeometry(1800, 40, 80, 80);
 
-//    QApplication::connect(pauseContinueButton, &QPauseContinueButton::clicked, gameController, &QLinkGameController::pauseOrContinue);
+    QApplication::connect(pauseContinueButton, &QPauseContinueButton::clicked, gameController, &QLinkGameController::pauseOrContinue);
 
 //    jewel = new HintJewel;
 //    jewel->setParent(this);
@@ -104,6 +103,7 @@ void GameWindow::spawnCharacter(int id, const QPoint &pos, MoveMode moveMode) {
 
 void GameWindow::startGame(int w, int h, GameMode gameMode)
 {
+    pauseContinueButton->initAndShow();
     show();
     int playerCnt = gameMode == ONE_PLAYER ? 1 : 2;
     for (int i = 0; i < playerCnt; ++i) {

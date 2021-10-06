@@ -4,7 +4,6 @@ QPauseContinueButton::QPauseContinueButton() {
     continueIcon.addFile(FileConstants::ICON_URL + "continue.png");
     pauseIcon.addFile(FileConstants::ICON_URL + "pause.png");
     QApplication::connect(this, &QPushButton::clicked, this, &QPauseContinueButton::toggle);
-    hide();
 }
 
 void QPauseContinueButton::toggle() {
@@ -21,5 +20,6 @@ void QPauseContinueButton::initAndShow() {
     setIconSize(size());
     setIcon(pauseIcon);
     setFlat(true);
+    paused = false;
     show();
 }

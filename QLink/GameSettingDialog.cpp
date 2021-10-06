@@ -10,7 +10,11 @@ GameSettingDialog::GameSettingDialog(QWidget *parent) :
     ui->widthSpinBox->setValue(6);
     ui->heightSpinBox->setValue(6);
 
+    ui->buttonBox->button(QDialogButtonBox::Ok)->setText("确认");
+    ui->buttonBox->button(QDialogButtonBox::Cancel)->setText("返回");
+
     QApplication::connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &GameSettingDialog::checkAndStart);
+    QApplication::connect(ui->buttonBox, &QDialogButtonBox::rejected, this, &GameSettingDialog::returnToMenu);
 }
 
 GameSettingDialog::~GameSettingDialog()
@@ -33,4 +37,8 @@ void GameSettingDialog::checkAndStart() {
         emit startGame(ui->widthSpinBox->value(), ui->heightSpinBox->value(), gameMode);
         close();
     }
+}
+
+void GameSettingDialog::returnToMenu() {
+    emit selected(MenuSelection::RET);
 }

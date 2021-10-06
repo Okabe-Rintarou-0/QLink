@@ -11,6 +11,7 @@ QWindowManager::QWindowManager() {
 
     QApplication::connect(gameSettingDialog, &GameSettingDialog::startGame, gameWindow, &GameWindow::startGame);
     QApplication::connect(gameWindow, &GameWindow::selected, this, &QWindowManager::select);
+    QApplication::connect(gameSettingDialog, &GameSettingDialog::selected, this, &QWindowManager::select);
     QApplication::connect(menu, &QLinkMenu::selected, this, &QWindowManager::select);
 }
 
@@ -22,6 +23,7 @@ void QWindowManager::loadArchive() {
 
 void QWindowManager::returnMenu() {
     gameWindow->hide();
+    gameSettingDialog->hide();
     QLinkGameController::getInstance()->endGame();
     menu->show();
 }

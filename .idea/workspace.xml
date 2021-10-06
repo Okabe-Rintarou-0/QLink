@@ -9,15 +9,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a1c061ac-3abf-4a44-87d8-ee572f9744d2" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/archive.json" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/archive.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/GameWindow.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/GameWindow.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/GameWindow.h" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/GameWindow.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/QLinkGameController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/QLinkGameController.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/QLinkGameController.h" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/QLinkGameController.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/QWindowManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/QWindowManager.cpp" afterDir="false" />
-    </list>
+    <list default="true" id="a1c061ac-3abf-4a44-87d8-ee572f9744d2" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -40,6 +32,12 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="cf.first.check.clang-format" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../SEP-labs/lab1" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.cidr.embedded.config" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -59,6 +57,7 @@
       <workItem from="1633422290111" duration="3000" />
       <workItem from="1633422401848" duration="53000" />
       <workItem from="1633436445667" duration="968000" />
+      <workItem from="1633445796716" duration="602000" />
     </task>
     <servers />
   </component>
