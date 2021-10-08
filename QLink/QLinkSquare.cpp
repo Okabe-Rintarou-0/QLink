@@ -2,19 +2,28 @@
 #include "QSquareImageManager.h"
 #include "ImageUtil.h"
 #include "QStyleSheetBuilder.h"
-
+#include <QDebug>
 QLinkSquare::QLinkSquare() {
     activated = false;
     widget = new QWidget;
+    bonusLabel = new QLabel(widget);
     widget->setAutoFillBackground(true);
 }
 
 QLinkSquare::~QLinkSquare() {
-    //delete widget;
+    delete bonusLabel;
+}
+
+int QLinkSquare::getBonus() const {
+   return bonus;
 }
 
 void QLinkSquare::setBonus(int bonus) {
     this->bonus = bonus;
+    bonusLabel->setFont(QFont("Microsoft YaHei", w / 10, w / 1.5));
+    bonusLabel->setGeometry(0, 0, w / 3, h / 6);
+    bonusLabel->raise();
+    bonusLabel->setText(QString::number(bonus));
 }
 
 QWidget *QLinkSquare::getWidget() {
@@ -72,8 +81,9 @@ void QLinkSquare::clearIcon() {
     widget->setPalette(QPalette());
 }
 
-void QLinkSquare::setAndRenderIcon(int iconIndex) {
+void QLinkSquare::setAndRenderIcon(int iconIndex, int bonus) {
     setIcon(iconIndex);
+    setBonus(bonus);
     renderIcon();
 }
 

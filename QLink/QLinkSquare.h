@@ -3,10 +3,12 @@
 
 #include <QPushButton>
 #include <QImage>
+#include <QLabel>
 
 class QLinkSquare {
 private:
     QWidget *widget;
+    QLabel *bonusLabel;
     QImage icon;
     static const QColor DEFAULT_BORDER_COLOR;
     static const QColor DEFAULT_ACTIVATE_BORDER_COLOR;
@@ -17,13 +19,15 @@ private:
     int h;
     bool activated;
 public:
-    void renderIcon();
+    int getBonus() const;
 
     void setBonus(int bonus);
 
+    void renderIcon();
+
     void setIcon(int iconIndex);
 
-    void setAndRenderIcon(int iconIndex);
+    void setAndRenderIcon(int iconIndex, int scores);
 
     void setSize(int w, int h);
 

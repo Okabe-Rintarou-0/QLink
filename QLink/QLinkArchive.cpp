@@ -18,6 +18,8 @@ void QCharacterInfo::parse(const QJsonObject &jsonObj) {
         moveMode = static_cast<MoveMode>(jsonObj["moveMode"].toInt());
         qDebug() << "Parse: pos = " << pos << " moveMode = " << moveMode << endl;
     }
+    else
+        throw JsonParseException();
 }
 
 QPlayerInfo::QPlayerInfo(const QVector <QCharacterInfo> &characters) {
@@ -45,26 +47,33 @@ void QPlayerInfo::parse(const QJsonObject &jsonObj) {
             this->characters.push_back(characterInfo);
         }
     }
+    else
+        throw JsonParseException();
 }
 
-QSquareInfo::QSquareInfo(const QPoint &pos, int iconIndex) {
+QSquareInfo::QSquareInfo(const QPoint &pos, int iconIndex, int bonus) {
     this->pos = pos;
     this->iconIndex = iconIndex;
+    this->bonus = bonus;
 }
 
 QJsonObject QSquareInfo::toJson() const {
     QJsonObject jsonObj;
     jsonObj.insert("pos", QJsonUtil::toJson(pos));
     jsonObj.insert("iconIndex", iconIndex);
+    jsonObj.insert("bonus", bonus);
     return jsonObj;
 }
 
 void QSquareInfo::parse(const QJsonObject &jsonObj) {
-    if (jsonObj.contains("pos") && jsonObj.contains("iconIndex")) {
+    if (jsonObj.contains("pos") && jsonObj.contains("iconIndex") && jsonObj.contains("bonus")) {
         pos = QJsonUtil::toQPoint(jsonObj["pos"].toObject());
         iconIndex = jsonObj["iconIndex"].toInt();
-        qDebug() << "Parse: pos = " << pos << " iconIndex = " << iconIndex << endl;
+        bonus = jsonObj["bonus"].toInt();
+        qDebug() << "Parse: pos = " << pos << " iconIndex = " << iconIndex << " bonus = " << bonus << endl;
     }
+    else
+        throw JsonParseException();
 }
 
 QSquarePanelInfo::QSquarePanelInfo(const QSize &size) {
@@ -108,6 +117,8 @@ void QSquarePanelInfo::parse(const QJsonObject &jsonObj) {
             squareInfos.push_back(squareInfo);
         }
     }
+    else
+        throw JsonParseException();
 }
 
 QGlobalInfo::QGlobalInfo(int restTime, int scores) {
@@ -128,6 +139,8 @@ void QGlobalInfo::parse(const QJsonObject &jsonObj) {
         scores = jsonObj["scores"].toInt();
         qDebug() << "Parse: scores = " << scores << " restTime = " << restTime << endl;
     }
+    else
+        throw JsonParseException();
 }
 
 QJewelInfo::QJewelInfo(JewelType jewelType, const QPoint &pos) {
@@ -148,6 +161,8 @@ void QJewelInfo::parse(const QJsonObject &jsonObj) {
         jewelType = static_cast<JewelType>(jsonObj["jewelType"].toInt());
         qDebug() << "Parse: pos = " << pos << " jewelType = " << jewelType << endl;
     }
+    else
+        throw JsonParseException();
 }
 
 QGameItemInfo::QGameItemInfo(const QVector <QJewelInfo> &jewels) {
@@ -179,6 +194,8 @@ void QGameItemInfo::parse(const QJsonObject &jsonObj) {
             this->jewels.push_back(jewelInfo);
         }
     }
+    else
+        throw JsonParseException();
 }
 
 QJsonObject QLinkArchive::toJson() const {
@@ -198,6 +215,8 @@ void QLinkArchive::parse(const QJsonObject &jsonObj) {
         globalInfo.parse(jsonObj["globalInfo"].toObject());
         gameItemInfo.parse(jsonObj["gameItemInfo"].toObject());
     }
+    else
+        throw JsonParseException();
 }
 
 void QLinkArchive::buildPlayerPart(const QPlayerInfo &playerInfo) {

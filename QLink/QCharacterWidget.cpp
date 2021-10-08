@@ -25,7 +25,7 @@ void QCharacterWidget::setSize(QSize size) {
 
 void QCharacterWidget::spawn(const QPoint &pos) {
     setGeometry(pos.x(), pos.y(), w, h);
-    character.load(QString("%1%2.png").arg(FileConstants::CHARACTER_URL).arg(1));
+    character.load(QString("%1%2.png").arg(FileConstants::CHARACTER_URL).arg(id + 1));
     QPalette palette;
     palette.setBrush(backgroundRole(), QBrush(character.scaled(width(), height())));
     setPalette(palette);

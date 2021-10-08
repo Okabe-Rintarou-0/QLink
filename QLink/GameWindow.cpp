@@ -12,9 +12,9 @@ GameWindow::GameWindow(QWidget *parent)
     setWindowTitle("QLink");
 
     hintLabel = new QLabel(this);
-    hintLabel->setText("按E激活方块");
+    hintLabel->setText("玩家一按E激活方块，玩家2按P激活方块");
     hintLabel->setGeometry(10, 10, 400, 60);
-    hintLabel->setFont(QFont("Microsoft YaHei", 30, 75));
+    hintLabel->setFont(QFont("Microsoft YaHei", 15, 75));
 
     linkStatusLabel = new QLabel(this);
     linkStatusLabel->setGeometry(10, 80, 200, 50);
@@ -105,11 +105,10 @@ void GameWindow::startGame(int w, int h, GameMode gameMode)
 {
     pauseContinueButton->initAndShow();
     show();
-    int playerCnt = gameMode == ONE_PLAYER ? 1 : 2;
-    for (int i = 0; i < playerCnt; ++i) {
-        spawnCharacter(i, QPoint(200, 200), MoveMode::COMMON);
-    }
+    spawnCharacter(0, QPoint(200, 200), MoveMode::COMMON);
 
+    if (gameMode == TWO_PLAYER)
+       spawnCharacter(1, QPoint(250, 200), MoveMode::COMMON);
     gameController->startGame();
 
     squarePanel->resizeAndRender(w, h);
@@ -182,5 +181,4 @@ void GameWindow::keyPressEvent(QKeyEvent *e) {
             break;
         }
     }
-    qDebug() << characters[0]->pos() << endl;
 }

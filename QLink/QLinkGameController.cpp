@@ -26,6 +26,10 @@ void QLinkGameController::reset() {
         jewels.remove(jewel);
         delete jewel;
     }
+    if (countDownTimer >= 0) {
+        killTimer(countDownTimer);
+        countDownTimer = -1;
+    }
 }
 
 void QLinkGameController::endGame() {
@@ -65,6 +69,7 @@ void QLinkGameController::startGame() {
 
 void QLinkGameController::pauseGame() {
     killTimer(countDownTimer);
+    countDownTimer = -1;
     QCharacterManager::getInstance()->frozenAll();
 }
 

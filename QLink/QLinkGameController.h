@@ -52,7 +52,7 @@ private:
     int score;
     int restSquares;
     int restTime;
-    int countDownTimer;
+    int countDownTimer = -1;
     QSet<QLinkGameItem *> jewels;
 
     static QLinkGameController *instance;

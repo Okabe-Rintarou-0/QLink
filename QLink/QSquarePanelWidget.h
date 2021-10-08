@@ -81,7 +81,7 @@ private:
 
     inline void removeSquareAt(QPoint);
 
-    void prepareRandom(QMap<int, int> &);
+    void prepareRandom(QMap<int, int> &, QMap<int, int> &);
 
     bool isLinkable(const QPoint &p1, const QPoint &p2) const;
 
@@ -139,6 +139,7 @@ public:
     void startHint();
 signals:
     void link(const QString &status);
+    void link(int bonus);
 };
 
 #endif // QSQUAREPANELWIDGET_H

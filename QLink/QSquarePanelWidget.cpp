@@ -36,7 +36,7 @@ void QSquarePanelWidget::renderSquares(const QVector<QSquareInfo> &squareInfos) 
         QLinkSquare *square = new QLinkSquare;
         int restHeight = (800 - (h - 1) * squareSpacing);
         square->setSize(restHeight / h, restHeight / h);
-        square->setAndRenderIcon(squareInfo.iconIndex);
+        square->setAndRenderIcon(squareInfo.iconIndex, squareInfo.bonus);
         int x = squareInfo.pos.x(), y = squareInfo.pos.y();
         squares[x][y] = square;
         gridLayout->addWidget(square->getWidget(), x, y, 1, 1);
@@ -57,14 +57,14 @@ QSquarePanelInfo QSquarePanelWidget::getSquarePanelInfo() const {
     for (int i = 0; i < h; ++i) {
         for (int j = 0; j < w; ++j) {
             if (squares[i][j] != nullptr) {
-                squarePanelInfo.addSquareInfo(QSquareInfo(QPoint(i, j), squares[i][j]->getIconIndex()));
+                squarePanelInfo.addSquareInfo(QSquareInfo(QPoint(i, j), squares[i][j]->getIconIndex(), squares[i][j]->getBonus()));
             }
         }
     }
     return squarePanelInfo;
 }
 
-void QSquarePanelWidget::prepareRandom(QMap<int, int> &randomIconIdxToNum) {
+void QSquarePanelWidget::prepareRandom(QMap<int, int> &randomIconIdxToNum, QMap<int, int> &randomIconBonus) {
     int totalNum = w * h;
     int maxCategoryNum = totalNum / 2;
     int randomSeed = RandomUtil::randomSeed();
@@ -79,6 +79,8 @@ void QSquarePanelWidget::prepareRandom(QMap<int, int> &randomIconIdxToNum) {
             rest -= additional;
         }
         randomIconIdxToNum.insert(i, (iconNum + additional) * 2);
+        int randomBonus = RandomUtil::randRange(1, 10) * 10;
+        randomIconBonus.insert(i, randomBonus);
     }
 }
 
@@ -102,7 +104,8 @@ QPair <Direction, Direction> QSquarePanelWidget::getRelativeDirection(const QPoi
 
 void QSquarePanelWidget::renderSquares() {
     QMap<int, int> randomIconIdxToNum;
-    prepareRandom(randomIconIdxToNum);
+    QMap<int, int> randomIconBonus;
+    prepareRandom(randomIconIdxToNum, randomIconBonus);
 
     for (int i = 0; i < h; ++i) {
         squares.push_back(QVector<QLinkSquare *>(w, nullptr));
@@ -112,8 +115,9 @@ void QSquarePanelWidget::renderSquares() {
             int randomId = RandomUtil::randRange(0, randomIconIdxToNum.size() - 1);
             auto it = randomIconIdxToNum.begin();
             for (int i = 0; i < randomId; ++i, ++it);
+            int iconIdx = it.key();
             square->setSize(restHeight / h, restHeight / h);
-            square->setAndRenderIcon(it.key());
+            square->setAndRenderIcon(iconIdx, randomIconBonus[iconIdx]);
             squares[i][j] = square;
             gridLayout->addWidget(square->getWidget(), i, j, 1, 1);
             --it.value();
@@ -338,14 +342,17 @@ void QSquarePanelWidget::hintNext() {
 }
 
 void QSquarePanelWidget::link(const QPoint &p1, const QPoint &p2) {
+    // TODO: optimize to decouple.
+    QLinkGameController *gameController = QLinkGameController::getInstance();
+    restSquares -= 2;
+    gameController->addScore(squares[p1.x()][p1.y()]->getBonus());
+    gameController->setRestSquares(restSquares);
+
     emit link("消除");
     updateCache(p1, p2);
     removeSquareAt(p1);
     removeSquareAt(p2);
-    QLinkGameController *gameController = QLinkGameController::getInstance();
-    restSquares -= 2;
-    gameController->addScore(15);
-    gameController->setRestSquares(restSquares);
+
     if (!existsLinkableSquare()) {
         shuffle();
     }
@@ -393,11 +400,11 @@ void QSquarePanelWidget::shuffle() {
     qDebug() << "Shuffle" << endl;
 
     QVector <QPoint> points;
-    QVector<int> icons;
+    QVector<QPair<int, int >> icons;
     for (int i = 0; i < h; ++i) {
         for (int j = 0; j < w; ++j) {
             if (squares[i][j] != nullptr) {
-                icons.push_back(squares[i][j]->getIconIndex());
+                icons.push_back(qMakePair(squares[i][j]->getIconIndex(), squares[i][j]->getBonus()));
                 points.push_back(QPoint(i, j));
             }
         }
@@ -406,7 +413,7 @@ void QSquarePanelWidget::shuffle() {
     for (int i = 0; i < points.size(); ++i) {
         int x = points[i].x();
         int y = points[i].y();
-        squares[x][y]->setAndRenderIcon(icons[i]);
+        squares[x][y]->setAndRenderIcon(icons[i].first, icons[i].second);
     }
 
     initSquarePosMap();

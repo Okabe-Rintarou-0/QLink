@@ -10,6 +10,7 @@
 #include "QLinkGameItem.h"
 #include "QCharacterWidget.h"
 #include "QJsonUtil.h"
+#include "JsonParseException.h"
 
 typedef QCharacterWidget::MoveMode MoveMode;
 typedef QLinkGameItem::JewelType JewelType;
@@ -47,7 +48,7 @@ public:
 
 class QSquareInfo {
 public:
-    QSquareInfo(const QPoint &pos, int iconIndex);
+    QSquareInfo(const QPoint &pos, int iconIndex, int bonus);
 
     QSquareInfo() = default;
 
@@ -59,6 +60,7 @@ public:
 
     QPoint pos;
     int iconIndex;
+    int bonus;
 };
 
 class QGlobalInfo {

@@ -22,23 +22,23 @@ void QUnitTest::init() {
     QVector<QSquareInfo> squareInfos;
 
     //row 1
-    squareInfos.push_back(QSquareInfo(p(0, 0), 1));
-    squareInfos.push_back(QSquareInfo(p(0, 1), 1));
-    squareInfos.push_back(QSquareInfo(p(0, 2), 3));
-    squareInfos.push_back(QSquareInfo(p(0, 3), 4));
+    squareInfos.push_back(QSquareInfo(p(0, 0), 1, 30));
+    squareInfos.push_back(QSquareInfo(p(0, 1), 1, 30));
+    squareInfos.push_back(QSquareInfo(p(0, 2), 3, 30));
+    squareInfos.push_back(QSquareInfo(p(0, 3), 4, 30));
 
     //row 2
-    squareInfos.push_back(QSquareInfo(p(1, 0), 2));
-    squareInfos.push_back(QSquareInfo(p(1, 1), 3));
+    squareInfos.push_back(QSquareInfo(p(1, 0), 2, 30));
+    squareInfos.push_back(QSquareInfo(p(1, 1), 3, 30));
 
     //row 3
-    squareInfos.push_back(QSquareInfo(p(2, 0), 2));
-    squareInfos.push_back(QSquareInfo(p(2, 1), 4));
-    squareInfos.push_back(QSquareInfo(p(2, 2), 3));
+    squareInfos.push_back(QSquareInfo(p(2, 0), 2, 30));
+    squareInfos.push_back(QSquareInfo(p(2, 1), 4, 30));
+    squareInfos.push_back(QSquareInfo(p(2, 2), 3, 30));
 
     //row 4
-    squareInfos.push_back(QSquareInfo(p(3, 0), 4));
-    squareInfos.push_back(QSquareInfo(p(3, 2), 4));
+    squareInfos.push_back(QSquareInfo(p(3, 0), 4, 30));
+    squareInfos.push_back(QSquareInfo(p(3, 2), 4, 30));
 
     squarePanel->clear();
     squarePanel->setSize(4, 4);

@@ -20,6 +20,7 @@ SOURCES += \
     GameSettingDialog.cpp \
     HintJewel.cpp \
     ImageUtil.cpp \
+    JsonParseException.cpp \
     QCharacterManager.cpp \
     QJsonUtil.cpp \
     QLinkArchive.cpp \
@@ -48,6 +49,7 @@ HEADERS += \
     GameSettingDialog.h \
     HintJewel.h \
     Jewels.h \
+    JsonParseException.h \
     MenuSelection.h \
     QCharacterManager.h \
     QJsonUtil.h \

@@ -7,6 +7,8 @@ GameSettingDialog::GameSettingDialog(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    setWindowTitle("游戏设置");
+
     ui->widthSpinBox->setValue(6);
     ui->heightSpinBox->setValue(6);
 

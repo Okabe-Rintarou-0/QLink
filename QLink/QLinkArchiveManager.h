@@ -18,7 +18,7 @@ private:
 public:
     ~QLinkArchiveManager();
 
-    void loadArchive() const;
+    bool loadArchive() const;
 
     void saveArchive() const;
 

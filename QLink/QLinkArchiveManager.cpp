@@ -15,7 +15,7 @@ QLinkArchiveManager::~QLinkArchiveManager() {
     delete instance;
 }
 
-void QLinkArchiveManager::loadArchive() const {
+bool QLinkArchiveManager::loadArchive() const {
     QLinkArchive archive;
     QJsonDocument jdoc;
     //打开文件
@@ -31,15 +31,21 @@ void QLinkArchiveManager::loadArchive() const {
     //判断文件是否完整
     if (error->error != QJsonParseError::NoError) {
         qDebug() << "parseJson:" << error->errorString();
+        return false;
     }
 
-    qDebug() << jdoc.toJson() << endl;
-    archive.parse(jdoc.object());
-
-    QLinkGameController::getInstance()->loadFromArchive(archive.globalInfo);
-    QCharacterManager::getInstance()->loadFromArchive(archive.playerInfo);
-    QSquarePanelWidget::getInstance()->loadFromArchive(archive.squarePanelInfo);
-    QLinkGameController::getInstance()->loadFromArchive(archive.gameItemInfo);
+//    qDebug() << jdoc.toJson() << endl;
+    try {
+        archive.parse(jdoc.object());
+        QLinkGameController::getInstance()->loadFromArchive(archive.globalInfo);
+        QCharacterManager::getInstance()->loadFromArchive(archive.playerInfo);
+        QSquarePanelWidget::getInstance()->loadFromArchive(archive.squarePanelInfo);
+        QLinkGameController::getInstance()->loadFromArchive(archive.gameItemInfo);
+    } catch (JsonParseException e) {
+        qDebug() << e.what() << endl;
+        return false;
+    }
+    return true;
 }
 
 void QLinkArchiveManager::saveArchive() const {
