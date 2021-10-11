@@ -8,6 +8,8 @@ QLinkGameController::QLinkGameController() {
     instance = nullptr;
     score = 0;
     restTime = 0;
+
+    QApplication::connect(QSquarePanelWidget::getInstance(), SIGNAL(linked(int, int)), this, SLOT(update(int, int)));
 }
 
 QLinkGameController *QLinkGameController::getInstance() {
@@ -30,6 +32,11 @@ void QLinkGameController::reset() {
         killTimer(countDownTimer);
         countDownTimer = -1;
     }
+}
+
+void QLinkGameController::update(int bonus, int restSquares) {
+    addScore(bonus);
+    setRestSquares(restSquares);
 }
 
 void QLinkGameController::endGame() {

@@ -36,12 +36,21 @@ public:
 
     MoveMode getMoveMode() const;
 
+    int moveTimer;
+
+protected:
+    void timerEvent(QTimerEvent *event) override;
+
 private:
     QImage character;
     int id;
     int w;
     int h;
-    int moveSpeed;
+    int moveSpeed = 10;
+
+    int notMoveCnt = 10;
+    int speedX;
+    int speedY;
 
     MoveMode moveMode = FLASH;
 

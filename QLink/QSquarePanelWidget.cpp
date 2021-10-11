@@ -8,6 +8,10 @@ QSquarePanelWidget::QSquarePanelWidget() {
     squareSpacing = DEFAULT_SPACING;
     gridLayout = new QGridLayout;
     instance = nullptr;
+
+    // init activate Queue
+    for (int i = 0; i < 2; ++i)
+        activateQueue.push_back(QQueue<QPoint>());
 }
 
 QSquarePanelWidget::~QSquarePanelWidget() {
@@ -143,7 +147,7 @@ void QSquarePanelWidget::initSquareMap() {
     }
 }
 
-void QSquarePanelWidget::activate(const QPoint &fromPos) {
+void QSquarePanelWidget::activate(int idx, const QPoint &fromPos) {
     int fromX = fromPos.x();
     int fromY = fromPos.y();
     int col = (fromX - pos().x()) / ((800 - (h - 1) * squareSpacing) / h + squareSpacing);
@@ -152,9 +156,9 @@ void QSquarePanelWidget::activate(const QPoint &fromPos) {
     if (0 <= row && row < h && 0 <= col && col < w) {
         QLinkSquare *targetSquare = squares[row][col];
         if (targetSquare != nullptr && !targetSquare->isActivated()) {
-            targetSquare->activate();
-            activateQueue.enqueue(QPoint(row, col));
-            tryLink();
+            targetSquare->activate(idx);
+            activateQueue[idx].enqueue(QPoint(row, col));
+            tryLink(idx);
         }
     }
 }
@@ -165,7 +169,7 @@ void QSquarePanelWidget::removeSquareAt(int x, int y) {
 //        targetSquare->getWidget()->setParent(nullptr);
 //        gridLayout->removeWidget(targetSquare->getWidget());
 //        delete targetSquare;
-        targetSquare->clearIcon();
+        targetSquare->clear();
         squares[x][y] = nullptr;
         squareMap[x + 1][y + 1] = 0;
     }
@@ -341,14 +345,14 @@ void QSquarePanelWidget::hintNext() {
     highlightAt(linkablePairCache.second);
 }
 
-void QSquarePanelWidget::link(const QPoint &p1, const QPoint &p2) {
-    // TODO: optimize to decouple.
-    QLinkGameController *gameController = QLinkGameController::getInstance();
-    restSquares -= 2;
-    gameController->addScore(squares[p1.x()][p1.y()]->getBonus());
-    gameController->setRestSquares(restSquares);
+int QSquarePanelWidget::getBonus(const QPoint &p) {
+    return squares[p.x()][p.y()]->getBonus();
+}
 
-    emit link("消除");
+void QSquarePanelWidget::link(const QPoint &p1, const QPoint &p2) {
+    restSquares -= 2;
+    emit linked(getBonus(p1), restSquares);
+
     updateCache(p1, p2);
     removeSquareAt(p1);
     removeSquareAt(p2);
@@ -361,24 +365,29 @@ void QSquarePanelWidget::link(const QPoint &p1, const QPoint &p2) {
     }
 }
 
+QSize QSquarePanelWidget::getSize() const {
+    return QSize(w, h);
+}
+
 void QSquarePanelWidget::highlightAt(const QPoint &p) {
     squares[p.x()][p.y()]->highlight();
 }
 
 void QSquarePanelWidget::cancelLink(const QPoint &p1, const QPoint &p2) {
-    emit link("不可消除");
     squares[p1.x()][p1.y()]->reset();
     squares[p2.x()][p2.y()]->reset();
 }
 
-void QSquarePanelWidget::tryLink() {
-    if (activateQueue.size() == 2) {
-        QPoint first = activateQueue.dequeue();
-        QPoint second = activateQueue.dequeue();
+void QSquarePanelWidget::tryLink(int idx) {
+    if (activateQueue[idx].size() == 2) {
+        QPoint first = activateQueue[idx].dequeue();
+        QPoint second = activateQueue[idx].dequeue();
         if (isLinkable(first, second)) {
             link(first, second);
+            emit tryLink("消除");
         } else {
             cancelLink(first, second);
+            emit tryLink("不可消除");
         }
     }
 }

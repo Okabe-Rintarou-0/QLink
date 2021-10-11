@@ -82,7 +82,7 @@ GameWindow::GameWindow(QWidget *parent)
     QApplication::connect(retButton, &QPushButton::clicked, this, [&](){
         emit selected(MenuSelection::RET);
     });
-    QApplication::connect(squarePanel, SIGNAL(link(QString)), linkStatusLabel, SLOT(setText(QString)));
+    QApplication::connect(squarePanel, SIGNAL(tryLink(QString)), linkStatusLabel, SLOT(setText(QString)));
     QApplication::connect(gameController, SIGNAL(timeChanged(int)), countDownLCD, SLOT(display(int)));
     QApplication::connect(gameController, SIGNAL(gameOver(QString)), this, SLOT(showGameOverTips(QString)));
     QApplication::connect(gameController, SIGNAL(scoreChanged(QString)), scoreLabel, SLOT(setText(QString)));
@@ -160,7 +160,7 @@ void GameWindow::keyPressEvent(QKeyEvent *e) {
             characters[0]->move(Direction::Up);
             break;
         case Qt::Key_E:
-            squarePanel->activate(characters[0]->center());
+            squarePanel->activate(0, characters[0]->center());
             break;
         }
         if(characters[1] != nullptr){
@@ -177,7 +177,7 @@ void GameWindow::keyPressEvent(QKeyEvent *e) {
             characters[1]->move(Direction::Up);
             break;
         case Qt::Key_P:
-            squarePanel->activate(characters[1]->center());
+            squarePanel->activate(1, characters[1]->center());
             break;
         }
     }

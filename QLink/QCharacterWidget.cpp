@@ -31,39 +31,62 @@ void QCharacterWidget::spawn(const QPoint &pos) {
     setPalette(palette);
     show();
     qDebug() << "spawn here: " << pos << "and size = " << w << "*" << h << endl;
+
+    moveTimer = startTimer(10);
+}
+
+void QCharacterWidget::timerEvent(QTimerEvent *event) {
+    if (event->timerId() == moveTimer) {
+        if (--notMoveCnt == 0) {
+            speedX = speedY = 0;
+        }
+        if (speedX != 0 || speedY != 0) {
+            int nextX = x() + speedX;
+            int nextY = y() + speedY;
+            constrainPos(nextX, nextY);
+            QWidget::move(nextX, nextY);
+        } else {
+            notMoveCnt = 5;
+        }
+    }
 }
 
 void QCharacterWidget::moveUp() {
-    int nextX = x();
-    int nextY = y() - moveSpeed;
-    constrainPos(nextX, nextY);
-    QWidget::move(nextX, nextY);
+//    int nextX = x();
+//    int nextY = y() - moveSpeed;
+//    constrainPos(nextX, nextY);
+//    QWidget::move(nextX, nextY);
+    speedY = -moveSpeed;
 }
 
 void QCharacterWidget::moveDown() {
-    int nextX = x();
-    int nextY = y() + moveSpeed;
-    constrainPos(nextX, nextY);
-    QWidget::move(nextX, nextY);
+//    int nextX = x();
+//    int nextY = y() + moveSpeed;
+//    constrainPos(nextX, nextY);
+//    QWidget::move(nextX, nextY);
+    speedY = moveSpeed;
 }
 
 void QCharacterWidget::moveLeft() {
-    int nextX = x() - moveSpeed;
-    int nextY = y();
-    constrainPos(nextX, nextY);
-    QWidget::move(nextX, nextY);
+//    int nextX = x() - moveSpeed;
+//    int nextY = y();
+//    constrainPos(nextX, nextY);
+//    QWidget::move(nextX, nextY);
+    speedX = -moveSpeed;
 }
 
 void QCharacterWidget::moveRight() {
-    int nextX = x() + moveSpeed;
-    int nextY = y();
-    constrainPos(nextX, nextY);
-    QWidget::move(nextX, nextY);
+//    int nextX = x() + moveSpeed;
+//    int nextY = y();
+//    constrainPos(nextX, nextY);
+//    QWidget::move(nextX, nextY);
+    speedX = moveSpeed;
 }
 
 void QCharacterWidget::dash(const QPoint &targetPos) {
     QPoint centerPos = QPoint(targetPos.x() - width() / 2, targetPos.y() - height() / 2);
     QWidget::move(centerPos);
+    emit moveTo(id, center());
 }
 
 QCharacterWidget::MoveMode QCharacterWidget::getMoveMode() const {

@@ -84,6 +84,9 @@ signals:
     void gameOver(const QString &);
 
     void formJewel(QLinkGameItem *jewel, const QPoint &pos);
+
+private slots:
+    void update(int bonus, int restSquares);
 };
 
 #endif // QLINKGAMECONTROLLER_H

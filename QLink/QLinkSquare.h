@@ -11,7 +11,7 @@ private:
     QLabel *bonusLabel;
     QImage icon;
     static const QColor DEFAULT_BORDER_COLOR;
-    static const QColor DEFAULT_ACTIVATE_BORDER_COLOR;
+    static const QColor DEFAULT_ACTIVATE_BORDER_COLORS[2];
     static const QColor DEFAULT_HIGHLIGHT_BORDER_COLOR;
     int bonus;
     int iconIndex;
@@ -31,7 +31,7 @@ public:
 
     void setSize(int w, int h);
 
-    void activate();
+    void activate(int idx);
 
     void highlight();
 
@@ -43,7 +43,7 @@ public:
 
     bool equals(QLinkSquare *other) const;
 
-    void clearIcon();
+    void clear();
 
     QLinkSquare();
 

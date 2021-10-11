@@ -11,6 +11,7 @@ QLinkSquare::QLinkSquare() {
 }
 
 QLinkSquare::~QLinkSquare() {
+    bonusLabel->setParent(nullptr);
     delete bonusLabel;
 }
 
@@ -42,8 +43,8 @@ void QLinkSquare::setIcon(int iconIndex) {
     ImageUtil::setBorder(icon, DEFAULT_BORDER_COLOR, 2);
 }
 
-void QLinkSquare::activate() {
-    ImageUtil::setBorder(icon, DEFAULT_ACTIVATE_BORDER_COLOR, 2);
+void QLinkSquare::activate(int idx) {
+    ImageUtil::setBorder(icon, DEFAULT_ACTIVATE_BORDER_COLORS[idx], 2);
     activated = true;
     renderIcon();
 }
@@ -77,8 +78,9 @@ void QLinkSquare::reset() {
     renderIcon();
 }
 
-void QLinkSquare::clearIcon() {
+void QLinkSquare::clear() {
     widget->setPalette(QPalette());
+    bonusLabel->clear();
 }
 
 void QLinkSquare::setAndRenderIcon(int iconIndex, int bonus) {
@@ -89,4 +91,4 @@ void QLinkSquare::setAndRenderIcon(int iconIndex, int bonus) {
 
 const QColor QLinkSquare::DEFAULT_HIGHLIGHT_BORDER_COLOR = Qt::red;
 const QColor QLinkSquare::DEFAULT_BORDER_COLOR = Qt::gray;
-const QColor QLinkSquare::DEFAULT_ACTIVATE_BORDER_COLOR = Qt::black;
+const QColor QLinkSquare::DEFAULT_ACTIVATE_BORDER_COLORS[2] = { Qt::black, QColor("#9400d3") };

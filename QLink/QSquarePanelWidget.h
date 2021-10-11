@@ -39,7 +39,7 @@ private:
     QVector <QPoint> path;
     QVector <QVector<QLinkSquare *>> squares;
     QGridLayout *gridLayout;
-    QQueue <QPoint> activateQueue;
+    QVector<QQueue <QPoint>> activateQueue;
     QVector <QVector<int>> squareMap;
     QMap<int, QVector<QPoint>> squarePosMap;
 
@@ -50,6 +50,8 @@ private:
     QPair<QPoint, QPoint> linkablePairCache = qMakePair(QPoint(-1, -1), QPoint(-1, -1));
 
     QSquarePanelWidget();
+
+    int getBonus(const QPoint &p);
 
     void highlightAt(const QPoint &p);
 
@@ -69,7 +71,7 @@ private:
 
     void hintNext();
 
-    void tryLink();
+    void tryLink(int idx);
 
     bool canPassBy(const QPoint &p) const;
 
@@ -118,7 +120,7 @@ public:
 
     ~QSquarePanelWidget();
 
-    void activate(const QPoint &fromPos);
+    void activate(int idx, const QPoint &fromPos);
 
     void setSize(int h, int w);
 
@@ -130,6 +132,8 @@ public:
 
     QSize getSquareSize() const;
 
+    QSize getSize() const;
+
     void loadFromArchive(const QSquarePanelInfo &squarePanelInfo);
 
     void shuffle();
@@ -138,8 +142,8 @@ public:
 
     void startHint();
 signals:
-    void link(const QString &status);
-    void link(int bonus);
+    void tryLink(const QString &status);
+    void linked(int bonus, int restSquares);
 };
 
 #endif // QSQUAREPANELWIDGET_H
