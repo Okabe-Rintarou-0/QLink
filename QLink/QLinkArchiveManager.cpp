@@ -38,8 +38,8 @@ bool QLinkArchiveManager::loadArchive() const {
     try {
         archive.parse(jdoc.object());
         QLinkGameController::getInstance()->loadFromArchive(archive.globalInfo);
-        QCharacterManager::getInstance()->loadFromArchive(archive.playerInfo);
         QSquarePanelWidget::getInstance()->loadFromArchive(archive.squarePanelInfo);
+        QCharacterManager::getInstance()->loadFromArchive(archive.playerInfo);
         QLinkGameController::getInstance()->loadFromArchive(archive.gameItemInfo);
     } catch (JsonParseException e) {
         qDebug() << e.what() << endl;

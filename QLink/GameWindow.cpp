@@ -11,10 +11,10 @@ GameWindow::GameWindow(QWidget *parent)
     setGeometry(0, 0, 1920, 1080);
     setWindowTitle("QLink");
 
-    hintLabel = new QLabel(this);
-    hintLabel->setText("玩家一按E激活方块，玩家2按P激活方块");
-    hintLabel->setGeometry(10, 10, 400, 60);
-    hintLabel->setFont(QFont("Microsoft YaHei", 15, 75));
+//    hintLabel = new QLabel(this);
+//    hintLabel->setText("玩家一按E激活方块，玩家2按P激活方块");
+//    hintLabel->setGeometry(10, 10, 400, 60);
+//    hintLabel->setFont(QFont("Microsoft YaHei", 15, 75));
 
     linkStatusLabel = new QLabel(this);
     linkStatusLabel->setGeometry(10, 80, 200, 50);
@@ -51,7 +51,7 @@ GameWindow::GameWindow(QWidget *parent)
     saveBtn = new QPushButton(this);
     saveBtn->setText("存档");
     saveBtn->setGeometry(1000, 930, 80, 40);
-    QApplication::connect(saveBtn, &QPushButton::clicked, this, [=](){
+    QApplication::connect(saveBtn, &QPushButton::clicked, this, [=]() {
         QLinkArchiveManager::getInstance()->saveArchive();
     });
 
@@ -65,7 +65,8 @@ GameWindow::GameWindow(QWidget *parent)
     pauseContinueButton->setParent(this);
     pauseContinueButton->setGeometry(1800, 40, 80, 80);
 
-    QApplication::connect(pauseContinueButton, &QPauseContinueButton::clicked, gameController, &QLinkGameController::pauseOrContinue);
+    QApplication::connect(pauseContinueButton, &QPauseContinueButton::clicked, gameController,
+                          &QLinkGameController::pauseOrContinue);
 
 //    jewel = new HintJewel;
 //    jewel->setParent(this);
@@ -77,9 +78,11 @@ GameWindow::GameWindow(QWidget *parent)
     setFocusPolicy(Qt::StrongFocus);
     setFocus();
 
-    QApplication::connect(characterManager, SIGNAL(spawn(int, QPoint, MoveMode)), this, SLOT(spawnCharacter(int, QPoint, MoveMode)));
-    QApplication::connect(gameController, SIGNAL(formJewel(QLinkGameItem *, QPoint)), this, SLOT(renderJewel(QLinkGameItem *, QPoint)));
-    QApplication::connect(retButton, &QPushButton::clicked, this, [&](){
+    QApplication::connect(characterManager, SIGNAL(spawn(int, QPoint, MoveMode)), this,
+                          SLOT(spawnCharacter(int, QPoint, MoveMode)));
+    QApplication::connect(gameController, SIGNAL(formJewel(QLinkGameItem * , QPoint)), this,
+                          SLOT(renderJewel(QLinkGameItem * , QPoint)));
+    QApplication::connect(retButton, &QPushButton::clicked, this, [&]() {
         emit selected(MenuSelection::RET);
     });
     QApplication::connect(squarePanel, SIGNAL(tryLink(QString)), linkStatusLabel, SLOT(setText(QString)));
@@ -101,21 +104,20 @@ void GameWindow::spawnCharacter(int id, const QPoint &pos, MoveMode moveMode) {
     characters[id]->setMoveMode(moveMode);
 }
 
-void GameWindow::startGame(int w, int h, GameMode gameMode)
-{
+void GameWindow::startGame(int w, int h, GameMode gameMode) {
     pauseContinueButton->initAndShow();
-    show();
+    squarePanel->resizeAndRender(w, h);
+
     spawnCharacter(0, QPoint(200, 200), MoveMode::COMMON);
 
     if (gameMode == TWO_PLAYER)
-       spawnCharacter(1, QPoint(250, 200), MoveMode::COMMON);
+        spawnCharacter(1, QPoint(250, 200), MoveMode::COMMON);
     gameController->startGame();
 
-    squarePanel->resizeAndRender(w, h);
+    show();
 }
 
-void GameWindow::showGameOverTips(const QString &tips)
-{
+void GameWindow::showGameOverTips(const QString &tips) {
     QMessageBox::information(this, "提示", tips);
 }
 
@@ -146,38 +148,32 @@ void GameWindow::renderJewel(QLinkGameItem *jewel, const QPoint &pos) {
 
 void GameWindow::keyPressEvent(QKeyEvent *e) {
     switch (e->key()) {
-        if(characters[0] != nullptr){
-        case Qt::Key_A:
-            characters[0]->move(Direction::Left);
+        if (characters[0] != nullptr) {
+            case Qt::Key_A:
+                characters[0]->move(Direction::Left);
             break;
-        case Qt::Key_D:
-            characters[0]->move(Direction::Right);
+            case Qt::Key_D:
+                characters[0]->move(Direction::Right);
             break;
-        case Qt::Key_S:
-            characters[0]->move(Direction::Down);
+            case Qt::Key_S:
+                characters[0]->move(Direction::Down);
             break;
-        case Qt::Key_W:
-            characters[0]->move(Direction::Up);
-            break;
-        case Qt::Key_E:
-            squarePanel->activate(0, characters[0]->center());
+            case Qt::Key_W:
+                characters[0]->move(Direction::Up);
             break;
         }
-        if(characters[1] != nullptr){
-        case Qt::Key_Left:
-            characters[1]->move(Direction::Left);
+        if (characters[1] != nullptr) {
+            case Qt::Key_Left:
+                characters[1]->move(Direction::Left);
             break;
-        case Qt::Key_Right:
-            characters[1]->move(Direction::Right);
+            case Qt::Key_Right:
+                characters[1]->move(Direction::Right);
             break;
-        case Qt::Key_Down:
-            characters[1]->move(Direction::Down);
+            case Qt::Key_Down:
+                characters[1]->move(Direction::Down);
             break;
-        case Qt::Key_Up:
-            characters[1]->move(Direction::Up);
-            break;
-        case Qt::Key_P:
-            squarePanel->activate(1, characters[1]->center());
+            case Qt::Key_Up:
+                characters[1]->move(Direction::Up);
             break;
         }
     }

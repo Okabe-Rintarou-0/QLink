@@ -1,4 +1,5 @@
 #include "QCharacterWidget.h"
+#include "QSquarePanelWidget.h"
 
 QCharacterWidget::QCharacterWidget(int id) : id(id) {
     setAutoFillBackground(true);
@@ -124,8 +125,15 @@ void QCharacterWidget::move(Direction direction) {
 }
 
 void QCharacterWidget::constrainPos(int &x, int &y) {
-    x = qBound(0, x, 1960 - w);
-    y = qBound(0, y, 1080 - h);
+    QPoint nextCenter = QPoint(x + width() / 2, y + height() / 2);
+    if (QSquarePanelWidget::getInstance()->existsSquare(nextCenter)) {
+        QSquarePanelWidget::getInstance()->tryActivate(id, nextCenter);
+        x = pos().x();
+        y = pos().y();
+    } else {
+        x = qBound(0, x, 1960 - w);
+        y = qBound(0, y, 1080 - h);
+    }
 }
 
 QPoint QCharacterWidget::center() const {

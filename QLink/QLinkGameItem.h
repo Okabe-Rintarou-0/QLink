@@ -24,7 +24,7 @@ private:
 
     void onPick(int picker);
 
-    static constexpr int PICK_THRESH = 15;
+    static constexpr int PICK_THRESH = 50;
 
     static constexpr int DEFAULT_H = 50;
 

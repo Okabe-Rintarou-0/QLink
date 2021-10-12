@@ -48,7 +48,7 @@ private:
     QPushButton *retButton;
     QLabel *heightLabel;
     QLabel *widthLabel;
-    QLabel *hintLabel;
+//    QLabel *hintLabel;
     QLabel *linkStatusLabel;
     QPushButton *saveBtn;
     QLCDNumber *countDownLCD;

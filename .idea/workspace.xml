@@ -9,7 +9,18 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a1c061ac-3abf-4a44-87d8-ee572f9744d2" name="Default Changelist" comment="" />
+    <list default="true" id="a1c061ac-3abf-4a44-87d8-ee572f9744d2" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/archive.json" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/archive.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QLink/GameWindow.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/GameWindow.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QLink/GameWindow.h" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/GameWindow.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QLink/QCharacterWidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/QCharacterWidget.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QLink/QCharacterWidget.h" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/QCharacterWidget.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QLink/QLinkArchiveManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/QLinkArchiveManager.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QLink/QLinkGameItem.h" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/QLinkGameItem.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QLink/QSquarePanelWidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/QSquarePanelWidget.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QLink/QSquarePanelWidget.h" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/QSquarePanelWidget.h" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -59,6 +70,7 @@
       <workItem from="1633436445667" duration="968000" />
       <workItem from="1633445796716" duration="602000" />
       <workItem from="1633570024578" duration="92000" />
+      <workItem from="1634050175613" duration="173000" />
     </task>
     <servers />
   </component>

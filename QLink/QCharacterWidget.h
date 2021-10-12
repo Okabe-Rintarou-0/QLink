@@ -46,7 +46,7 @@ private:
     int id;
     int w;
     int h;
-    int moveSpeed = 10;
+    int moveSpeed = 25;
 
     int notMoveCnt = 10;
     int speedX;
