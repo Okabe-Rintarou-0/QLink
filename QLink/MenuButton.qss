@@ -1,0 +1,87 @@
+QPushButton#onePlayerBtn
+{
+    background-color:rgb(134,183,200);
+    border:2px solid #5F92B2;
+    border-radius:5px;
+    color:white
+}
+QPushButton#onePlayerBtn:hover
+{
+    background-color:rgb(0,130,150);
+    border:2px solid #5F92B2;
+    border-radius:5px;
+    color:white;
+}
+QPushButton#onePlayerBtn:hover:pressed
+{
+    background-color:rgb(85,170,255);
+    border:2px solid #3C80B1;
+    border-radius:5px;
+    color:white;
+}
+
+QPushButton#twoPlayerBtn
+{
+    background-color:rgb(134,183,200);
+    border:2px solid #5F92B2;
+    border-radius:5px;
+    color:white
+}
+QPushButton#twoPlayerBtn:hover
+{
+    background-color:rgb(0,130,150);
+    border:2px solid #5F92B2;
+    border-radius:5px;
+    color:white;
+}
+QPushButton#twoPlayerBtn:hover:pressed
+{
+    background-color:rgb(85,170,255);
+    border:2px solid #3C80B1;
+    border-radius:5px;
+    color:white;
+}
+
+QPushButton#loadArchiveBtn
+{
+    background-color:#F4A460;
+    border:2px solid #D2691E;
+    border-radius:5px;
+    color:white
+}
+QPushButton#loadArchiveBtn:hover
+{
+    background-color:#FFA500;
+    border:2px solid #D2691E;
+    border-radius:5px;
+    color:white;
+}
+QPushButton#loadArchiveBtn:hover:pressed
+{
+    background-color:#FF8C00;
+    border:2px solid #D2691E;
+    border-radius:5px;
+    color:white;
+}
+
+QPushButton#quitBtn
+{
+    background-color:#FF7F50;
+    border:2px solid #CD5C5C;
+    border-radius:5px;
+    color:white
+}
+QPushButton#quitBtn:hover
+{
+    background-color:#FF6347;
+    border:2px solid #CD5C5C;
+    border-radius:5px;
+    color:white;
+}
+QPushButton#quitBtn:hover:pressed
+{
+    background-color:#FF4500;
+    border:2px solid #CD5C5C;
+    border-radius:5px;
+    color:white;
+}

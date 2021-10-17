@@ -11,30 +11,8 @@
   <component name="ChangeListManager">
     <list default="true" id="a1c061ac-3abf-4a44-87d8-ee572f9744d2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/GameWindow.h" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/GameWindow.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/ImageUtil.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/ImageUtil.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/ImageUtil.h" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/ImageUtil.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/QCharacterManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/QCharacterManager.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/QCharacterWidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/QCharacterWidget.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/QCharacterWidget.h" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/QCharacterWidget.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/QJsonUtil.h" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/QJsonUtil.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/QLink.pro" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/QLink.pro" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/QLinkArchive.h" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/QLinkArchive.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/QLinkArchiveManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/QLinkArchiveManager.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/QLinkCanvas.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/QLinkCanvas.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/QLinkGameController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/QLinkGameController.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/QLinkGameController.h" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/QLinkGameController.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/QLinkGameItem.h" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/QLinkGameItem.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/QLinkSquare.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/QLinkSquare.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/QLinkSquare.h" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/QLinkSquare.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/QPauseContinueButton.h" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/QPauseContinueButton.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/QSquareImageManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/QSquareImageManager.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/QSquareImageManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/QSquareImageManager.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/QLink/QSquarePanelWidget.h" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/QSquarePanelWidget.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/QStyleSheetBuilder.h" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/QStyleSheetBuilder.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/QUnitTest.h" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/QUnitTest.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/QWindowManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/QWindowManager.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,7 +65,7 @@
       <workItem from="1633570024578" duration="92000" />
       <workItem from="1634050175613" duration="173000" />
       <workItem from="1634083162860" duration="65000" />
-      <workItem from="1634461806734" duration="7137000" />
+      <workItem from="1634461806734" duration="8110000" />
     </task>
     <servers />
   </component>

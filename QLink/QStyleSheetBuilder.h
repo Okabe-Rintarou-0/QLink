@@ -17,6 +17,12 @@ public:
 
     QStyleSheetBuilder *setBorderColor(const QString &color);
 
+    QStyleSheetBuilder *setBorderRadis(int radis);
+
+    QStyleSheetBuilder *setBorder(int width, const QString &form, const QString &color);
+
+    QStyleSheetBuilder *setColor(const QString &color);
+
     QString build();
 };
 

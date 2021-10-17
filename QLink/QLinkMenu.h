@@ -31,6 +31,8 @@ private:
 
     QPushButton *quitBtn;
 
+    QWidget *banner;
+
 signals:
     void selected(MenuSelection::Selection selection);
 };

@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>MenuButton.qss</file>
+    </qresource>
+    <qresource prefix="/qss"/>
+</RCC>
