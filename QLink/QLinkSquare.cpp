@@ -3,6 +3,7 @@
 #include "ImageUtil.h"
 #include "QStyleSheetBuilder.h"
 #include <QDebug>
+
 QLinkSquare::QLinkSquare() {
     activated = false;
     widget = new QWidget;
@@ -16,7 +17,7 @@ QLinkSquare::~QLinkSquare() {
 }
 
 int QLinkSquare::getBonus() const {
-   return bonus;
+    return bonus;
 }
 
 void QLinkSquare::setBonus(int bonus) {
@@ -91,4 +92,4 @@ void QLinkSquare::setAndRenderIcon(int iconIndex, int bonus) {
 
 const QColor QLinkSquare::DEFAULT_HIGHLIGHT_BORDER_COLOR = Qt::red;
 const QColor QLinkSquare::DEFAULT_BORDER_COLOR = Qt::gray;
-const QColor QLinkSquare::DEFAULT_ACTIVATE_BORDER_COLORS[2] = { Qt::black, QColor("#9400d3") };
+const QColor QLinkSquare::DEFAULT_ACTIVATE_BORDER_COLORS[2] = {Qt::black, QColor("#9400d3")};

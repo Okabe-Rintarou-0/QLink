@@ -15,6 +15,20 @@
 typedef QCharacterWidget::MoveMode MoveMode;
 typedef QLinkGameItem::JewelType JewelType;
 
+/**
+ *  @file     QLinkArchive.h
+ *  @brief    该类存储所有和存档相关的对象。
+ *  @details  每个对象都存在两个函数toJson和parse
+ *
+ *  @fn       toJson
+ *  @brief    把当前对象转换成QJsonObject对象
+ *  @return   QJsonObject对象
+ *
+ *  @fn       parse
+ *  @brief    解析QJsonObject对象
+ *  @param    jsonObj QJsonObject对象
+ */
+
 class QCharacterInfo {
 public:
     QCharacterInfo(const QPoint &pos, MoveMode moveMode);

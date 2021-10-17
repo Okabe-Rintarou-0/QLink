@@ -15,9 +15,15 @@ private:
 public:
     QPauseContinueButton();
 
+    /**
+     * @brief 初始化并渲染
+     */
     void initAndShow();
 
 private slots:
+    /**
+     * @brief 翻转状态
+     */
     void toggle();
 };
 

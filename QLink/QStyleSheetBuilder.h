@@ -3,6 +3,10 @@
 
 #include <QString>
 
+/**
+ * @brief 用于生成stylesheet字符串的辅助类
+ * @note 考虑到本质上和java中的StringBuilder是很类似的，所以也采用建造者模式。
+ */
 class QStyleSheetBuilder {
 private:
     QString styleSheet;

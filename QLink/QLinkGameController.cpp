@@ -23,7 +23,7 @@ void QLinkGameController::reset() {
     restTime = 120;
     emit scoreChanged("分数: " + QString::number(score));
     emit timeChanged(restTime);
-    for (QLinkGameItem *jewel:jewels){
+    for (QLinkGameItem *jewel:jewels) {
         jewel->setParent(nullptr);
         jewels.remove(jewel);
         delete jewel;
@@ -43,8 +43,8 @@ void QLinkGameController::endGame() {
     reset();
 }
 
-void QLinkGameController::addScore(int increament) {
-    score += increament;
+void QLinkGameController::addScore(int increment) {
+    score += increment;
     emit scoreChanged("分数: " + QString::number(score));
 }
 
@@ -64,7 +64,7 @@ void QLinkGameController::loadFromArchive(const QGlobalInfo &globalInfo) {
 void QLinkGameController::loadFromArchive(const QGameItemInfo &gameItemInfo) {
     for (QJewelInfo jewelInfo: gameItemInfo.jewels) {
         qDebug() << "form jewel " << jewelInfo.jewelType << " " << jewelInfo.pos << endl;
-        formJewel(jewelInfo.jewelType, jewelInfo.pos);
+        spawnJewel(jewelInfo.jewelType, jewelInfo.pos);
     }
 }
 
@@ -92,7 +92,7 @@ void QLinkGameController::countDown() {
         killTimer(countDownTimer);
     }
     if (restTime % 5 == 0) {
-        formJewel();
+        randomSpawnJewel();
     }
 }
 
@@ -136,7 +136,7 @@ QLinkGameItem *QLinkGameController::getJewel(JewelType jewelType) {
     return nullptr;
 }
 
-QPoint QLinkGameController::getRandomFormPoint() {
+QPoint QLinkGameController::getRandomSpawnPoint() {
     QSize size = QSquarePanelWidget::getInstance()->size();
     QPoint pos = QSquarePanelWidget::getInstance()->pos();
     int minX = pos.x(), maxX = pos.x() + size.width();
@@ -163,23 +163,20 @@ QPoint QLinkGameController::getRandomFormPoint() {
     return QPoint(x, y);
 }
 
-//Form jewels. Game items.
-///Form pos need to be optimized
-void QLinkGameController::formJewel() {
+void QLinkGameController::randomSpawnJewel() {
     JewelType jewelType = (JewelType) RandomUtil::randRange(0, 3);
-    QPoint randomPos = getRandomFormPoint();
-    formJewel(jewelType, randomPos);
+    QPoint randomPos = getRandomSpawnPoint();
+    spawnJewel(jewelType, randomPos);
 }
 
-///Exist some bugs
-void QLinkGameController::formJewel(JewelType jewelType, const QPoint &pos) {
+void QLinkGameController::spawnJewel(JewelType jewelType, const QPoint &pos) {
     QLinkGameItem *jewel = getJewel(jewelType);
 
     QApplication::connect(jewel, &QLinkGameItem::picked, this, [=]() {
         jewels.remove(jewel);
     });
     jewels.insert(jewel);
-    emit formJewel(jewel, pos);
+    emit spawnJewel(jewel, pos);
 }
 
 void QLinkGameController::startCountDown() {

@@ -1,4 +1,4 @@
-#include "qSquareImageManager.h"
+#include "QSquareImageManager.h"
 
 QSquareImageManager::QSquareImageManager() {
     instance = nullptr;

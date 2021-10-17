@@ -326,8 +326,10 @@ public:
      */
     int getBonus(const QPoint &p);
 
-signals:
-    void tryLink(const QString &status);
+    signals:
+            void tryLink(
+    const QString &status
+    );
 
     void linked(int bonus, int restSquares);
 };

@@ -31,7 +31,7 @@ void ImageUtil::adjustBrightness(QImage &image, int delta) {
 
 //Stable.
 //Set image border.
-void ImageUtil::setBorder(QImage &image, QColor color, int px) {
+void ImageUtil::setBorder(QImage &image, const QColor &color, int px) {
     QImage newImage = QImage(image.width(), image.height(), QImage::Format_ARGB32);
     QColor oldColor;
     int w = newImage.width();

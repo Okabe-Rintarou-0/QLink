@@ -80,7 +80,7 @@ GameWindow::GameWindow(QWidget *parent)
 
     QApplication::connect(characterManager, SIGNAL(spawn(int, QPoint, MoveMode)), this,
                           SLOT(spawnCharacter(int, QPoint, MoveMode)));
-    QApplication::connect(gameController, SIGNAL(formJewel(QLinkGameItem * , QPoint)), this,
+    QApplication::connect(gameController, SIGNAL(spawnJewel(QLinkGameItem * , QPoint)), this,
                           SLOT(renderJewel(QLinkGameItem * , QPoint)));
     QApplication::connect(retButton, &QPushButton::clicked, this, [&]() {
         emit selected(MenuSelection::RET);
