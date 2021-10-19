@@ -18,7 +18,7 @@ QLinkGameController *QLinkGameController::getInstance() {
     return instance;
 }
 
-void QLinkGameController::reset() {
+void QLinkGameController::init() {
     score = 0;
     restTime = 120;
     emit scoreChanged("分数: " + QString::number(score));
@@ -34,13 +34,25 @@ void QLinkGameController::reset() {
     }
 }
 
+void QLinkGameController::clear() {
+    if (countDownTimer >= 0) {
+        killTimer(countDownTimer);
+        countDownTimer = -1;
+    }
+}
+
 void QLinkGameController::update(int bonus, int restSquares) {
     addScore(bonus);
     setRestSquares(restSquares);
 }
 
-void QLinkGameController::endGame() {
-    reset();
+void QLinkGameController::endGame(const QString &msg) {
+    clear();
+    emit gameOver(msg);
+}
+
+void QLinkGameController::forceQuit() {
+    clear();
 }
 
 void QLinkGameController::addScore(int increment) {
@@ -48,16 +60,21 @@ void QLinkGameController::addScore(int increment) {
     emit scoreChanged("分数: " + QString::number(score));
 }
 
+void QLinkGameController::setScore(int score) {
+    this->score = score;
+    emit scoreChanged("分数: " + QString::number(score));
+}
+
 void QLinkGameController::setRestSquares(int restSquares) {
     this->restSquares = restSquares;
     if (this->restSquares == 0) {
-        emit gameOver("方块均已被消除，游戏结束！");
+        endGame("方块均已被消除，游戏结束！");
     }
 }
 
 void QLinkGameController::loadFromArchive(const QGlobalInfo &globalInfo) {
-    restTime = globalInfo.restTime;
-    score = globalInfo.scores;
+    setTime(globalInfo.restTime);
+    setScore(globalInfo.scores);
     startCountDown();
 }
 
@@ -69,7 +86,7 @@ void QLinkGameController::loadFromArchive(const QGameItemInfo &gameItemInfo) {
 }
 
 void QLinkGameController::startGame() {
-    reset();
+    init();
     startCountDown();
     emit timeChanged(restTime);
 }
@@ -88,8 +105,7 @@ void QLinkGameController::continueGame() {
 void QLinkGameController::countDown() {
     emit timeChanged(--restTime);
     if (restTime == 0) {
-        emit gameOver("超时了哦！游戏结束！");
-        killTimer(countDownTimer);
+        endGame("超时了哦！游戏结束！");
     }
     if (restTime % 5 == 0) {
         randomSpawnJewel();
@@ -142,7 +158,7 @@ QPoint QLinkGameController::getRandomSpawnPoint() {
     int minX = pos.x(), maxX = pos.x() + size.width();
     int minY = pos.y(), maxY = pos.y() + size.height();
     int x, y;
-    bool valid;
+    bool valid = false;
     do {
         if (RandomUtil::randRange(0, 1)) {
             x = RandomUtil::randRange(150, minX - 150);
@@ -191,6 +207,11 @@ void QLinkGameController::timerEvent(QTimerEvent *event) {
 
 void QLinkGameController::addTime(int sec) {
     restTime += sec;
+    emit timeChanged(restTime);
+}
+
+void QLinkGameController::setTime(int time) {
+    restTime = time;
     emit timeChanged(restTime);
 }
 

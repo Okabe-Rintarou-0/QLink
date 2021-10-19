@@ -22,6 +22,7 @@ private:
     enum RunMode {
         COMMON, HINT
     } runMode = COMMON;
+    static int next[4][2];
     int h;
     int w;
     int squareSpacing;
@@ -84,7 +85,7 @@ private:
      * @brief 搜索是否当前存在着可以连接的方块
      * @return 若存在返回true；否则返回false。
      */
-    bool searchLinkabelSquare();
+    bool searchLinkableSquare();
 
     /**
      * @brief 尝试连接
@@ -116,6 +117,12 @@ private:
      * @brief 初始化squareMap，为连接检测做准备。
      */
     void initSquareMap();
+
+    /**
+     * @brief 生成玩家可到达的方块数组
+     * @param reachablePoints 玩家可到达的方块
+     */
+    void fetchReachable(QVector<QVector<bool>> &reachable);
 
     /**
      * @brief 移除方块
@@ -154,6 +161,12 @@ private:
      * @param 两个map分别存储生成的随机方块数量和随机奖励 即<index, num> & <index, bonus>
      */
     void prepareRandom(QMap<int, int> &, QMap<int, int> &);
+
+    /**
+     * @brief 将消除的方块周围的方块加入squarePosMap（因为这些方块都变为可达到的）
+     * @param p 消除的方块坐标
+     */
+    void expandReachable(const QPoint &p);
 
     /****************************************************
     *                 Checking logic                   *
@@ -326,8 +339,10 @@ public:
      */
     int getBonus(const QPoint &p);
 
-signals:
-    void tryLink(const QString &status);
+    signals:
+            void tryLink(
+    const QString &status
+    );
 
     void linked(int bonus, int restSquares);
 };

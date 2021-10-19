@@ -1,5 +1,6 @@
 #include "GameWindow.h"
 #include "ui_mainwindow.h"
+#include "QWindowManager.h"
 #include <QDebug>
 
 GameWindow::GameWindow(QWidget *parent)
@@ -65,6 +66,10 @@ GameWindow::GameWindow(QWidget *parent)
     QApplication::connect(gameController, SIGNAL(scoreChanged(QString)), scoreLabel, SLOT(setText(QString)));
 }
 
+void GameWindow::init() {
+    pauseContinueButton->initAndShow();
+}
+
 void GameWindow::spawnCharacter(int id, const QPoint &pos, MoveMode moveMode) {
     assert(id >= 0 && id <= 1);
     characters[id] = characterManager->getCharacter(id);
@@ -75,7 +80,7 @@ void GameWindow::spawnCharacter(int id, const QPoint &pos, MoveMode moveMode) {
 }
 
 void GameWindow::startGame(int w, int h, GameMode gameMode) {
-    pauseContinueButton->initAndShow();
+    init();
     squarePanel->resizeAndRender(w, h);
 
     spawnCharacter(0, QPoint(200, 200), MoveMode::COMMON);
@@ -89,6 +94,7 @@ void GameWindow::startGame(int w, int h, GameMode gameMode) {
 
 void GameWindow::showGameOverTips(const QString &tips) {
     QMessageBox::information(this, "提示", tips);
+    emit selected(MenuSelection::RET);
 }
 
 GameWindow::~GameWindow() {

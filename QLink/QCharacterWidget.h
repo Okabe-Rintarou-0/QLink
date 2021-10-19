@@ -102,8 +102,8 @@ private:
     int moveTimer;
 
     int notMoveCnt = 10;
-    int speedX;
-    int speedY;
+    int speedX = 0;
+    int speedY = 0;
 
     MoveMode moveMode = FLASH;
 

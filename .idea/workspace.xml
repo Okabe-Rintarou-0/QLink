@@ -11,8 +11,16 @@
   <component name="ChangeListManager">
     <list default="true" id="a1c061ac-3abf-4a44-87d8-ee572f9744d2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/archive.json" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/archive.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QLink/GameWindow.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/GameWindow.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QLink/GameWindow.h" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/GameWindow.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QLink/QCharacterWidget.h" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/QCharacterWidget.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QLink/QLinkGameController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/QLinkGameController.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QLink/QLinkGameController.h" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/QLinkGameController.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QLink/QLinkMenu.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/QLinkMenu.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QLink/QSquarePanelWidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/QSquarePanelWidget.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/QLink/QSquarePanelWidget.h" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/QSquarePanelWidget.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QLink/QWindowManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/QWindowManager.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,7 +73,9 @@
       <workItem from="1633570024578" duration="92000" />
       <workItem from="1634050175613" duration="173000" />
       <workItem from="1634083162860" duration="65000" />
-      <workItem from="1634461806734" duration="8110000" />
+      <workItem from="1634461806734" duration="9070000" />
+      <workItem from="1634570443290" duration="2763000" />
+      <workItem from="1634616040897" duration="5300000" />
     </task>
     <servers />
   </component>
@@ -85,10 +95,14 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="781" y="344" key="SettingsEditor/0.0.2560.1400@0.0.2560.1400" timestamp="1634462160209" />
-    <state x="982" y="432" width="596" height="536" key="find.popup" timestamp="1634467488487">
+    <state x="982" y="432" width="596" height="536" key="find.popup" timestamp="1634619244183">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="982" y="432" width="596" height="536" key="find.popup/0.0.2560.1400@0.0.2560.1400" timestamp="1634467488487" />
+    <state x="982" y="432" width="596" height="536" key="find.popup/0.0.2560.1400@0.0.2560.1400" timestamp="1634619244183" />
+    <state x="936" y="330" key="run.anything.popup" timestamp="1634621709871">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="936" y="330" key="run.anything.popup/0.0.2560.1400@0.0.2560.1400" timestamp="1634621709871" />
     <state x="943" y="315" width="672" height="678" key="search.everywhere.popup" timestamp="1634464125231">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>

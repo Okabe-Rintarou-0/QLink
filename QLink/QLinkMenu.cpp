@@ -4,9 +4,8 @@
 #include "FileConstants.h"
 
 QLinkMenu::QLinkMenu(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::QLinkMenu)
-{
+        QWidget(parent),
+        ui(new Ui::QLinkMenu) {
     ui->setupUi(this);
 
     QFile file(":/MenuButton.qss");
@@ -18,7 +17,7 @@ QLinkMenu::QLinkMenu(QWidget *parent) :
     onePlayerBtn->setGeometry(800, 300, 400, 60);
     onePlayerBtn->setText("单人游戏");
     onePlayerBtn->setFont(QFont("Microsoft YaHei", 10, 75));
-    QApplication::connect(onePlayerBtn, &QPushButton::clicked, this, [&](){
+    QApplication::connect(onePlayerBtn, &QPushButton::clicked, this, [&]() {
         emit selected(MenuSelection::ONE_PLAYER);
     });
     onePlayerBtn->setStyleSheet(styleSheet);
@@ -28,7 +27,7 @@ QLinkMenu::QLinkMenu(QWidget *parent) :
     twoPlayerBtn->setObjectName("twoPlayerBtn");
     twoPlayerBtn->setText("双人游戏");
     twoPlayerBtn->setFont(QFont("Microsoft YaHei", 10, 75));
-    QApplication::connect(twoPlayerBtn, &QPushButton::clicked, this, [&](){
+    QApplication::connect(twoPlayerBtn, &QPushButton::clicked, this, [&]() {
         emit selected(MenuSelection::TWO_PLAYER);
     });
     twoPlayerBtn->setStyleSheet(styleSheet);
@@ -38,7 +37,7 @@ QLinkMenu::QLinkMenu(QWidget *parent) :
     loadArchiveBtn->setObjectName("loadArchiveBtn");
     loadArchiveBtn->setText("加载存档");
     loadArchiveBtn->setFont(QFont("Microsoft YaHei", 10, 75));
-    QApplication::connect(loadArchiveBtn, &QPushButton::clicked, this, [&](){
+    QApplication::connect(loadArchiveBtn, &QPushButton::clicked, this, [&]() {
         emit selected(MenuSelection::LOAD_ARCHIVE);
     });
     loadArchiveBtn->setStyleSheet(styleSheet);
@@ -48,7 +47,7 @@ QLinkMenu::QLinkMenu(QWidget *parent) :
     quitBtn->setText("退出游戏");
     quitBtn->setObjectName("quitBtn");
     quitBtn->setFont(QFont("Microsoft YaHei", 10, 75));
-    QApplication::connect(quitBtn, &QPushButton::clicked, this, [&](){
+    QApplication::connect(quitBtn, &QPushButton::clicked, this, [&]() {
         emit selected(MenuSelection::QUIT);
     });
     quitBtn->setStyleSheet(styleSheet);
@@ -64,7 +63,6 @@ QLinkMenu::QLinkMenu(QWidget *parent) :
     banner->setPalette(palette);
 }
 
-QLinkMenu::~QLinkMenu()
-{
+QLinkMenu::~QLinkMenu() {
     delete ui;
 }

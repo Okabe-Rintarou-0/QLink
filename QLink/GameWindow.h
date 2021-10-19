@@ -36,6 +36,11 @@ public:
     };
 
     /**
+     * @brief 初始化工作
+     */
+    void init();
+
+    /**
      * @brief 开启游戏
      * @param w 方块面板宽度
      * @param h 方块面板高度

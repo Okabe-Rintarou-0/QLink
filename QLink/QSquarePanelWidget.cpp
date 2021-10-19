@@ -233,7 +233,7 @@ bool QSquarePanelWidget::isLinkable(const QPoint &p1, const QPoint &p2) const {
     return first->equals(second) && (checkStraightLine(p1, p2) || checkOneCorner(p1, p2) || checkTwoCorner(p1, p2));
 }
 
-bool QSquarePanelWidget::searchLinkabelSquare() {
+bool QSquarePanelWidget::searchLinkableSquare() {
     for (const QVector <QPoint> &points: squarePosMap) {
         int size = points.size();
         for (int i = 0; i < size; ++i)
@@ -254,7 +254,7 @@ bool QSquarePanelWidget::existsLinkableSquare() {
     }
 
     qDebug() << "cannot link!" << endl;
-    return searchLinkabelSquare();
+    return searchLinkableSquare();
 }
 
 void QSquarePanelWidget::updateCache(const QPoint &p1, const QPoint &p2) {
@@ -279,7 +279,7 @@ bool QSquarePanelWidget::existsSquare(const QPoint &pos) {
 
 void QSquarePanelWidget::hintNext() {
     if (linkablePairCache == INVALID_PAIR) {
-        searchLinkabelSquare();
+        searchLinkableSquare();
     }
     highlightAt(linkablePairCache.first);
     highlightAt(linkablePairCache.second);
@@ -293,6 +293,8 @@ void QSquarePanelWidget::link(const QPoint &p1, const QPoint &p2) {
     restSquares -= 2;
     emit linked(getBonus(p1), restSquares);
 
+    expandReachable(p1);
+    expandReachable(p2);
     updateCache(p1, p2);
     removeSquareAt(p1);
     removeSquareAt(p2);
@@ -452,19 +454,85 @@ void QSquarePanelWidget::startHint() {
     });
 }
 
+void QSquarePanelWidget::expandReachable(const QPoint &p) {
+    int nx, ny;
+    for (int i = 0; i < 4; ++i) {
+        nx = p.x() + next[i][0];
+        ny = p.y() + next[i][1];
+        if (nx >= 0 && nx < h && ny >= 0 && ny < w) {
+            if (squares[nx][ny] == nullptr) continue;
+//            squares[nx][ny]->highlight();
+            int index = squares[nx][ny]->getIconIndex();
+            squarePosMap[index].push_back(QPoint(nx, ny));
+//            qDebug() << "Add reachable: " << QPoint(nx, ny) << endl;
+        }
+    }
+}
+
+void QSquarePanelWidget::fetchReachable(QVector <QVector<bool>> &reachable) {
+    assert(reachable.size() == h && reachable[0].size() == w);
+
+    for (int i = 0; i < h; ++i) {
+        for (int j = 0; j < w; ++j)
+            reachable[i][j] = false;
+    }
+
+    QQueue <QPoint> reachableQ;
+
+    for (int i = 0; i < w; ++i) {
+        reachable[0][i] = reachable[h - 1][i] = true;
+        reachableQ.enqueue(QPoint(0, i));
+        reachableQ.enqueue(QPoint(h - 1, i));
+    }
+
+    for (int i = 0; i < h; ++i) {
+        reachable[i][0] = reachable[i][w - 1] = true;
+        reachableQ.enqueue(QPoint(i, 0));
+        reachableQ.enqueue(QPoint(i, w - 1));
+    }
+
+    while (!reachableQ.empty()) {
+        QPoint curP = reachableQ.dequeue();
+        int curX = curP.x(), curY = curP.y();
+        int nx, ny;
+        if (squares[curX][curY] != nullptr) continue;
+        for (int i = 0; i < 4; ++i) {
+            nx = curX + next[i][0];
+            ny = curY + next[i][1];
+            if (nx < 0 || nx >= h || ny < 0 || ny >= w) continue;
+            if (!reachable[nx][ny]) {
+                reachable[nx][ny] = true;
+                reachableQ.enqueue(QPoint(nx, ny));
+//                qDebug() << "add Reachable: " << QPoint(nx, ny) << endl;
+            }
+        }
+    }
+}
+
 void QSquarePanelWidget::initSquarePosMap() {
+    QVector <QVector<bool>> reachable(h, QVector<bool>(w));
+
+    fetchReachable(reachable);
+
     squarePosMap.clear();
     for (int i = 0; i < h; ++i) {
         for (int j = 0; j < w; ++j) {
             if (squares[i][j] == nullptr) continue;
-            int index = squares[i][j]->getIconIndex();
-            if (!squarePosMap.contains(index))
-                squarePosMap.insert(index, QVector<QPoint>());
-            squarePosMap[index].push_back(QPoint(i, j));
+            if (reachable[i][j]) {
+//                squares[i][j]->highlight();
+                int index = squares[i][j]->getIconIndex();
+                squarePosMap[index].push_back(QPoint(i, j));
+            }
         }
     }
 }
 
 const QPair <QPoint, QPoint> QSquarePanelWidget::INVALID_PAIR = qMakePair(QPoint(-1, -1), QPoint(-1, -1));
+int QSquarePanelWidget::next[4][2] = {
+        {-1, 0},
+        {1,  0},
+        {0,  1},
+        {0,  -1}
+};
 QSquarePanelWidget *QSquarePanelWidget::instance;
 

@@ -22,9 +22,14 @@ public:
     static QLinkGameController *getInstance();
 
     /**
-     * @brief 重置游戏，包括得分，剩余时间；关闭计时器
+     * @brief 初始化游戏，包括得分，剩余时间；关闭计时器
      */
-    void reset();
+    void init();
+
+    /**
+     * @brief 清除游戏
+     */
+    void clear();
 
     /**
      * @brief 重置，打开计时器，开启游戏。
@@ -36,6 +41,12 @@ public:
      * @param increment 增量
      * */
     void addScore(int increment);
+
+    /**
+     * @brief 设置当前分数
+     * @param score 分数
+     */
+    void setScore(int score);
 
     /**
      * @brief 设置剩余方块数
@@ -50,6 +61,12 @@ public:
     void addTime(int sec);
 
     /**
+     * @brief 设置剩余时间
+     * @param time 剩余时间
+     */
+    void setTime(int time);
+
+    /**
      * @brief 暂停游戏(关闭计时器)
      */
     void pauseGame();
@@ -61,8 +78,14 @@ public:
 
     /**
      * @brief 结束游戏，重置。
+     * @param msg 结束游戏的提示消息
      */
-    void endGame();
+    void endGame(const QString &msg);
+
+    /**
+     * @brief 返回菜单时强制退出
+     */
+    void forceQuit();
 
     /**
      * @brief 对应于按下暂停/继续键的响应。如果已暂停那就开启，反之类似。
