@@ -107,7 +107,7 @@ void QLinkGameController::countDown() {
     if (restTime == 0) {
         endGame("超时了哦！游戏结束！");
     }
-    if (restTime % 5 == 0) {
+    if (restTime % 20 == 0) {
         randomSpawnJewel();
     }
 }

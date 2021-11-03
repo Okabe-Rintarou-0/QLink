@@ -2,6 +2,8 @@
 #include <QDebug>
 #include <QDateTime>
 
+//TODO: 解决游戏退出人物仍然显示的问题， 解决4*4显示不正常的问题
+
 QSquarePanelWidget::QSquarePanelWidget() {
     h = 0;
     w = 0;
@@ -95,12 +97,53 @@ void QSquarePanelWidget::renderSquares() {
     QMap<int, int> randomIconIdxToNum;
     QMap<int, int> randomIconBonus;
     prepareRandom(randomIconIdxToNum, randomIconBonus);
+    int restHeight = (800 - (h - 1) * squareSpacing);
+
+    QPoint linkable_p1, linkable_p2;
+    int randomSide = RandomUtil::randRange(0, 3);
+    int randomOffset1, randomOffset2;
+    if (randomSide % 2 == 0) {
+        randomOffset1 = RandomUtil::randRange(0, (w - 1) / 2);
+        randomOffset2 = RandomUtil::randRange((w - 1) / 2 + 1, (w - 1));
+        int x = randomSide ? h - 1 : 0;
+        linkable_p1 = QPoint(x, randomOffset1);
+        linkable_p2 = QPoint(x, randomOffset2);
+    } else {
+        randomOffset1 = RandomUtil::randRange(0, (h - 1) / 2);
+        randomOffset2 = RandomUtil::randRange((h - 1) / 2 + 1, (h - 1));
+        int y = randomSide ? w - 1 : 0;
+        linkable_p1 = QPoint(randomOffset1, y);
+        linkable_p2 = QPoint(randomOffset2, y);
+    }
+    int randomIdx = RandomUtil::randRange(0, randomIconIdxToNum.size() - 1);
+    int randomIconIdx = (randomIconIdxToNum.begin() + randomIdx).key();
+    randomIconIdxToNum[randomIconIdx] -= 2;
+
+    qDebug() << linkable_p1 << endl;
+    qDebug() << linkable_p2 << endl;
+
+    for (int i = 0; i < h; ++i)
+        squares.push_back(QVector<QLinkSquare *>(w, nullptr));
+
+    int p1x = linkable_p1.x(), p2x = linkable_p2.x();
+    int p1y = linkable_p1.y(), p2y = linkable_p2.y();
+    QLinkSquare *square = new QLinkSquare;
+    square->setSize(restHeight / h, restHeight / h);
+    square->setAndRenderIcon(randomIconIdx, randomIconBonus[randomIconIdx]);
+    gridLayout->addWidget(square->getWidget(), p1x, p1y, 1, 1);
+    squares[p1x][p1y] = square;
+
+    square = new QLinkSquare;
+    square->setSize(restHeight / h, restHeight / h);
+    square->setAndRenderIcon(randomIconIdx, randomIconBonus[randomIconIdx]);
+    gridLayout->addWidget(square->getWidget(), p2x, p2y, 1, 1);
+    squares[p2x][p2y] = square;
 
     for (int i = 0; i < h; ++i) {
-        squares.push_back(QVector<QLinkSquare *>(w, nullptr));
         for (int j = 0; j < w; ++j) {
+            QPoint curP = QPoint(i, j);
+            if (curP == linkable_p1 || curP == linkable_p2) continue;
             QLinkSquare *square = new QLinkSquare;
-            int restHeight = (800 - (h - 1) * squareSpacing);
             int randomId = RandomUtil::randRange(0, randomIconIdxToNum.size() - 1);
             auto it = randomIconIdxToNum.begin();
             for (int i = 0; i < randomId; ++i, ++it);

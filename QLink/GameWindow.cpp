@@ -38,6 +38,7 @@ GameWindow::GameWindow(QWidget *parent)
     });
 
     characters = new QCharacterWidget *[2];
+    characters[0] = characters[1] = nullptr;
 
     countDownLCD = new QLCDNumber(this);
     countDownLCD->setGeometry(940, 50, 100, 40);
@@ -68,6 +69,10 @@ GameWindow::GameWindow(QWidget *parent)
 
 void GameWindow::init() {
     pauseContinueButton->initAndShow();
+    for (int i = 0; i < 2; ++i) {
+        if (characters[i])
+            characters[i]->hide();
+    }
 }
 
 void GameWindow::spawnCharacter(int id, const QPoint &pos, MoveMode moveMode) {
