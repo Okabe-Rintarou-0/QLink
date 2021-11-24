@@ -6,10 +6,11 @@ QLinkGameController::~QLinkGameController() {
 
 QLinkGameController::QLinkGameController() {
     instance = nullptr;
-    score = 0;
+    scores[0] = scores[1] = 0;
     restTime = 0;
 
-    QApplication::connect(QSquarePanelWidget::getInstance(), SIGNAL(linked(int, int)), this, SLOT(update(int, int)));
+    QApplication::connect(QSquarePanelWidget::getInstance(), SIGNAL(linked(int, int, int, bool)), this,
+                          SLOT(update(int, int, int, bool)));
 }
 
 QLinkGameController *QLinkGameController::getInstance() {
@@ -19,9 +20,11 @@ QLinkGameController *QLinkGameController::getInstance() {
 }
 
 void QLinkGameController::init() {
-    score = 0;
+    scores[0] = scores[1] = 0;
     restTime = 120;
-    emit scoreChanged("分数: " + QString::number(score));
+    for (int i = 0; i < 2; ++i)
+        emit scoresChanged(i, "分数: " + QString::number(scores[i]));
+
     emit timeChanged(restTime);
     for (QLinkGameItem *jewel:jewels) {
         jewel->setParent(nullptr);
@@ -32,6 +35,10 @@ void QLinkGameController::init() {
         killTimer(countDownTimer);
         countDownTimer = -1;
     }
+
+    spawnJewel(JewelType::TIME, QPoint(300, 300));
+    spawnJewel(JewelType::HINT, QPoint(300, 400));
+    spawnJewel(JewelType::SHUFFLE, QPoint(300, 500));
 }
 
 void QLinkGameController::clear() {
@@ -41,9 +48,11 @@ void QLinkGameController::clear() {
     }
 }
 
-void QLinkGameController::update(int bonus, int restSquares) {
-    addScore(bonus);
+void QLinkGameController::update(int idx, int bonus, int restSquares, bool linkable) {
+    addScores(idx, bonus);
     setRestSquares(restSquares);
+    if (!linkable && restSquares > 0)
+        endGame("没有可以消除的方块，游戏结束！");
 }
 
 void QLinkGameController::endGame(const QString &msg) {
@@ -55,26 +64,34 @@ void QLinkGameController::forceQuit() {
     clear();
 }
 
-void QLinkGameController::addScore(int increment) {
-    score += increment;
-    emit scoreChanged("分数: " + QString::number(score));
+void QLinkGameController::addScores(int idx, int increment) {
+    scores[idx] += increment;
+    emit scoresChanged(idx, "分数: " + QString::number(scores[idx]));
 }
 
-void QLinkGameController::setScore(int score) {
-    this->score = score;
-    emit scoreChanged("分数: " + QString::number(score));
+void QLinkGameController::setScores(int idx, int scores) {
+    this->scores[idx] = scores;
+    emit scoresChanged(idx, "分数: " + QString::number(this->scores[idx]));
 }
 
 void QLinkGameController::setRestSquares(int restSquares) {
     this->restSquares = restSquares;
     if (this->restSquares == 0) {
-        endGame("方块均已被消除，游戏结束！");
+        QString msg;
+        if (scores[0] != scores[1]) {
+            int winner = scores[0] < scores[1];
+            msg = "方块均已被消除，游戏结束！玩家" + QString::number(winner) + "获胜。";
+        } else {
+            msg = "方块均已被消除，游戏结束！双方平局。";
+        }
+        endGame(msg);
     }
 }
 
 void QLinkGameController::loadFromArchive(const QGlobalInfo &globalInfo) {
     setTime(globalInfo.restTime);
-    setScore(globalInfo.scores);
+    for (int i = 0; i < 2; ++i)
+        setScores(i, globalInfo.scores[i]);
     startCountDown();
 }
 
@@ -85,7 +102,9 @@ void QLinkGameController::loadFromArchive(const QGameItemInfo &gameItemInfo) {
     }
 }
 
-void QLinkGameController::startGame() {
+void QLinkGameController::startGame(int playerNum) {
+    assert(playerNum == 1 || playerNum == 2);
+    this->playerNum = playerNum;
     init();
     startCountDown();
     emit timeChanged(restTime);
@@ -129,7 +148,7 @@ QGameItemInfo QLinkGameController::getGameItemInfo() const {
 }
 
 QGlobalInfo QLinkGameController::getGlobalInfo() const {
-    return QGlobalInfo(restTime, score);
+    return QGlobalInfo(restTime, scores[0], scores[1]);
 }
 
 QLinkGameItem *QLinkGameController::getJewel(JewelType jewelType) {
@@ -180,7 +199,7 @@ QPoint QLinkGameController::getRandomSpawnPoint() {
 }
 
 void QLinkGameController::randomSpawnJewel() {
-    JewelType jewelType = (JewelType) RandomUtil::randRange(0, 3);
+    JewelType jewelType = (JewelType) RandomUtil::randRange(0, 2);
     QPoint randomPos = getRandomSpawnPoint();
     spawnJewel(jewelType, randomPos);
 }

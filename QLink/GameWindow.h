@@ -59,7 +59,7 @@ private:
     QSpinBox *heightSpinBox;
     QCharacterWidget **characters;
     QSquarePanelWidget *squarePanel;
-    QLabel *scoreLabel;
+    QLabel *scoreLabels;
     QPushButton *retButton;
     QLabel *heightLabel;
     QLabel *widthLabel;

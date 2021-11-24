@@ -2,7 +2,7 @@
 #include "QWindowManager.h"
 #include "QUnitTest.h"
 
-//#define TEST
+#define TEST
 
 
 int main(int argc, char *argv[]) {
@@ -10,9 +10,10 @@ int main(int argc, char *argv[]) {
 #ifdef TEST
     QUnitTest unitTest;
     QTest::qExec(&unitTest);
-#endif
+#else
     QWindowManager *windowManager = QWindowManager::getInstance();
 //    GameWindow w;
 //    w.show();
+#endif
     return a.exec();
 }

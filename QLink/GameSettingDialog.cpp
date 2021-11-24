@@ -34,7 +34,7 @@ void GameSettingDialog::setGameMode(GameMode gameMode) {
 
 void GameSettingDialog::checkAndStart() {
     if (!checkValidation())
-        QMessageBox::warning(this, "警告", "宽或高必须为整数！");
+        QMessageBox::warning(this, "警告", "宽或高必须为偶数！");
     else {
         emit startGame(ui->widthSpinBox->value(), ui->heightSpinBox->value(), gameMode);
         close();

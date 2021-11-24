@@ -6,6 +6,7 @@
    2 4 3
    4   4
 ***************************************/
+
 //to simplify
 typedef QPoint p;
 
@@ -43,7 +44,6 @@ void QUnitTest::init() {
     squarePanel->clear();
     squarePanel->setSize(4, 4);
     squarePanel->renderSquares(squareInfos);
-    squarePanel->onRender();
 }
 
 void QUnitTest::testHorizontal() {
@@ -122,5 +122,54 @@ void QUnitTest::testIsLinkable() {
     QVERIFY(!squarePanel->isLinkable(p(0,0),p(3,0)));
 }
 
+// This is a map without linkable pairs
+/***************************************
+   1 3 2 5
+   5 3 4 6
+   2 1 2 1
+   6 2 1 4
+***************************************/
+
+void QUnitTest::formNotLinkableMap() {
+    QVector<QSquareInfo> squareInfos;
+
+    //row 1
+    squareInfos.push_back(QSquareInfo(p(0, 0), 1, 30));
+    squareInfos.push_back(QSquareInfo(p(0, 1), 4, 30));
+    squareInfos.push_back(QSquareInfo(p(0, 2), 2, 30));
+    squareInfos.push_back(QSquareInfo(p(0, 3), 5, 30));
+
+    //row 2
+    squareInfos.push_back(QSquareInfo(p(1, 0), 5, 30));
+    squareInfos.push_back(QSquareInfo(p(1, 1), 3, 30));
+    squareInfos.push_back(QSquareInfo(p(1, 2), 4, 30));
+    squareInfos.push_back(QSquareInfo(p(1, 3), 6, 30));
+
+    //row 3
+    squareInfos.push_back(QSquareInfo(p(2, 0), 2, 30));
+    squareInfos.push_back(QSquareInfo(p(2, 1), 1, 30));
+    squareInfos.push_back(QSquareInfo(p(2, 2), 2, 30));
+    squareInfos.push_back(QSquareInfo(p(2, 3), 1, 30));
+
+    //row 4
+    squareInfos.push_back(QSquareInfo(p(3, 0), 6, 30));
+    squareInfos.push_back(QSquareInfo(p(3, 1), 2, 30));
+    squareInfos.push_back(QSquareInfo(p(3, 2), 1, 30));
+    squareInfos.push_back(QSquareInfo(p(3, 3), 4, 30));
+
+    squarePanel->clear();
+    squarePanel->setSize(4, 4);
+    squarePanel->renderSquares(squareInfos);
+}
+
+void QUnitTest::testExistsLinkable() {
+    init();
+
+    QVERIFY(squarePanel->existsLinkableSquare());
+
+    formNotLinkableMap();
+
+    QVERIFY(!squarePanel->existsLinkableSquare());
+}
 
 

@@ -121,23 +121,26 @@ void QSquarePanelInfo::parse(const QJsonObject &jsonObj) {
         throw JsonParseException();
 }
 
-QGlobalInfo::QGlobalInfo(int restTime, int scores) {
+QGlobalInfo::QGlobalInfo(int restTime, int fstScores, int secScores) {
     this->restTime = restTime;
-    this->scores = scores;
+    this->scores[0] = fstScores;
+    this->scores[1] = secScores;
 }
 
 QJsonObject QGlobalInfo::toJson() const {
     QJsonObject jsonObj;
     jsonObj.insert("restTime", restTime);
-    jsonObj.insert("scores", scores);
+    jsonObj.insert("fstScores", scores[0]);
+    jsonObj.insert("secScores", scores[1]);
     return jsonObj;
 }
 
 void QGlobalInfo::parse(const QJsonObject &jsonObj) {
-    if (jsonObj.contains("restTime") && jsonObj.contains("scores")) {
+    if (jsonObj.contains("restTime") && jsonObj.contains("fstScores") && jsonObj.contains("secScores")) {
         restTime = jsonObj["restTime"].toInt();
-        scores = jsonObj["scores"].toInt();
-        qDebug() << "Parse: scores = " << scores << " restTime = " << restTime << endl;
+        scores[0] = jsonObj["fstScores"].toInt();
+        scores[1] = jsonObj["secScores"].toInt();
+        qDebug() << "Parse: scores = " << scores[0] << " and " << scores[1] << " restTime = " << restTime << endl;
     }
     else
         throw JsonParseException();

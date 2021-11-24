@@ -50,6 +50,8 @@ void QSquarePanelWidget::renderSquares(const QVector <QSquareInfo> &squareInfos)
         gridLayout->addWidget(square->getWidget(), x, y, 1, 1);
     }
     restSquares = squareInfos.size();
+
+    onRender();
 }
 
 void QSquarePanelWidget::loadFromArchive(const QSquarePanelInfo &squarePanelInfo) {
@@ -57,7 +59,6 @@ void QSquarePanelWidget::loadFromArchive(const QSquarePanelInfo &squarePanelInfo
     setSize(squarePanelInfo.w, squarePanelInfo.h);
     renderSquares(squarePanelInfo.squareInfos);
     setUpGridLayout();
-    onRender();
 }
 
 QSquarePanelInfo QSquarePanelWidget::getSquarePanelInfo() const {
@@ -98,51 +99,9 @@ void QSquarePanelWidget::renderSquares() {
     QMap<int, int> randomIconBonus;
     prepareRandom(randomIconIdxToNum, randomIconBonus);
     int restHeight = (800 - (h - 1) * squareSpacing);
-
-    QPoint linkable_p1, linkable_p2;
-    int randomSide = RandomUtil::randRange(0, 3);
-    int randomOffset1, randomOffset2;
-    if (randomSide % 2 == 0) {
-        randomOffset1 = RandomUtil::randRange(0, (w - 1) / 2);
-        randomOffset2 = RandomUtil::randRange((w - 1) / 2 + 1, (w - 1));
-        int x = randomSide ? h - 1 : 0;
-        linkable_p1 = QPoint(x, randomOffset1);
-        linkable_p2 = QPoint(x, randomOffset2);
-    } else {
-        randomOffset1 = RandomUtil::randRange(0, (h - 1) / 2);
-        randomOffset2 = RandomUtil::randRange((h - 1) / 2 + 1, (h - 1));
-        int y = randomSide ? w - 1 : 0;
-        linkable_p1 = QPoint(randomOffset1, y);
-        linkable_p2 = QPoint(randomOffset2, y);
-    }
-    int randomIdx = RandomUtil::randRange(0, randomIconIdxToNum.size() - 1);
-    int randomIconIdx = (randomIconIdxToNum.begin() + randomIdx).key();
-    randomIconIdxToNum[randomIconIdx] -= 2;
-
-    qDebug() << linkable_p1 << endl;
-    qDebug() << linkable_p2 << endl;
-
-    for (int i = 0; i < h; ++i)
-        squares.push_back(QVector<QLinkSquare *>(w, nullptr));
-
-    int p1x = linkable_p1.x(), p2x = linkable_p2.x();
-    int p1y = linkable_p1.y(), p2y = linkable_p2.y();
-    QLinkSquare *square = new QLinkSquare;
-    square->setSize(restHeight / h, restHeight / h);
-    square->setAndRenderIcon(randomIconIdx, randomIconBonus[randomIconIdx]);
-    gridLayout->addWidget(square->getWidget(), p1x, p1y, 1, 1);
-    squares[p1x][p1y] = square;
-
-    square = new QLinkSquare;
-    square->setSize(restHeight / h, restHeight / h);
-    square->setAndRenderIcon(randomIconIdx, randomIconBonus[randomIconIdx]);
-    gridLayout->addWidget(square->getWidget(), p2x, p2y, 1, 1);
-    squares[p2x][p2y] = square;
-
     for (int i = 0; i < h; ++i) {
         for (int j = 0; j < w; ++j) {
-            QPoint curP = QPoint(i, j);
-            if (curP == linkable_p1 || curP == linkable_p2) continue;
+            squares.push_back(QVector<QLinkSquare *>(w));
             QLinkSquare *square = new QLinkSquare;
             int randomId = RandomUtil::randRange(0, randomIconIdxToNum.size() - 1);
             auto it = randomIconIdxToNum.begin();
@@ -158,6 +117,11 @@ void QSquarePanelWidget::renderSquares() {
         }
     }
     restSquares = w * h;
+
+    onRender();
+    if (!existsLinkableSquare()) {
+        shuffle();
+    }
 }
 
 void QSquarePanelWidget::initSquareMap() {
@@ -231,8 +195,8 @@ void QSquarePanelWidget::setUpGridLayout() {
 }
 
 void QSquarePanelWidget::render() {
-    renderSquares();
     setUpGridLayout();
+    renderSquares();
 }
 
 void QSquarePanelWidget::clear() {
@@ -259,7 +223,6 @@ void QSquarePanelWidget::resizeAndRender(int w, int h) {
     clear();
     setSize(w, h);
     render();
-    onRender();
 }
 
 bool QSquarePanelWidget::canPassBy(const QPoint &p) const {
@@ -332,9 +295,9 @@ int QSquarePanelWidget::getBonus(const QPoint &p) {
     return squares[p.x()][p.y()]->getBonus();
 }
 
-void QSquarePanelWidget::link(const QPoint &p1, const QPoint &p2) {
+void QSquarePanelWidget::link(int idx, const QPoint &p1, const QPoint &p2) {
     restSquares -= 2;
-    emit linked(getBonus(p1), restSquares);
+    int bonus = getBonus(p1);
 
     expandReachable(p1);
     expandReachable(p2);
@@ -342,9 +305,8 @@ void QSquarePanelWidget::link(const QPoint &p1, const QPoint &p2) {
     removeSquareAt(p1);
     removeSquareAt(p2);
 
-    if (!existsLinkableSquare()) {
-        shuffle();
-    }
+    emit linked(idx, bonus, restSquares, existsLinkableSquare());
+
     if (runMode == RunMode::HINT) {
         hintNext();
     }
@@ -368,7 +330,7 @@ void QSquarePanelWidget::tryLink(int idx) {
         QPoint first = activateQueue[idx].dequeue();
         QPoint second = activateQueue[idx].dequeue();
         if (isLinkable(first, second)) {
-            link(first, second);
+            link(idx, first, second);
             emit tryLink("消除");
         } else {
             cancelLink(first, second);
@@ -392,7 +354,7 @@ QPoint QSquarePanelWidget::toMapPoint(int x, int y) const {
 
 void QSquarePanelWidget::shuffle() {
     qDebug() << "Shuffle" << endl;
-
+    runMode = RunMode::COMMON;
     QVector <QPoint> points;
     QVector <QPair<int, int >> icons;
     for (int i = 0; i < h; ++i) {
@@ -411,6 +373,10 @@ void QSquarePanelWidget::shuffle() {
     }
 
     initSquarePosMap();
+
+    linkablePairCache = INVALID_PAIR;
+    if (!existsLinkableSquare())
+        shuffle();
 }
 
 //check if it's blocked

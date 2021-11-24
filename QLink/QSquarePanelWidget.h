@@ -95,9 +95,10 @@ private:
 
     /**
      * @brief 连接两个方块（对应check成功的情况）
+     * @param idx 玩家id
      * @return 两个方块的坐标p1, p2。
      */
-    void link(const QPoint &p1, const QPoint &p2);
+    void link(int idx, const QPoint &p1, const QPoint &p2);
 
     /**
      * @brief 取消连接（对应check失败的情况）
@@ -339,12 +340,10 @@ public:
      */
     int getBonus(const QPoint &p);
 
-    signals:
-            void tryLink(
-    const QString &status
-    );
+signals:
+    void tryLink(const QString &status);
 
-    void linked(int bonus, int restSquares);
+    void linked(int idx, int bonus, int restSquares, bool linkable = true);
 };
 
 #endif // QSQUAREPANELWIDGET_H

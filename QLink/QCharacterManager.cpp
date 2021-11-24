@@ -48,6 +48,7 @@ void QCharacterManager::loadFromArchive(const QPlayerInfo &playerInfo) {
     assert(playerInfo.characters.size() <= 2);
     for (int i = 0; i < playerInfo.characters.size(); ++i) {
         emit spawn(i, playerInfo.characters[i].pos, playerInfo.characters[i].moveMode);
+        qDebug() << "spawn: "<< endl;
     }
 }
 

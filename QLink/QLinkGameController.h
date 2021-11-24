@@ -33,20 +33,21 @@ public:
 
     /**
      * @brief 重置，打开计时器，开启游戏。
+     * @param playerNum 玩家数
      * */
-    void startGame();
+    void startGame(int playerNum);
 
     /**
      * @brief 增加游戏得分
      * @param increment 增量
      * */
-    void addScore(int increment);
+    void addScores(int idx, int increment);
 
     /**
      * @brief 设置当前分数
      * @param score 分数
      */
-    void setScore(int score);
+    void setScores(int idx, int score);
 
     /**
      * @brief 设置剩余方块数
@@ -118,10 +119,11 @@ public:
 
 private:
     bool paused = true;
-    int score;
+    int scores[2];
     int restSquares;
     int restTime;
     int countDownTimer = -1;
+    int playerNum;
     QSet<QLinkGameItem *> jewels;
 
     static QLinkGameController *instance;
@@ -175,14 +177,14 @@ protected:
 signals:
     void timeChanged(int sec);
 
-    void scoreChanged(const QString &);
+    void scoresChanged(int idx, const QString &);
 
     void gameOver(const QString &);
 
     void spawnJewel(QLinkGameItem *jewel, const QPoint &pos);
 
 private slots:
-    void update(int bonus, int restSquares);
+    void update(int idx, int bonus, int restSquares, bool linkable);
 };
 
 #endif // QLINKGAMECONTROLLER_H

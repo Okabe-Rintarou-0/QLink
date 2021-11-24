@@ -19,6 +19,11 @@ private:
     void init();
 
     /**
+     * @brief 生成无法连接的地图
+     */
+    void formNotLinkableMap();
+
+    /**
      * @brief 转换到map point
      * @note 实际上在连连看地图上，如果方格是N*M，那么可连线范围则是(N + 1)*(M + 1)，多了一个外围的区域
      * @note 所以实际上map point就是将(row, col)网格坐标映射到(row - 1, col - 1)的地图坐标
@@ -58,6 +63,11 @@ private slots:
      * @brief 测试整体连接判断
      */
     void testIsLinkable();
+
+    /**
+     * @brief testExistsLinkable
+     */
+    void testExistsLinkable();
 
 public:
     QUnitTest();

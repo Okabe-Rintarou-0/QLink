@@ -10,7 +10,7 @@ class QLinkGameItem : public QWidget {
     Q_OBJECT
 public:
     enum JewelType {
-        UNDEFINED = -1, TIME, FLASH, SHUFFLE, HINT
+        UNDEFINED = -1, TIME, SHUFFLE, HINT, FLASH
     };
 
     QLinkGameItem(const QString &imgPath);
@@ -52,10 +52,12 @@ private:
 protected:
     JewelType jewelType = UNDEFINED;
 
-signals:
-    void picked(int picker);
+    signals:
+            void picked(int
+    picker);
 
-public slots:
+public
+slots:
     void tryPick(int picker, const QPoint &pickerPos);
 };
 

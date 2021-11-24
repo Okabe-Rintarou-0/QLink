@@ -69,7 +69,8 @@ void QCharacterWidget::moveRight() {
 
 void QCharacterWidget::dash(const QPoint &targetPos) {
     QPoint centerPos = QPoint(targetPos.x() - width() / 2, targetPos.y() - height() / 2);
-    QWidget::move(centerPos);
+    if (!QSquarePanelWidget::getInstance()->existsSquare(centerPos))
+        QWidget::move(centerPos);
     emit moveTo(id, center());
 }
 

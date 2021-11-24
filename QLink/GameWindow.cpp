@@ -17,10 +17,14 @@ GameWindow::GameWindow(QWidget *parent)
     linkStatusLabel->setStyleSheet("color:red;");
     linkStatusLabel->setFont(QFont("Microsoft YaHei", 15, 50));
 
-    scoreLabel = new QLabel(this);
-    scoreLabel->setGeometry(960, 10, 200, 50);
-    scoreLabel->setText("分数: 0");
-    scoreLabel->setFont(QFont("Microsoft YaHei", 10, 75));
+    scoreLabels = new QLabel[2];
+    for (int i = 0; i < 2; ++i) {
+        scoreLabels[i].setParent(this);
+        scoreLabels[i].setText("分数: 0");
+        scoreLabels[i].setFont(QFont("Microsoft YaHei", 10, 75));
+    }
+    scoreLabels[0].setGeometry(940, 10, 200, 50);
+    scoreLabels[1].setGeometry(1000, 10, 200, 50);
 
     squarePanel = QSquarePanelWidget::getInstance();
     squarePanel->setParent(this);
@@ -64,7 +68,9 @@ GameWindow::GameWindow(QWidget *parent)
     QApplication::connect(squarePanel, SIGNAL(tryLink(QString)), linkStatusLabel, SLOT(setText(QString)));
     QApplication::connect(gameController, SIGNAL(timeChanged(int)), countDownLCD, SLOT(display(int)));
     QApplication::connect(gameController, SIGNAL(gameOver(QString)), this, SLOT(showGameOverTips(QString)));
-    QApplication::connect(gameController, SIGNAL(scoreChanged(QString)), scoreLabel, SLOT(setText(QString)));
+    QApplication::connect(gameController, &QLinkGameController::scoresChanged, this, [&](int idx, const QString &scores) {
+        scoreLabels[idx].setText(scores);
+    });
 }
 
 void GameWindow::init() {
@@ -82,6 +88,8 @@ void GameWindow::spawnCharacter(int id, const QPoint &pos, MoveMode moveMode) {
     characters[id]->setSize(squarePanel->getSquareSize());
     characters[id]->spawn(pos);
     characters[id]->setMoveMode(moveMode);
+    characters[id]->show();
+    qDebug() << "window spawn" << endl;
 }
 
 void GameWindow::startGame(int w, int h, GameMode gameMode) {
@@ -92,7 +100,9 @@ void GameWindow::startGame(int w, int h, GameMode gameMode) {
 
     if (gameMode == TWO_PLAYER)
         spawnCharacter(1, QPoint(250, 200), MoveMode::COMMON);
-    gameController->startGame();
+
+    int playerNum = gameMode == ONE_PLAYER ? 1 : 2;
+    gameController->startGame(playerNum);
 
     show();
 }

@@ -79,7 +79,7 @@ public:
 
 class QGlobalInfo {
 public:
-    QGlobalInfo(int restTime, int scores);
+    QGlobalInfo(int restTime, int fstScores, int secScores);
 
     QGlobalInfo() = default;
 
@@ -90,7 +90,7 @@ public:
     void parse(const QJsonObject &jsonObj);
 
     int restTime;
-    int scores;
+    int scores[2];
 };
 
 class QJewelInfo {

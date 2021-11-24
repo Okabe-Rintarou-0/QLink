@@ -16,9 +16,9 @@ QWindowManager::QWindowManager() {
 }
 
 void QWindowManager::loadArchive() {
+    gameWindow->init();
     if (QLinkArchiveManager::getInstance()->loadArchive()) {
         menu->hide();
-        gameWindow->init();
         gameWindow->show();
     } else {
         QMessageBox::warning(menu, "错误", "存档加载失败，格式可能有误！");
