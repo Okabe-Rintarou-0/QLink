@@ -10,22 +10,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a1c061ac-3abf-4a44-87d8-ee572f9744d2" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/QLink/linkcanvas.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QLink/linkcanvas.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/archive.json" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/archive.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/GameSettingDialog.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/GameSettingDialog.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/QLink/GameWindow.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/GameWindow.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/QLink/GameWindow.h" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/GameWindow.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/QCharacterManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/QCharacterManager.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/QCharacterWidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/QCharacterWidget.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/QLinkArchive.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/QLinkArchive.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/QLinkArchive.h" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/QLinkArchive.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QLink/QLink.pro" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/QLink.pro" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/QLink/QLinkGameController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/QLinkGameController.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/QLinkGameController.h" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/QLinkGameController.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/QLinkGameItem.h" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/QLinkGameItem.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/QLink/QSquarePanelWidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/QSquarePanelWidget.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/QLink/QSquarePanelWidget.h" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/QSquarePanelWidget.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/QLink/QUnitTest.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/QUnitTest.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/QWindowManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/QWindowManager.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QLink/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/main.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -86,7 +81,9 @@
       <workItem from="1635926444286" duration="1378000" />
       <workItem from="1636119201601" duration="597000" />
       <workItem from="1636771079832" duration="1225000" />
-      <workItem from="1637755514828" duration="8570000" />
+      <workItem from="1637755514828" duration="8572000" />
+      <workItem from="1637802846019" duration="699000" />
+      <workItem from="1637913147585" duration="3435000" />
     </task>
     <servers />
   </component>
@@ -106,10 +103,11 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="781" y="344" key="SettingsEditor/0.0.2560.1400@0.0.2560.1400" timestamp="1634462160209" />
-    <state x="1008" y="565" width="1061" height="536" key="find.popup" timestamp="1637764132494">
-      <screen x="0" y="0" width="2560" height="1400" />
+    <state x="605" y="105" width="883" height="719" key="find.popup" timestamp="1637925683602">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="1008" y="565" width="1061" height="536" key="find.popup/0.0.2560.1400@0.0.2560.1400" timestamp="1637764132494" />
+    <state x="605" y="105" width="883" height="719" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1637925683602" />
+    <state x="1008" y="565" width="1061" height="536" key="find.popup/0.0.2560.1400@0.0.2560.1400" timestamp="1637802879286" />
     <state x="936" y="330" key="run.anything.popup" timestamp="1637763242454">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>

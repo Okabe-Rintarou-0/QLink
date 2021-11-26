@@ -2,7 +2,7 @@
 #include "QWindowManager.h"
 #include "QUnitTest.h"
 
-#define TEST
+//#define TEST
 
 
 int main(int argc, char *argv[]) {

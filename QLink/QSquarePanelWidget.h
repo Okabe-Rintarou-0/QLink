@@ -40,6 +40,7 @@ private:
     QVector <QVector<int>> squareMap;
     QMap<int, QVector<QPoint>> squarePosMap;
     QPair <QPoint, QPoint> linkablePairCache = qMakePair(QPoint(-1, -1), QPoint(-1, -1));
+    QList<QLinkSquare *> deleted;
 
     QSquarePanelWidget();
 
@@ -192,28 +193,29 @@ private:
      * @param p1, p2待测连接方块的坐标
      * @return 如果可连接，返回true；否则返回false。
      */
-    bool checkStraightLine(const QPoint &p1, const QPoint &p2) const;
+    bool checkStraightLine(const QPoint &p1, const QPoint &p2, QVector<QPoint> &linkPoints) const;
 
     /**
      * @brief 测试一个拐角的情况
      * @param p1, p2待测连接方块的坐标
      * @return 如果可连接，返回true；否则返回false。
      */
-    bool checkOneCorner(const QPoint &p1, const QPoint &p2) const;
+    bool checkOneCorner(const QPoint &p1, const QPoint &p2, QVector<QPoint> &linkPoints) const;
 
     /**
      * @brief 测试两个拐角的情况
      * @param p1, p2待测连接方块的坐标
      * @return 如果可连接，返回true；否则返回false。
      */
-    bool checkTwoCorner(const QPoint &p1, const QPoint &p2) const;
+    bool checkTwoCorner(const QPoint &p1, const QPoint &p2, QVector<QPoint> &linkPoints) const;
 
     /**
      * @brief 测试两个方块是否是可连接的
      * @param p1, p2待测连接方块的坐标
      * @return 如果可连接，返回true；否则返回false。
      */
-    bool isLinkable(const QPoint &p1, const QPoint &p2) const;
+    bool isLinkable(const QPoint &p1, const QPoint &p2, QVector<QPoint> &linkPoints) const;
+
 
     /**
      * @brief 是否存在可以连接的方块
@@ -303,6 +305,8 @@ public:
      */
     void shuffle();
 
+    QPoint toRealPoint(const QPoint &mp) const;
+
     /**
      * @brief 判断是否指定位置存在方块，若存在则不可通过。
      * @param pos 指定位置
@@ -344,6 +348,8 @@ signals:
     void tryLink(const QString &status);
 
     void linked(int idx, int bonus, int restSquares, bool linkable = true);
+
+    void linkTrace(const QVector<QPoint> &linkPoints);
 };
 
 #endif // QSQUAREPANELWIDGET_H

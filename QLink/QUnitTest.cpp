@@ -69,57 +69,63 @@ void QUnitTest::testVertical() {
 void QUnitTest::testStraightLine() {
     init();
 
-    QVERIFY(squarePanel->checkStraightLine(p(3,0),p(3,2)));
-    QVERIFY(squarePanel->checkStraightLine(p(0,0),p(0,1)));
-    QVERIFY(squarePanel->checkStraightLine(p(0,2),p(2,2)));
-    QVERIFY(squarePanel->checkStraightLine(p(1,0),p(2,0)));
+    QVector<QPoint> points;
+    QVERIFY(squarePanel->checkStraightLine(p(3,0),p(3,2), points));
+    QVERIFY(squarePanel->checkStraightLine(p(0,0),p(0,1), points));
+    QVERIFY(squarePanel->checkStraightLine(p(0,2),p(2,2), points));
+    QVERIFY(squarePanel->checkStraightLine(p(1,0),p(2,0), points));
 
-    QVERIFY(!squarePanel->checkStraightLine(p(0,2),p(1,1)));
-    QVERIFY(!squarePanel->checkStraightLine(p(0,0),p(0,0)));
+    QVERIFY(!squarePanel->checkStraightLine(p(0,2),p(1,1), points));
+    QVERIFY(!squarePanel->checkStraightLine(p(0,0),p(0,0), points));
 }
 
 void QUnitTest::testOneCorner() {
     init();
 
-    QVERIFY(squarePanel->checkOneCorner(p(3,0),p(2,1)));
-    QVERIFY(squarePanel->checkOneCorner(p(3,2),p(2,1)));
-    QVERIFY(squarePanel->checkOneCorner(p(0,3),p(3,2)));
-    QVERIFY(squarePanel->checkOneCorner(p(0,2),p(1,1)));
-    QVERIFY(squarePanel->checkOneCorner(p(2,2),p(1,1)));
+    QVector<QPoint> points;
+    QVERIFY(squarePanel->checkOneCorner(p(3,0),p(2,1), points));
+    QVERIFY(squarePanel->checkOneCorner(p(3,2),p(2,1), points));
+    QVERIFY(squarePanel->checkOneCorner(p(0,3),p(3,2), points));
+    QVERIFY(squarePanel->checkOneCorner(p(0,2),p(1,1), points));
+    QVERIFY(squarePanel->checkOneCorner(p(2,2),p(1,1), points));
 
-    QVERIFY(!squarePanel->checkOneCorner(p(0,3),p(2,1)));
-    QVERIFY(!squarePanel->checkOneCorner(p(3,0),p(3,0)));
+    QVERIFY(!squarePanel->checkOneCorner(p(0,3),p(2,1), points));
+    QVERIFY(!squarePanel->checkOneCorner(p(3,0),p(3,0), points));
 }
 
 void QUnitTest::testTwoCorner() {
     init();
 
-    QVERIFY(squarePanel->checkTwoCorner(p(0,3),p(2,1)));
-    QVERIFY(squarePanel->checkTwoCorner(p(3,0),p(0,3)));
+    QVector<QPoint> points;
 
-    QVERIFY(!squarePanel->checkTwoCorner(p(0,2),p(2,2)));
-    QVERIFY(!squarePanel->checkTwoCorner(p(0,3),p(0,3)));
+    QVERIFY(squarePanel->checkTwoCorner(p(0,3),p(2,1), points));
+    QVERIFY(squarePanel->checkTwoCorner(p(3,0),p(0,3), points));
+
+    QVERIFY(!squarePanel->checkTwoCorner(p(0,2),p(2,2), points));
+    QVERIFY(!squarePanel->checkTwoCorner(p(0,3),p(0,3), points));
 }
 
 void QUnitTest::testIsLinkable() {
     init();
 
-    QVERIFY(squarePanel->isLinkable(p(0,0),p(0,1)));
-    QVERIFY(squarePanel->isLinkable(p(1,0),p(2,0)));
-    QVERIFY(squarePanel->isLinkable(p(0,2),p(1,1)));
-    QVERIFY(squarePanel->isLinkable(p(2,2),p(1,1)));
-    QVERIFY(squarePanel->isLinkable(p(0,3),p(3,0)));
-    QVERIFY(squarePanel->isLinkable(p(0,3),p(3,2)));
-    QVERIFY(squarePanel->isLinkable(p(3,0),p(2,1)));
-    QVERIFY(squarePanel->isLinkable(p(3,2),p(2,1)));
-    QVERIFY(squarePanel->isLinkable(p(0,3),p(2,1)));
+    QVector<QPoint> points;
 
-    QVERIFY(!squarePanel->isLinkable(p(3,3),p(3,3)));
-    QVERIFY(!squarePanel->isLinkable(p(0,0),p(0,0)));
-    QVERIFY(!squarePanel->isLinkable(p(0,2),p(3,2)));
-    QVERIFY(!squarePanel->isLinkable(p(1,1),p(2,1)));
-    QVERIFY(!squarePanel->isLinkable(p(0,1),p(0,2)));
-    QVERIFY(!squarePanel->isLinkable(p(0,0),p(3,0)));
+    QVERIFY(squarePanel->isLinkable(p(0,0),p(0,1), points));
+    QVERIFY(squarePanel->isLinkable(p(1,0),p(2,0), points));
+    QVERIFY(squarePanel->isLinkable(p(0,2),p(1,1), points));
+    QVERIFY(squarePanel->isLinkable(p(2,2),p(1,1), points));
+    QVERIFY(squarePanel->isLinkable(p(0,3),p(3,0), points));
+    QVERIFY(squarePanel->isLinkable(p(0,3),p(3,2), points));
+    QVERIFY(squarePanel->isLinkable(p(3,0),p(2,1), points));
+    QVERIFY(squarePanel->isLinkable(p(3,2),p(2,1), points));
+    QVERIFY(squarePanel->isLinkable(p(0,3),p(2,1), points));
+
+    QVERIFY(!squarePanel->isLinkable(p(3,3),p(3,3), points));
+    QVERIFY(!squarePanel->isLinkable(p(0,0),p(0,0), points));
+    QVERIFY(!squarePanel->isLinkable(p(0,2),p(3,2), points));
+    QVERIFY(!squarePanel->isLinkable(p(1,1),p(2,1), points));
+    QVERIFY(!squarePanel->isLinkable(p(0,1),p(0,2), points));
+    QVERIFY(!squarePanel->isLinkable(p(0,0),p(3,0), points));
 }
 
 // This is a map without linkable pairs

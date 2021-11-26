@@ -15,6 +15,7 @@
 #include "QPauseContinueButton.h"
 #include "QLinkArchiveManager.h"
 #include "MenuSelection.h"
+#include "linkcanvas.h"
 #include "Jewels.h"
 
 QT_BEGIN_NAMESPACE
@@ -68,6 +69,8 @@ private:
     QLCDNumber *countDownLCD;
     QPauseContinueButton *pauseContinueButton;
     QLinkGameItem *jewel;
+
+    LinkCanvas *canvas;
 
     QLinkGameController *gameController;
     QCharacterManager *characterManager;

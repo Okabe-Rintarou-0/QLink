@@ -23,12 +23,16 @@ GameWindow::GameWindow(QWidget *parent)
         scoreLabels[i].setText("分数: 0");
         scoreLabels[i].setFont(QFont("Microsoft YaHei", 10, 75));
     }
-    scoreLabels[0].setGeometry(940, 10, 200, 50);
-    scoreLabels[1].setGeometry(1000, 10, 200, 50);
+    scoreLabels[0].setGeometry(900, 10, 200, 50);
+    scoreLabels[1].setGeometry(1040, 10, 200, 50);
 
     squarePanel = QSquarePanelWidget::getInstance();
     squarePanel->setParent(this);
     squarePanel->setSize(8, 8);
+
+    canvas = new LinkCanvas();
+    canvas->setParent(this);
+    canvas->setGeometry(0, 0, this->width(), this->height());
 
     retButton = new QPushButton(this);
     retButton->setText("返回菜单");
@@ -71,6 +75,7 @@ GameWindow::GameWindow(QWidget *parent)
     QApplication::connect(gameController, &QLinkGameController::scoresChanged, this, [&](int idx, const QString &scores) {
         scoreLabels[idx].setText(scores);
     });
+    QApplication::connect(squarePanel, &QSquarePanelWidget::linkTrace, canvas, &LinkCanvas::renderLinkTrace);
 }
 
 void GameWindow::init() {
@@ -128,7 +133,7 @@ void GameWindow::renderJewel(QLinkGameItem *jewel, const QPoint &pos) {
     qDebug() << "render jewel at pos: " << pos << endl;
     jewel->setGeometry(pos.x(), pos.y(), 50, 50);
     jewel->setParent(this);
-    for (int i = 0; i < 1; ++i) {
+    for (int i = 0; i < 2; ++i) {
         if (characters[i] != nullptr) {
             jewel->connect(characters[i]);
             jewel->stackUnder(characters[i]);

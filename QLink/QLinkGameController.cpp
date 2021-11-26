@@ -26,19 +26,11 @@ void QLinkGameController::init() {
         emit scoresChanged(i, "分数: " + QString::number(scores[i]));
 
     emit timeChanged(restTime);
-    for (QLinkGameItem *jewel:jewels) {
-        jewel->setParent(nullptr);
-        jewels.remove(jewel);
-        delete jewel;
-    }
-    if (countDownTimer >= 0) {
-        killTimer(countDownTimer);
-        countDownTimer = -1;
-    }
+    clear();
 
-    spawnJewel(JewelType::TIME, QPoint(300, 300));
-    spawnJewel(JewelType::HINT, QPoint(300, 400));
-    spawnJewel(JewelType::SHUFFLE, QPoint(300, 500));
+//    spawnJewel(JewelType::TIME, QPoint(300, 300));
+//    spawnJewel(JewelType::HINT, QPoint(300, 400));
+//    spawnJewel(JewelType::SHUFFLE, QPoint(300, 500));
 }
 
 void QLinkGameController::clear() {

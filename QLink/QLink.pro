@@ -31,6 +31,7 @@ SOURCES += \
     ShuffleJewel.cpp \
     TimeJewel.cpp \
     DirectionUtil.cpp \
+    linkcanvas.cpp \
     main.cpp \
     GameWindow.cpp \
     QCharacterWidget.cpp \
@@ -71,7 +72,8 @@ HEADERS += \
     QStyleSheetBuilder.h \
     QLinkGameItem.h \
     QLinkMenu.h \
-    RandomUtil.h
+    RandomUtil.h \
+    linkcanvas.h
 
 FORMS += \
     GameSettingDialog.ui \
