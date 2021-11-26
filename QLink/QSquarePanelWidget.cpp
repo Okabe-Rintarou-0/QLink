@@ -222,7 +222,7 @@ void QSquarePanelWidget::clear() {
     }
     squares.clear();
     linkablePairCache = INVALID_PAIR;
-    for (QLinkSquare* square: deleted) {
+    for (QLinkSquare *square: deleted) {
         gridLayout->removeWidget(square->getWidget());
         square->getWidget()->setParent(nullptr);
         delete square;
@@ -249,10 +249,11 @@ bool QSquarePanelWidget::outOfBound(const QPoint &p) const {
     return p.x() < 0 || p.x() > h + 1 || p.y() < 0 || p.y() > w + 1;
 }
 
-bool QSquarePanelWidget::isLinkable(const QPoint &p1, const QPoint &p2, QVector<QPoint> &linkPoints) const {
+bool QSquarePanelWidget::isLinkable(const QPoint &p1, const QPoint &p2, QVector <QPoint> &linkPoints) const {
     QLinkSquare *first = squares[p1.x()][p1.y()];
     QLinkSquare *second = squares[p2.x()][p2.y()];
-    return first->equals(second) && (checkStraightLine(p1, p2, linkPoints) || checkOneCorner(p1, p2, linkPoints) || checkTwoCorner(p1, p2, linkPoints));
+    return first->equals(second) && (checkStraightLine(p1, p2, linkPoints) || checkOneCorner(p1, p2, linkPoints) ||
+                                     checkTwoCorner(p1, p2, linkPoints));
 }
 
 bool QSquarePanelWidget::searchLinkableSquare() {
@@ -260,7 +261,7 @@ bool QSquarePanelWidget::searchLinkableSquare() {
         int size = points.size();
         for (int i = 0; i < size; ++i)
             for (int j = i + 1; j < size; ++j) {
-                QVector<QPoint> tmp;
+                QVector <QPoint> tmp;
                 if (isLinkable(points[i], points[j], tmp)) {
                     linkablePairCache = qMakePair(points[i], points[j]);
                     qDebug() << "Can link :" << points[i] << " to " << points[j] << endl;
@@ -348,7 +349,7 @@ void QSquarePanelWidget::tryLink(int idx) {
     if (activateQueue[idx].size() == 2) {
         QPoint first = activateQueue[idx].dequeue();
         QPoint second = activateQueue[idx].dequeue();
-        QVector<QPoint> linkPoints;
+        QVector <QPoint> linkPoints;
         if (isLinkable(first, second, linkPoints)) {
             link(idx, first, second);
             emit linkTrace(linkPoints);
@@ -430,7 +431,7 @@ bool QSquarePanelWidget::checkHorizontal(const QPoint &mp1, const QPoint &mp2) c
     return true;
 }
 
-bool QSquarePanelWidget::checkStraightLine(const QPoint &p1, const QPoint &p2, QVector<QPoint> &linkPoints) const {
+bool QSquarePanelWidget::checkStraightLine(const QPoint &p1, const QPoint &p2, QVector <QPoint> &linkPoints) const {
     QPoint mp1 = toMapPoint(p1), mp2 = toMapPoint(p2);
     if ((mp1.y() == mp2.y() && checkVertical(mp1, mp2)) || (mp1.x() == mp2.x() && checkHorizontal(mp1, mp2))) {
         linkPoints.push_back(mp1);
@@ -440,7 +441,7 @@ bool QSquarePanelWidget::checkStraightLine(const QPoint &p1, const QPoint &p2, Q
     return false;
 }
 
-bool QSquarePanelWidget::checkOneCorner(const QPoint &p1, const QPoint &p2, QVector<QPoint> &linkPoints) const {
+bool QSquarePanelWidget::checkOneCorner(const QPoint &p1, const QPoint &p2, QVector <QPoint> &linkPoints) const {
 //    qDebug() << "check one corner: " << "p1: " << p1 << "p2: " << p2 << endl;
     QPoint mp1 = toMapPoint(p1), mp2 = toMapPoint(p2);
     QPoint corner_1 = toMapPoint(p2.x(), p1.y());
@@ -461,7 +462,7 @@ bool QSquarePanelWidget::checkOneCorner(const QPoint &p1, const QPoint &p2, QVec
     return false;
 }
 
-bool QSquarePanelWidget::checkTwoCorner(const QPoint &p1, const QPoint &p2, QVector<QPoint> &linkPoints) const {
+bool QSquarePanelWidget::checkTwoCorner(const QPoint &p1, const QPoint &p2, QVector <QPoint> &linkPoints) const {
 //    qDebug() << "check two corner: " << "p1: " << p1 << "p2: " << p2 << endl;
     QPoint mp1 = toMapPoint(p1), mp2 = toMapPoint(p2);
     int mx1 = mp1.x(), mx2 = mp2.x();

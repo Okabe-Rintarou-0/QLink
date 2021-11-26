@@ -10,17 +10,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a1c061ac-3abf-4a44-87d8-ee572f9744d2" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/QLink/linkcanvas.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/QLink/linkcanvas.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/GameWindow.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/GameWindow.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/GameWindow.h" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/GameWindow.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/QLink.pro" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/QLink.pro" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/QLinkGameController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/QLinkGameController.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/QLink/QSquarePanelWidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/QSquarePanelWidget.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/QSquarePanelWidget.h" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/QSquarePanelWidget.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/QUnitTest.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/QUnitTest.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QLink/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/QLink/main.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,7 +73,7 @@
       <workItem from="1636771079832" duration="1225000" />
       <workItem from="1637755514828" duration="8572000" />
       <workItem from="1637802846019" duration="699000" />
-      <workItem from="1637913147585" duration="3435000" />
+      <workItem from="1637913147585" duration="4035000" />
     </task>
     <servers />
   </component>
