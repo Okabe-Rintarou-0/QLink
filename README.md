@@ -15,3 +15,5 @@ A project from lesson SE2308.
 + Make full use of **SIGNAL/SLOT**, which is a good way to decouple your modules.
 + You can **cache** the found linkable square pairs instead of trying to find it again after each link.
 
+### Final Score
+99 / 100
